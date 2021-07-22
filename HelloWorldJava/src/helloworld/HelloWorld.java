@@ -12,9 +12,9 @@ import javafx.stage.Stage;
  *
  * ./mill mill.scalalib.GenIdea/idea
  *
- * ./mill -i HelloWorld.run
- * ./mill -i HelloWorld.runMain helloworld.HelloWorld
- * ./mill -i --watch HelloWorld.run
+ * ./mill -i HelloWorldJava.run
+ * ./mill -i HelloWorldJava.runMain helloworld.HelloWorld
+ * ./mill -i --watch HelloWorldJava.run
  */
 public class HelloWorld extends Application {
     public static void main(String[] args) {
@@ -23,14 +23,14 @@ public class HelloWorld extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("Hello Java World!");
         Button btn = new Button();
-        btn.setText("Say 'Hello World'");
+        btn.setText("Say 'Hello Java World'");
         btn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
+                System.out.println("Hello Java World!");
             }
         });
 

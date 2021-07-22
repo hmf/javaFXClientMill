@@ -154,7 +154,13 @@ trait javaFX extends ScalaModule with JavaModule {
 
 }
 
-object HelloWorld extends javaFX {
+object HelloWorldJava extends javaFX {
+
+  override def mainClass: T[Option[String]] = Some("helloworld.HelloWorld")
+
+}
+
+object HelloWorldScala extends javaFX {
 
   override def mainClass: T[Option[String]] = Some("helloworld.HelloWorld")
 
