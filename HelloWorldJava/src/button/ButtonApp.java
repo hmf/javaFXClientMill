@@ -10,16 +10,16 @@ public class ButtonApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
+      
     @Override public void start(Stage stage) {
-        System.out.println("STARTED!");
-        var button = new Button("Please Click Me!");
+        System.out.println("STARTED Java!");
+        var button = new Button("Please Java Click Me!");
         button.setOnAction(e -> stage.close());
         var box = new VBox();
         box.getChildren().add(button);
         var scene = new Scene(box);
         stage.setScene(scene);
-        stage.setTitle("Just a button");
+        stage.setTitle("Just a Java button");
         stage.show();
     }
 }
