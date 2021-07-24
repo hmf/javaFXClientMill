@@ -1,5 +1,7 @@
 package org.modernclient;
 
+// cSpell:ignore javafx, dropshadow
+
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
@@ -26,6 +28,26 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 
+/**
+ *
+ * ./mill mill.scalalib.GenIdea/idea
+ *
+ * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes2.run
+ * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes2.runMain org.modernclient.MyShapes2
+ * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapes2.runMain org.modernclient.MyShapes2
+ * 
+ * Note on resources (see StackOverflow link below): Mill's convention is to 
+ * place a resources directory on the lowest level Mill module. To access 
+ * these resources one must use the path relative to the application (Mill 
+ * module) and not the class (because resources are not copied to the compiled 
+ * class directory).
+ * 
+ * If you want to keep the resources next to the classes, these would require
+ * you change Mill behavior to copy them, or do it yourself. 
+ * 
+ * @see https://stackoverflow.com/questions/22000423/javafx-and-maven-nullpointerexception-location-is-required
+ * @see https://stackoverflow.com/questions/12124657/getting-started-on-scala-javafx-desktop-application-development
+ */
 public class MyShapes2 extends Application {
 
     @Override
