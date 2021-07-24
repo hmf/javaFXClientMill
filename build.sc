@@ -1,5 +1,5 @@
 // cSpell:ignore scalalib, helloworld, coursier, Deps, unmanaged, classpath, JVM's, customizer, dprism
-// cSpell:ignore javafx, controlsfx, openjfx, munit
+// cSpell:ignore javafx, controlsfx, openjfx, munit, myshapes
 
 import coursier.core.Resolution
 import mill._

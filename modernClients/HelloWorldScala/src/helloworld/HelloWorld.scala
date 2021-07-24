@@ -1,6 +1,5 @@
 package helloworld
 
-// cSpell:ignore helloworld
 
 import javafx.application.Application
 import javafx.event.ActionEvent
