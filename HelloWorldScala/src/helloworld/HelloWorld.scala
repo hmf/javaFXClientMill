@@ -1,12 +1,14 @@
-package helloworld;
+package helloworld
 
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
+// cSpell:ignore helloworld
+
+import javafx.application.Application
+import javafx.event.ActionEvent
+import javafx.event.EventHandler
+import javafx.scene.Scene
+import javafx.scene.control.Button
+import javafx.scene.layout.StackPane
+import javafx.stage.Stage
 
 /**
  *
@@ -20,23 +22,20 @@ import javafx.stage.Stage;
  */
 class HelloWorld extends Application {
 
-    @Override
-    def start(primaryStage: Stage) = {
-        primaryStage.setTitle("Hello Scala World!")
-        val btn = new Button()
-        btn.setText("Say 'Hello Scala World'")
-        btn.setOnAction(new EventHandler[ActionEvent]() {
+  override def start(primaryStage: Stage) = {
+      primaryStage.setTitle("Hello Scala World!")
+      val btn = new Button()
+      btn.setText("Say 'Hello Scala World'")
+      btn.setOnAction(new EventHandler[ActionEvent]() {
+           override def handle(event: ActionEvent) = {
+              System.out.println("Hello Scala World!")
+          }
+      })
 
-            @Override
-            def handle(event: ActionEvent) = {
-                System.out.println("Hello Scala World!");
-            }
-        })
-
-        val root = new StackPane()
-        root.getChildren().add(btn)
-        primaryStage.setScene(new Scene(root, 300, 250))
-        primaryStage.show()
+      val root = new StackPane()
+      root.getChildren().add(btn)
+      primaryStage.setScene(new Scene(root, 300, 250))
+      primaryStage.show()
     }
 }
 

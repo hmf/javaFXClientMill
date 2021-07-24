@@ -33,13 +33,62 @@ val mUnitVersion = "0.7.27"
  * overriding certain modules on boot-up. This allows for example the use the
  * TestFX for use in headless UI testing.
  *
+ * To add other libraries as modules see `controlsFXModule` as an example. 
+ * 
  * ./mill mill.scalalib.GenIdea/idea
+ * 
+ * TODO: https://stackoverflow.com/questions/46616520/list-modules-in-jar-file
  *
  * @see https://github.com/com-lihaoyi/mill/pull/775#issuecomment-826091576
  */
-trait javaFX extends ScalaModule with JavaModule {
-  def scalaVersion = T{ ScalaVersion }
+trait OpenJFX extends JavaModule {
 
+  // Modules 
+
+  val BASE_       = s"base"
+  val CONTROLS_   = s"controls"
+  val FXML_       = s"fxml"
+  val GRAPHICS_   = s"graphics"
+  val MEDIA_      = s"media"
+  val SWING_      = s"swing"
+  val WEB_        = s"web"
+  val CONTROLSFX_ = s"controlsfx"
+
+  // Extra modules
+  // Note that the module name and the library name are not the same
+  val controlsFXModule = "org.controlsfx.controls"
+
+  // Module libraries 
+  val BASE       = s"org.openjfx:javafx-$BASE_:$javaFXVersion"
+  val CONTROLS   = s"org.openjfx:javafx-$CONTROLS_:$javaFXVersion"
+  val FXML       = s"org.openjfx:javafx-$FXML_:$javaFXVersion"
+  val GRAPHICS   = s"org.openjfx:javafx-$GRAPHICS_:$javaFXVersion"
+  val MEDIA      = s"org.openjfx:javafx-$MEDIA_:$javaFXVersion"
+  val SWING      = s"org.openjfx:javafx-$SWING_:$javaFXVersion"
+  val WEB        = s"org.openjfx:javafx-$WEB_:$javaFXVersion"
+  val CONTROLSFX = s"org.controlsfx:$CONTROLSFX_:$controlsFXVersion"
+
+  // OpenFX/JavaFX libraries
+  val javaFXModuleNames = Seq(BASE_, CONTROLS_, FXML_, GRAPHICS_, MEDIA_, SWING_, WEB_)
+
+
+  /* TODO: we need a better way to identify modules in the JARs
+  see: https://stackoverflow.com/questions/46616520/list-modules-in-jar-file
+  see: https://www.daniweb.com/programming/software-development/threads/291837/best-way-executing-jar-from-java-code-then-killing-parent-java-code
+  see: https://in.relation.to/2017/12/06/06-calling-jdk-tools-programmatically-on-java-9/
+  see: https://www.pluralsight.com/guides/creating-opening-jar-files-java-programming-language
+  see: https://stackoverflow.com/questions/320510/viewing-contents-of-a-jar-file
+  see: https://www.baeldung.com/java-compress-and-uncompress
+  see: https://github.com/srikanth-lingala/zip4j
+  // List of modules (note that a single Jar may have ore than one module)
+  val modules = javaFXModuleNames.map(n => n -> s"org.openjfx:javafx-$n:$javaFXVersion") // OpenFX
+                                  .toMap 
+                ++  // Other modules
+                Map( "controlsfx" -> s"org.controlsfx:controlsfx:$controlsFXVersion")    // ControlsFX
+  println(modules)
+  */
+
+  // TODO: after version 0.10.0 iof Mill put test in the managed/unmanaged classes
   val ivyMunit = ivy"org.scalameta::munit::0.7.27"
   val ivyMunitInterface = "munit.Framework"
 
@@ -56,57 +105,27 @@ trait javaFX extends ScalaModule with JavaModule {
   }
 
   /**
-   * We setup JavaFX using managed libraries pretty much as any other library.
-   * However, we must use the [[resolutionCustomizer]] to ensure that the proper
-   * OS dependent libraries are correctly downloaded. In order to ise JavaFX or
-   * OpenJFX we must include these libraries in the module path and module names
-   * to the JVM parameters. We can automate this via [[forkArgs]].
-   *
-   * Here we list the dependencies via the Mill `ivy` macro (uses Coursier). We
-   * could automate this too because the naming of the libraries and models uses
-   * a consistent convention. We leave that as an exercise to the reader.
-   *
-   * Note that any dependencies are loaded automatically so no need to add
-   * all the JavaFX libraries. We have these here as an example.
-   *
-   * @return an aggregation of the dependencies
-   */
-  override def ivyDeps = Agg(
-                              /*ivy"org.openjfx:javafx-base:$javaFXVersion",
-                              ivy"org.openjfx:javafx-controls:$javaFXVersion",
-                              ivy"org.openjfx:javafx-fxml:$javaFXVersion",
-                              ivy"org.openjfx:javafx-graphics:$javaFXVersion",
-                              ivy"org.openjfx:javafx-media:$javaFXVersion",
-                              ivy"org.openjfx:javafx-swing:$javaFXVersion",
-                              ivy"org.openjfx:javafx-web:$javaFXVersion",*/
-                              ivy"org.openjfx:javafx-controls:$javaFXVersion",
-                              ivy"org.controlsfx:controlsfx:$controlsFXVersion"
-                             )
-
-
-  // OpenFX/JavaFX libraries
-  //private lazy val javaFXModuleNames = Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
-  // Extra OpenFX library
-  private lazy val controlsFXModuleName = "org.controlsfx.controls"
-
-  /**
    * Here we setup the Java modules so that they can be loaded prior to
    * application boot. We can indicate which modules are visible and even opt
    * to substitute some of those. For example using TestFX to allow for headless
    * testing.
    *
+   * Note that with managed libraries, we may pull in additional modules. So we
+   * attempt here to identify (via naming convention), which libraries are modules.
+   * These corresponding modules are then added to the JVM command line. 
+   * 
    * @return the list of parameters for the JVM
    */
   override def forkArgs: Target[Seq[String]] = T {
     // get the managed libraries
-    val unmanaged: Loose.Agg[PathRef] = runClasspath()
+    val allLibs: Loose.Agg[PathRef] = runClasspath()
     // get the OpenJFX and related managed libraries
-    val s: Loose.Agg[String] = unmanaged.map(_.path.toString())
-                                        .filter{
-                                           s =>
-                                             val t= s.toLowerCase()
-                                             t.contains("javafx") || t.contains("controlsfx")
-                                          }
+    val s: Loose.Agg[String] = allLibs.map(_.path.toString())
+                                      .filter{
+                                         s =>
+                                           val t= s.toLowerCase()
+                                           t.contains("javafx") || t.contains("controlsfx")
+                                        }
 
     // Create the JavaFX module names (convention is amenable to automation)
     import scala.util.matching.Regex
@@ -119,7 +138,7 @@ trait javaFX extends ScalaModule with JavaModule {
                       .map(_.get)
     // Now generate the module names
     val modulesNames = javaFXModules.map( m => s"javafx.$m") ++
-                          Seq(controlsFXModuleName) // no standard convention, so add it manually
+                          Seq(controlsFXModule) // no standard convention, so add it manually
 
     // Add to the modules list
     Seq(
@@ -134,18 +153,14 @@ trait javaFX extends ScalaModule with JavaModule {
   }
 
 
+  // TODO: after version 0.10.0 of Mill put test in the managed/unmanaged classes
   object test extends Tests {
 
+    // TODO: after version 0.10.0 of Mill remove this
+    // sse https://github.com/com-lihaoyi/mill/issues/1406
     override def resolutionCustomizer: Task[Option[Resolution => Resolution]] = T.task {
       Some((_: coursier.core.Resolution).withOsInfo(coursier.core.Activation.Os.fromProperties(sys.props.toMap)))
     }
-    
-    //override def ivyDeps = Agg(ivyMunit)
-    // sse https://github.com/com-lihaoyi/mill/issues/1406
-    override def ivyDeps = Agg(
-                              ivy"org.openjfx:javafx-controls:$javaFXVersion",
-                              ivy"org.controlsfx:controlsfx:$controlsFXVersion",
-                              ivyMunit)
 
     // https://github.com/com-lihaoyi/mill#097---2021-05-14
     //def testFrameworks = Seq(ivyMunitInterface)
@@ -153,17 +168,29 @@ trait javaFX extends ScalaModule with JavaModule {
   }
 
 }
-
-object HelloWorldJava extends javaFX {
-
+object HelloWorldJava extends OpenJFX {
+  
   override def mainClass: T[Option[String]] = Some("helloworld.HelloWorld")
+
+  override def ivyDeps = Agg(
+                              ivy"$CONTROLS",
+                              ivy"$CONTROLSFX"
+                             )
+
+
 
 }
 
-object HelloWorldScala extends javaFX {
+
+object HelloWorldScala extends OpenJFX with ScalaModule {
+  def scalaVersion = T{ ScalaVersion }
 
   override def mainClass: T[Option[String]] = Some("helloworld.HelloWorld")
 
+  override def ivyDeps = Agg(
+                              ivy"$CONTROLS",
+                              ivy"$CONTROLSFX"
+                             )
 }
 
 
