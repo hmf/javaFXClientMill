@@ -1,5 +1,5 @@
-// cSpell:ignore scalalib, helloworld, coursier, Deps, unmanaged, classpath
-// cSpell:ignore javafx, controlsfx, openjfx
+// cSpell:ignore scalalib, helloworld, coursier, Deps, unmanaged, classpath, JVM's, customizer, dprism
+// cSpell:ignore javafx, controlsfx, openjfx, munit
 
 import coursier.core.Resolution
 import mill._
@@ -181,7 +181,6 @@ object HelloWorldJava extends OpenJFX {
 
 }
 
-
 object HelloWorldScala extends OpenJFX with ScalaModule {
   def scalaVersion = T{ ScalaVersion }
 
@@ -194,4 +193,34 @@ object HelloWorldScala extends OpenJFX with ScalaModule {
 }
 
 
+
+object modernClients extends ScalaModule {
+    def scalaVersion = T{ ScalaVersion }
+
+  object HelloWorldScala extends OpenJFX with ScalaModule {
+    def scalaVersion = T{ ScalaVersion }
+
+    override def mainClass: T[Option[String]] = Some("helloworld.HelloWorld")
+
+    override def ivyDeps = Agg(
+                                ivy"$CONTROLS",
+                                ivy"$CONTROLSFX",
+                              )
+
+    }
+
+  object HelloModernWorld extends OpenJFX with ScalaModule {
+    def scalaVersion = T{ ScalaVersion }
+
+    override def mainClass: T[Option[String]] = Some("helloworld.HelloWorld")
+
+    override def ivyDeps = Agg(
+                                ivy"$CONTROLS",
+                                ivy"$CONTROLSFX",
+                                ivy"$FXML"
+                              )
+
+    }
+
+}
 
