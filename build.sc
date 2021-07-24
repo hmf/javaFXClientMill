@@ -207,7 +207,7 @@ object modernClients extends ScalaModule {
                                 ivy"$CONTROLSFX",
                               )
 
-    }
+  }
 
   object HelloModernWorld extends OpenJFX with ScalaModule {
     def scalaVersion = T{ ScalaVersion }
@@ -220,7 +220,21 @@ object modernClients extends ScalaModule {
                                 ivy"$FXML"
                               )
 
+  }
+
+  object `ch02-javafx_fundamentals` extends OpenJFX {
+    object myshapes extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclient.MyShapes")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  ivy"$CONTROLSFX",
+                                  ivy"$FXML"
+                                )
+
     }
+  }
 
 }
-
