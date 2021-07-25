@@ -14,8 +14,10 @@ val ScalaVersion = "3.0.1"
 //val javaFXVersion = "13.0.2"
 val javaFXVersion = "16"
 
-val controlsFXVersion = "11.1.0"
-val mUnitVersion = "0.7.27"
+val mUnitVersion         = "0.7.27"
+val controlsFXVersion    = "11.1.0"
+val hanSoloChartsVersion = "16.0.12"
+
 
 /**
  * When working with JavaFX/OpenFX in JDK 1.9 and later, the libraries are
@@ -88,9 +90,14 @@ trait OpenJFX extends JavaModule {
   println(modules)
   */
 
+  // Standard libraries
+
   // TODO: after version 0.10.0 iof Mill put test in the managed/unmanaged classes
-  val ivyMunit = ivy"org.scalameta::munit::0.7.27"
+  val ivyMunit          = ivy"org.scalameta::munit::$mUnitVersion"
+  val ivyHanSoloCharts  = ivy"eu.hansolo.fx:charts::$hanSoloChartsVersion"  // Java
+
   val ivyMunitInterface = "munit.Framework"
+
 
   /**
    * In order to use OS specific libraries (such as JavaFX or OpenJFX), we
@@ -193,6 +200,21 @@ object HelloWorldScala extends OpenJFX with ScalaModule {
 }
 
 
+  object hanSoloCharts extends OpenJFX with ScalaModule {
+    def scalaVersion = T{ ScalaVersion }
+
+    //override def javacOptions = Seq("-source", "1.8", "-target", "1.8", "-Xlint")
+    override def javacOptions = Seq("-source", "11", "-target", "11", "-Xlint")
+
+    //override def mainClass: T[Option[String]] = Some("helloworld.HelloWorld")
+
+    override def ivyDeps = Agg(
+                                ivyHanSoloCharts, 
+                                ivy"$CONTROLSFX"   // TODO: bug - we should not need this
+                              )
+
+  }
+
 
 object modernClients extends ScalaModule {
     def scalaVersion = T{ ScalaVersion }
@@ -204,7 +226,7 @@ object modernClients extends ScalaModule {
 
     override def ivyDeps = Agg(
                                 ivy"$CONTROLS",
-                                ivy"$CONTROLSFX",
+                                ivy"$CONTROLSFX"
                               )
 
   }
@@ -221,7 +243,6 @@ object modernClients extends ScalaModule {
                               )
 
   }
-
   object `ch02-javafx_fundamentals` extends OpenJFX {
     object myshapes extends OpenJFX with ScalaModule {
       def scalaVersion = T{ ScalaVersion }
