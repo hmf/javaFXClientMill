@@ -33,11 +33,9 @@ import javafx.scene.Scene
 /**
  * ./mill mill.scalalib.GenIdea/idea
  *
+ * ./mill -i hanSoloCharts.run
  * ./mill -i hanSoloCharts.runMain hansolo.charts.LineChartTest
- * 
- * ./mill -i modernClients.ch02-javafx_fundamentals.myshapesproperties.run
- * ./mill -i modernClients.ch02-javafx_fundamentals.myshapesproperties.runMain org.modernclient.MyShapesProperties
- * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapesproperties.runMain org.modernclient.MyShapesProperties
+ * ./mill -i --watch hanSoloCharts.runMain hansolo.charts.LineChartTest
  * 
  * Note on resources (see StackOverflow link below): Mill's convention is to 
  * place a resources directory on the lowest level Mill module. To access 
@@ -47,6 +45,7 @@ import javafx.scene.Scene
  * 
  * If you want to keep the resources next to the classes, these would require
  * you change Mill behavior to copy them, or do it yourself. 
+ * 
  * 
  * @see https://stackoverflow.com/questions/22000423/javafx-and-maven-nullpointerexception-location-is-required
  * @see https://stackoverflow.com/questions/12124657/getting-started-on-scala-javafx-desktop-application-development

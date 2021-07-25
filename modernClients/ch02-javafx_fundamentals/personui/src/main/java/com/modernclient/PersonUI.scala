@@ -1,23 +1,22 @@
-package org.modernclient
+package com.modernclientPersonUI
 
 // cSpell:ignore javafx
 
-import javafx.application.Application
-import javafx.fxml.FXMLLoader
-import javafx.scene.Parent
-import javafx.scene.Scene
-import javafx.scene.paint.Color
-import javafx.stage.Stage
+import javafx.application.ApplicationPersonUI
+// import static javafx.application.Application.launchPersonUI
+import javafx.fxml.FXMLLoaderPersonUI
+import javafx.scene.ParentPersonUI
+import javafx.scene.ScenePersonUI
+import javafx.stage.StagePersonUI
 
-import javafx.scene.layout.VBox
 
 /**
  *
  * ./mill mill.scalalib.GenIdea/idea
  *
- * ./mill -i modernClients.ch02-javafx_fundamentals.myshapesfxml.run
- * ./mill -i modernClients.ch02-javafx_fundamentals.myshapesfxml.runMain org.modernclient.MyShapesFXML
- * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapesfxml.runMain org.modernclient.MyShapesFXML
+ * ./mill -i modernClients.ch02-javafx_fundamentals.personui.run
+ * ./mill -i modernClients.ch02-javafx_fundamentals.personiu.runMain org.modernclient.PersonUI
+ * ./mill -i --watch modernClients.ch02-javafx_fundamentals.personui.runMain org.modernclient.PersonUI
  * 
  * Note on resources (see StackOverflow link below): Mill's convention is to 
  * place a resources directory on the lowest level Mill module. To access 
@@ -31,20 +30,17 @@ import javafx.scene.layout.VBox
  * @see https://stackoverflow.com/questions/22000423/javafx-and-maven-nullpointerexception-location-is-required
  * @see https://stackoverflow.com/questions/12124657/getting-started-on-scala-javafx-desktop-application-development
  */
-class MyShapesFXML extends Application {
+class PersonUI extends Application {
 
     override def start(stage: Stage) = {
-        //val root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"))
-        val root: VBox = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"))
-
-        val scene = new Scene(root, Color.LIGHTYELLOW)
-        // scene.getStylesheets().add(getClass()
-        //         .getResource("/styles/Styles.css").toExternalForm())
-
-        stage.setTitle("MyShapesApp with JavaFX")
-        stage.setScene(scene)
-        stage.show()
+        val root: Parent = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"))PersonUI
+        
+        Scene scene = new Scene(root)PersonUI
+        stage.setTitle("Person UI Example")PersonUI
+        stage.setScene(scene)PersonUI
+        stage.show()PersonUI
     }
+
 
     def launchIt():Unit = {
         Application.launch()
@@ -52,8 +48,7 @@ class MyShapesFXML extends Application {
     
 }
 
-
-object MyShapesFXML {
+object PersonUI {
     /**
     * The main() method is ignored in correctly deployed JavaFX application.
     * main() serves only as fallback in case the application can not be
@@ -63,7 +58,7 @@ object MyShapesFXML {
     * @param args the command line arguments
     */
     def main(args: Array[String]) =
-        val app = new MyShapesFXML
+        val app = new PersonUI
         app.launchIt()
 
 }

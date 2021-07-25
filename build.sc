@@ -18,7 +18,8 @@ val javaFXVersion = "16"
 
 val mUnitVersion         = "0.7.27"
 val controlsFXVersion    = "11.1.0"
-val hanSoloChartsVersion = "16.0.12"
+//val hanSoloChartsVersion = "16.0.12" JDK16
+val hanSoloChartsVersion = "11.7"
 
 
 /**
@@ -202,13 +203,45 @@ object HelloWorldScala extends OpenJFX with ScalaModule {
 }
 
 
+  // https://stackoverflow.com/questions/21185156/javafx-on-linux-is-showing-a-graphics-device-initialization-failed-for-es2-s
+  // locate -i libprism_es2.so
+  // locate -i libglass.so
+  // locate -i prism_sw.so   - this only appears in one of the versions 13.02
+  // locate -i locate -i libgio-2.0.so.0
+  // sudo apt-get install libgtk2.0-bin libXtst6 libxslt1.1
+  /*
+    GraphicsPipeline.createPipeline failed for com.sun.prism.es2.ES2Pipeline
+java.lang.UnsatisfiedLinkError: no prism_es2 in java.library.path: [., /usr/local/cuda-11.2/lib64, /usr/java/packages/lib, /usr/lib/x86_64-linux-gnu/jni, /lib/x86_64-linux-gnu, /usr/lib/x86_64-linux-gnu, /usr/lib/jni, /lib, /usr/lib]
+
+Prism pipeline name = com.sun.prism.sw.SWPipeline
+GraphicsPipeline.createPipeline failed for com.sun.prism.sw.SWPipeline
+java.lang.UnsatisfiedLinkError: no prism_sw in java.library.path: [., /usr/local/cuda-11.2/lib64, /usr/java/packages/lib, /usr/lib/x86_64-linux-gnu/jni, /lib/x86_64-linux-gnu, /usr/lib/x86_64-linux-gnu, /usr/lib/jni, /lib, /usr/lib]
+
+/home/hmf/.openjfx/cache/13.0.2/libprism_es2.so
+/home/hmf/.openjfx/cache/13/libprism_es2.so
+/home/hmf/.openjfx/cache/16/libprism_es2.so
+    
+
+https://stackoverflow.com/questions/661320/how-to-add-native-library-to-java-library-path-with-eclipse-launch-instead-of
+  */
   object hanSoloCharts extends OpenJFX with ScalaModule {
     def scalaVersion = T{ ScalaVersion }
 
     //override def javacOptions = Seq("-source", "1.8", "-target", "1.8", "-Xlint")
-    override def javacOptions = Seq("-source", "11", "-target", "11", "-Xlint")
+    //override def javacOptions = T{ Seq("-source", "11", "-target", "11", "-Xlint") }
+    //override def scalacOptions = T{ Seq("-deprecation", "-feature") }
 
-    //override def mainClass: T[Option[String]] = Some("helloworld.HelloWorld")
+    // -Djdk.gtk.verbose=true -Djavafx.embed.singleThread=true -Dawt.useSystemAAFontSettings=on
+    // -Djava.library.path
+    override def forkArgs: Target[Seq[String]] = T {
+      val t = Seq("-Dprism.verbose=true", "-Djavafx.verbose=true", "-ea") ++ // JavaFX
+        super[OpenJFX].forkArgs() //  OpenFX
+      println(t.mkString("\n"))
+      t
+    }
+
+
+    override def mainClass: T[Option[String]] = Some("hansolo.charts.LineChartTest")
 
     override def ivyDeps = Agg(
                                 ivyHanSoloCharts, 
@@ -294,7 +327,20 @@ object modernClients extends ScalaModule {
                                 )
 
     }
+    object personui extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclient.PersonUI")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  ivy"$CONTROLSFX",
+                                  ivy"$FXML"
+                                )
+
+    }
 
   }
+
 
 }

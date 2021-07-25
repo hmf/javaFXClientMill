@@ -38,8 +38,8 @@ class MyShapesFXML extends Application {
         val root: VBox = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"))
 
         val scene = new Scene(root, Color.LIGHTYELLOW)
-        scene.getStylesheets().add(getClass()
-                .getResource("/styles/Styles.css").toExternalForm())
+        // scene.getStylesheets().add(getClass()
+        //         .getResource("/styles/Styles.css").toExternalForm())
 
         stage.setTitle("MyShapesApp with JavaFX")
         stage.setScene(scene)
