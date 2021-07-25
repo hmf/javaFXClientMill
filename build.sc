@@ -1,5 +1,7 @@
+
+// cSpell:ignore javac, xlint
 // cSpell:ignore scalalib, helloworld, coursier, Deps, unmanaged, classpath, JVM's, customizer, dprism
-// cSpell:ignore javafx, controlsfx, openjfx, munit, myshapes, myshapesproperties
+// cSpell:ignore javafx, controlsfx, openjfx, munit, myshapes, myshapesproperties, myshapesfxml
 
 import coursier.core.Resolution
 import mill._
@@ -272,6 +274,18 @@ object modernClients extends ScalaModule {
       def scalaVersion = T{ ScalaVersion }
 
       override def mainClass: T[Option[String]] = Some("org.modernclient.MyShapesProperties")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  ivy"$CONTROLSFX",
+                                  ivy"$FXML"
+                                )
+
+    }
+    object myshapesfxml extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclient.MyShapesFXML")
 
       override def ivyDeps = Agg(
                                   ivy"$CONTROLS",
