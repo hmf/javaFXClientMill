@@ -2,6 +2,8 @@
 // cSpell:ignore javac, xlint
 // cSpell:ignore scalalib, helloworld, coursier, Deps, unmanaged, classpath, JVM's, customizer, dprism
 // cSpell:ignore javafx, controlsfx, openjfx, munit, myshapes, myshapesproperties, myshapesfxml
+// cSpell:ignore hansolo, personui
+// cSpell:ignore libprism, libglass, libgio, libgtk, xtst, libxslt, cuda, versionless, Djavafx, Djdk, Dawt, Djava
 
 import coursier.core.Resolution
 import mill._
@@ -159,7 +161,7 @@ trait OpenJFX extends JavaModule {
         "--add-exports=javafx.graphics/com.sun.javafx.scene.traversal=org.controlsfx.controls"
     ) ++
       // add standard parameters
-      Seq("-Dprism.verbose = true", "-ea")
+      Seq("-Dprism.verbose=true", "-ea")
   }
 
 
@@ -221,6 +223,12 @@ java.lang.UnsatisfiedLinkError: no prism_sw in java.library.path: [., /usr/local
 /home/hmf/.openjfx/cache/13/libprism_es2.so
 /home/hmf/.openjfx/cache/16/libprism_es2.so
     
+https://stackoverflow.com/questions/53382810/configure-openjfx-11-to-extract-its-dlls-into-a-different-user-specified-directo
+// String jfxVersion = System.getProperty("javafx.version", "versionless")
+// -Djavafx.cachedir=/tmp/foo 
+
+https://www.gitmemory.com/issue/update4j/update4j/80/587583388
+
 
 https://stackoverflow.com/questions/661320/how-to-add-native-library-to-java-library-path-with-eclipse-launch-instead-of
   */
@@ -234,9 +242,11 @@ https://stackoverflow.com/questions/661320/how-to-add-native-library-to-java-lib
     // -Djdk.gtk.verbose=true -Djavafx.embed.singleThread=true -Dawt.useSystemAAFontSettings=on
     // -Djava.library.path
     override def forkArgs: Target[Seq[String]] = T {
-      val t = Seq("-Dprism.verbose=true", "-Djavafx.verbose=true", "-ea") ++ // JavaFX
+      //val t = Seq("-Dprism.verbose=true", "-Djavafx.verbose=true", "-ea") ++ // JavaFX
+      val t = Seq("-Djavafx.verbose=true", "-ea") ++ // JavaFX
         super[OpenJFX].forkArgs() //  OpenFX
       println(t.mkString("\n"))
+      // we do not have here the hansolo module, loading s not the same
       t
     }
 
@@ -244,8 +254,9 @@ https://stackoverflow.com/questions/661320/how-to-add-native-library-to-java-lib
     override def mainClass: T[Option[String]] = Some("hansolo.charts.LineChartTest")
 
     override def ivyDeps = Agg(
-                                ivyHanSoloCharts, 
-                                ivy"$CONTROLSFX"   // TODO: bug - we should not need this
+                                ivy"$CONTROLS",
+                                ivy"$CONTROLSFX",   // TODO: bug - we should not need this
+                                ivyHanSoloCharts 
                               )
 
   }
@@ -307,6 +318,13 @@ object modernClients extends ScalaModule {
       def scalaVersion = T{ ScalaVersion }
 
       override def mainClass: T[Option[String]] = Some("org.modernclient.MyShapesProperties")
+
+      override def forkArgs: Target[Seq[String]] = T {
+        val t = Seq("-Djavafx.verbose=true", "-ea") ++ // JavaFX
+          super[OpenJFX].forkArgs() //  OpenFX
+        println(t.mkString("\n"))
+        t
+      }
 
       override def ivyDeps = Agg(
                                   ivy"$CONTROLS",
