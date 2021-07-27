@@ -265,3 +265,5 @@ Could thr native library be shared? If so, how can we ensure that a common depen
 ```
  TODO
 ```
+
+home/hmf/.cache/coursier/v1/https/repo1.maven.org/maven2/eu/hansolo/fx/charts/11.7

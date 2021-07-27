@@ -52,32 +52,101 @@ trait OpenJFX extends JavaModule {
 
   // Modules 
 
-  val BASE_       = s"base"
-  val CONTROLS_   = s"controls"
-  val FXML_       = s"fxml"
-  val GRAPHICS_   = s"graphics"
-  val MEDIA_      = s"media"
-  val SWING_      = s"swing"
-  val WEB_        = s"web"
-  val CONTROLSFX_ = s"controlsfx"
+  // OpenFX
+  val BASE_       = "base"
+  val CONTROLS_   = "controls"
+  val FXML_       = "fxml"
+  val GRAPHICS_   = "graphics"
+  val MEDIA_      = "media"
+  val SWING_      = "swing"
+  val WEB_        = "web"
+
+  // ControlsFX
+  val CONTROLSFX_ = "controlsfx"
+  val CONTROLSFX_1 = "org.controlsfx.controls"
+
+  // Charts
+  //val HANSOLO_CHARTS_ = "eu.hansolo.fx.charts"
+  val HANSOLO_CHARTS_ = "charts"
+
 
   // Extra modules
   // Note that the module name and the library name are not the same
-  val controlsFXModule = "org.controlsfx.controls"
+  val controlsFXModule = CONTROLSFX_1
 
   // Module libraries 
-  val BASE       = s"org.openjfx:javafx-$BASE_:$javaFXVersion"
-  val CONTROLS   = s"org.openjfx:javafx-$CONTROLS_:$javaFXVersion"
-  val FXML       = s"org.openjfx:javafx-$FXML_:$javaFXVersion"
-  val GRAPHICS   = s"org.openjfx:javafx-$GRAPHICS_:$javaFXVersion"
-  val MEDIA      = s"org.openjfx:javafx-$MEDIA_:$javaFXVersion"
-  val SWING      = s"org.openjfx:javafx-$SWING_:$javaFXVersion"
-  val WEB        = s"org.openjfx:javafx-$WEB_:$javaFXVersion"
-  val CONTROLSFX = s"org.controlsfx:$CONTROLSFX_:$controlsFXVersion"
+  val BASE           = s"org.openjfx:javafx-$BASE_:$javaFXVersion"
+  val CONTROLS       = s"org.openjfx:javafx-$CONTROLS_:$javaFXVersion"
+  val FXML           = s"org.openjfx:javafx-$FXML_:$javaFXVersion"
+  val GRAPHICS       = s"org.openjfx:javafx-$GRAPHICS_:$javaFXVersion"
+  val MEDIA          = s"org.openjfx:javafx-$MEDIA_:$javaFXVersion"
+  val SWING          = s"org.openjfx:javafx-$SWING_:$javaFXVersion"
+  val WEB            = s"org.openjfx:javafx-$WEB_:$javaFXVersion"
+  val CONTROLSFX     = s"org.controlsfx:$CONTROLSFX_:$controlsFXVersion"
+  val HANSOLO_CHARTS = s"eu.hansolo.fx:charts:$hanSoloChartsVersion"  // Java
 
   // OpenFX/JavaFX libraries
   val javaFXModuleNames = Seq(BASE_, CONTROLS_, FXML_, GRAPHICS_, MEDIA_, SWING_, WEB_)
 
+
+  def jfx(s:String): String = s"javafx.$s"
+
+  val javaFXModuleNamesX = Map(
+                             jfx(BASE_)      -> BASE, 
+                             jfx(CONTROLS_)  -> CONTROLS, 
+                             jfx(FXML_)      -> FXML, 
+                             jfx(GRAPHICS_)  -> GRAPHICS, 
+                             jfx(MEDIA_)     -> MEDIA, 
+                             jfx(SWING_)     -> SWING, 
+                             jfx(WEB_)       -> WEB,
+                             CONTROLSFX_1    -> CONTROLSFX,
+                             HANSOLO_CHARTS_ -> HANSOLO_CHARTS
+                             )
+
+/*
+Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
+ eu.hansolo.fx.charts.event,eu.hansolo.fx.charts.series,eu.hansolo.fx.
+ charts.tools,javafx.application,javafx.beans,javafx.beans.property,ja
+ vafx.collections,javafx.geometry,javafx.scene,javafx.scene.input,java
+ fx.scene.layout,javafx.scene.paint,javafx.stage";version="11.7.0",eu.
+ hansolo.fx.charts.data;uses:="eu.hansolo.fx.charts,eu.hansolo.fx.char
+ ts.event,eu.hansolo.fx.charts.tools,javafx.beans.property,javafx.scen
+ e.paint";version="11.7.0",eu.hansolo.fx.charts.event;uses:="eu.hansol
+ o.fx.charts.data,eu.hansolo.fx.charts.series,eu.hansolo.fx.charts.too
+ ls";version="11.7.0",eu.hansolo.fx.charts.series;uses:="eu.hansolo.fx
+ .charts,eu.hansolo.fx.charts.data,eu.hansolo.fx.charts.event,javafx.b
+ eans.property,javafx.collections,javafx.scene.paint";version="11.7.0"
+ ,eu.hansolo.fx.charts.tools;uses:="eu.hansolo.fx.charts,eu.hansolo.fx
+ .charts.data,eu.hansolo.fx.charts.event,javafx.beans.property,javafx.
+ event,javafx.geometry,javafx.scene,javafx.scene.canvas,javafx.scene.i
+ nput,javafx.scene.paint,javafx.scene.shape,javafx.scene.text,javafx.s
+ tage";version="11.7.0",eu.hansolo.fx.geometry;uses:="eu.hansolo.fx.ge
+ ometry.tools,eu.hansolo.fx.geometry.transform,javafx.scene.canvas,jav
+ afx.scene.paint";version="11.7.0",eu.hansolo.fx.geometry.tools;uses:=
+ "eu.hansolo.fx.geometry,javafx.scene.paint";version="11.7.0",eu.hanso
+ lo.fx.geometry.transform;uses:="eu.hansolo.fx.geometry,eu.hansolo.fx.
+ geometry.tools";version="11.7.0"
+
+ https://github.com/HanSolo/charts/blob/master/src/main/java/module-info.java
+ exports eu.hansolo.fx.geometry;
+    exports eu.hansolo.fx.geometry.tools;
+    exports eu.hansolo.fx.geometry.transform;
+    exports eu.hansolo.fx.charts;
+    exports eu.hansolo.fx.charts.areaheatmap;
+    exports eu.hansolo.fx.charts.color;
+    exports eu.hansolo.fx.charts.converter;
+    exports eu.hansolo.fx.charts.data;
+    exports eu.hansolo.fx.charts.event;
+    exports eu.hansolo.fx.charts.font;
+    exports eu.hansolo.fx.charts.forcedirectedgraph;
+    exports eu.hansolo.fx.charts.heatmap;
+    exports eu.hansolo.fx.charts.pareto;
+    exports eu.hansolo.fx.charts.series;
+    exports eu.hansolo.fx.charts.tools;
+    exports eu.hansolo.fx.charts.world;
+*/
+
+  val xxx = "eu.hansolo.fx.charts"
 
   /* TODO: we need a better way to identify modules in the JARs
   see: https://stackoverflow.com/questions/46616520/list-modules-in-jar-file
@@ -99,8 +168,6 @@ trait OpenJFX extends JavaModule {
 
   // TODO: after version 0.10.0 iof Mill put test in the managed/unmanaged classes
   val ivyMunit          = ivy"org.scalameta::munit::$mUnitVersion"
-  val ivyHanSoloCharts  = ivy"eu.hansolo.fx:charts::$hanSoloChartsVersion"  // Java
-
   val ivyMunitInterface = "munit.Framework"
 
 
@@ -131,13 +198,19 @@ trait OpenJFX extends JavaModule {
   override def forkArgs: Target[Seq[String]] = T {
     // get the managed libraries
     val allLibs: Loose.Agg[PathRef] = runClasspath()
+    val strLibs = allLibs.map(_.path.toString())
     // get the OpenJFX and related managed libraries
     val s: Loose.Agg[String] = allLibs.map(_.path.toString())
                                       .filter{
                                          s =>
-                                           val t= s.toLowerCase()
-                                           t.contains("javafx") || t.contains("controlsfx")
+                                           val t = s.toLowerCase()
+                                           t.contains("javafx") || t.contains("controlsfx") || t.contains("hansolo")
                                         }
+    println(s.mkString("!\n"))                          
+    val hasControls = strLibs.filter{ s => s.toLowerCase.contains("controlsfx") }.size > 0
+    val hasCharts = strLibs.filter{ s => s.toLowerCase.contains("hansolo") }.size > 0
+    println(if (hasControls) Seq(controlsFXModule) else Seq())
+    println(if (hasCharts) Seq(HANSOLO_CHARTS_) else Seq())
 
     // Create the JavaFX module names (convention is amenable to automation)
     import scala.util.matching.Regex
@@ -150,16 +223,26 @@ trait OpenJFX extends JavaModule {
                       .map(_.get)
     // Now generate the module names
     val modulesNames = javaFXModules.map( m => s"javafx.$m") ++
-                          Seq(controlsFXModule) // no standard convention, so add it manually
+                          // no standard convention, so add it manually
+                          (if (hasControls) Seq(controlsFXModule) else Seq()) ++
+                          (if (hasCharts) Seq(HANSOLO_CHARTS_) else Seq())
+
+    println(modulesNames.mkString("?\n"))                          
+    // Experiment
+
 
     // Add to the modules list
     Seq(
         "--module-path", s.iterator.mkString(":"),
-        "--add-modules", modulesNames.iterator.mkString(","),
-        "--add-exports=javafx.controls/com.sun.javafx.scene.control.behavior=org.controlsfx.controls",
-        "--add-exports=javafx.controls/com.sun.javafx.scene.control.inputmap=org.controlsfx.controls",
-        "--add-exports=javafx.graphics/com.sun.javafx.scene.traversal=org.controlsfx.controls"
-    ) ++
+        "--add-modules", modulesNames.iterator.mkString(",")
+        ) ++
+    (
+      if (hasControls)
+        Seq("--add-exports=javafx.controls/com.sun.javafx.scene.control.behavior=org.controlsfx.controls",
+            "--add-exports=javafx.controls/com.sun.javafx.scene.control.inputmap=org.controlsfx.controls",
+            "--add-exports=javafx.graphics/com.sun.javafx.scene.traversal=org.controlsfx.controls") 
+      else Seq()
+    ) ++ 
       // add standard parameters
       Seq("-Dprism.verbose=true", "-ea")
   }
@@ -242,8 +325,9 @@ https://stackoverflow.com/questions/661320/how-to-add-native-library-to-java-lib
     // -Djdk.gtk.verbose=true -Djavafx.embed.singleThread=true -Dawt.useSystemAAFontSettings=on
     // -Djava.library.path
     override def forkArgs: Target[Seq[String]] = T {
+
       //val t = Seq("-Dprism.verbose=true", "-Djavafx.verbose=true", "-ea") ++ // JavaFX
-      val t = Seq("-Djavafx.verbose=true", "-ea") ++ // JavaFX
+      val t = Seq("-Djavafx.verbose=true") ++ // JavaFX
         super[OpenJFX].forkArgs() //  OpenFX
       println(t.mkString("\n"))
       // we do not have here the hansolo module, loading s not the same
@@ -255,8 +339,8 @@ https://stackoverflow.com/questions/661320/how-to-add-native-library-to-java-lib
 
     override def ivyDeps = Agg(
                                 ivy"$CONTROLS",
-                                ivy"$CONTROLSFX",   // TODO: bug - we should not need this
-                                ivyHanSoloCharts 
+                                //ivy"$CONTROLSFX",      // TODO: bug - we should not need this
+                                ivy"$HANSOLO_CHARTS" // ivyHanSoloCharts 
                               )
 
   }
@@ -271,8 +355,8 @@ object modernClients extends ScalaModule {
     override def mainClass: T[Option[String]] = Some("helloworld.HelloWorld")
 
     override def ivyDeps = Agg(
-                                ivy"$CONTROLS",
-                                ivy"$CONTROLSFX"
+                                ivy"$CONTROLS"
+                                //ivy"$CONTROLSFX"
                               )
 
   }
@@ -284,7 +368,7 @@ object modernClients extends ScalaModule {
 
     override def ivyDeps = Agg(
                                 ivy"$CONTROLS",
-                                ivy"$CONTROLSFX",
+                                //ivy"$CONTROLSFX",
                                 ivy"$FXML"
                               )
 
@@ -297,7 +381,7 @@ object modernClients extends ScalaModule {
 
       override def ivyDeps = Agg(
                                   ivy"$CONTROLS",
-                                  ivy"$CONTROLSFX",
+                                  //ivy"$CONTROLSFX",
                                   ivy"$FXML"
                                 )
 
@@ -309,7 +393,7 @@ object modernClients extends ScalaModule {
 
       override def ivyDeps = Agg(
                                   ivy"$CONTROLS",
-                                  ivy"$CONTROLSFX",
+                                  //ivy"$CONTROLSFX",
                                   ivy"$FXML"
                                 )
 
@@ -328,7 +412,8 @@ object modernClients extends ScalaModule {
 
       override def ivyDeps = Agg(
                                   ivy"$CONTROLS",
-                                  ivy"$CONTROLSFX",
+                                  //ivy"$CONTROLSFX",
+                                  ivy"$HANSOLO_CHARTS",
                                   ivy"$FXML"
                                 )
 
@@ -340,7 +425,7 @@ object modernClients extends ScalaModule {
 
       override def ivyDeps = Agg(
                                   ivy"$CONTROLS",
-                                  ivy"$CONTROLSFX",
+                                  //ivy"$CONTROLSFX",
                                   ivy"$FXML"
                                 )
 
@@ -352,7 +437,7 @@ object modernClients extends ScalaModule {
 
       override def ivyDeps = Agg(
                                   ivy"$CONTROLS",
-                                  ivy"$CONTROLSFX",
+                                  //ivy"$CONTROLSFX",
                                   ivy"$FXML"
                                 )
 
