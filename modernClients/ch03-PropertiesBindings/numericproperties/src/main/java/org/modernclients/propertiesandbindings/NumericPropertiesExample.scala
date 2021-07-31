@@ -14,6 +14,7 @@ import javafx.beans.InvalidationListener
 import javafx.beans.value.ChangeListener
 import javafx.beans.property.SimpleStringProperty
 import javafx.beans.property.StringProperty
+import javafx.beans.binding.DoubleBinding
 
 /**
  *
@@ -38,7 +39,7 @@ import javafx.beans.property.StringProperty
 object NumericPropertiesExample {
 
     def BidirectionalBindingExample: Unit = {
-        println("\nConstructing two StringProperty objects.")
+        println("\n\nConstructing two StringProperty objects.")
 
         val prop1: StringProperty = SimpleStringProperty("")
         val prop2: StringProperty = SimpleStringProperty("")
@@ -58,6 +59,37 @@ object NumericPropertiesExample {
         println(prop1.get())
     }
 
+    def DirectExtensionExample: Unit = {
+        println("\n\nConstructing x with value 2.0.")
+        val x: DoubleProperty= SimpleDoubleProperty(null, "x", 2.0)
+
+        println("Constructing y with value 3.0.")
+        val y: DoubleProperty = SimpleDoubleProperty(null, "y", 3.0)
+
+        println("Creating binding area" +
+                " with dependencies x and y.")
+
+        val area: DoubleBinding = 
+                new DoubleBinding() {
+                        super.bind(x, y)
+
+                        override def computeValue(): Double = {
+                                println("computeValue()" +
+                                           " is called.")
+                                x.get() * y.get()
+                        }
+                }
+
+        println("area.get() = " + area.get())
+        println("area.get() = " + area.get())
+        println("Setting x to 5")
+        x.set(5)
+        println("Setting y to 7")
+        y.set(7)
+        println("area.get() = " + area.get())
+    }
+
+
     def main(args: Array[String]) = {
         val i: IntegerProperty = SimpleIntegerProperty(null, "i", 1024)
         val l: LongProperty    = SimpleLongProperty(null, "l", 0L)
@@ -71,6 +103,9 @@ object NumericPropertiesExample {
                          observable + ".")
                 } 
 
+        // This lazy value evaluation is what makes the JavaFX properties and 
+        // bindings framework efficient. Attaching a ChangeListener forces eager
+        // evaluation
         val changeListener: ChangeListener[Number] = 
                 (observableValue, oldValue, newValue) => {
                         println( "The observableValue has " +
@@ -126,6 +161,7 @@ object NumericPropertiesExample {
         println("i.get() = " + i.get())
 
         BidirectionalBindingExample
+        DirectExtensionExample
     }
 }
 
