@@ -12,6 +12,8 @@ import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleLongProperty
 import javafx.beans.InvalidationListener
 import javafx.beans.value.ChangeListener
+import javafx.beans.property.SimpleStringProperty
+import javafx.beans.property.StringProperty
 
 /**
  *
@@ -34,6 +36,27 @@ import javafx.beans.value.ChangeListener
  * @see https//stackoverflow.com/questions/12124657/getting-started-on-scala-javafx-desktop-application-development
  */
 object NumericPropertiesExample {
+
+    def BidirectionalBindingExample: Unit = {
+        println("\nConstructing two StringProperty objects.")
+
+        val prop1: StringProperty = SimpleStringProperty("")
+        val prop2: StringProperty = SimpleStringProperty("")
+
+        println("Calling bindBidirectional.")
+        prop2.bindBidirectional(prop1)
+        println("prop1.isBound() = " + prop1.isBound())
+        println("prop2.isBound() = " + prop2.isBound())
+
+        println("\nCalling prop1.set(\"prop1" + " says: Hi!\")")
+        prop1.set("prop1 says: Hi!")
+        println("prop2.get() returned: " + prop2.get())
+
+        println("Calling prop2.set(prop2.get()" + " + \"\\nprop2 says: Bye!\")")
+        prop2.set(prop2.get() + "\nprop2 says: Bye!")
+        println("prop1.get() returned:")
+        println(prop1.get())
+    }
 
     def main(args: Array[String]) = {
         val i: IntegerProperty = SimpleIntegerProperty(null, "i", 1024)
@@ -101,6 +124,8 @@ object NumericPropertiesExample {
         println("f.get() = " + f.get())
         println("l.get() = " + l.get())
         println("i.get() = " + i.get())
+
+        BidirectionalBindingExample
     }
 }
 
