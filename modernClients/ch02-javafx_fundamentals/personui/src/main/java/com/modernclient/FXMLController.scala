@@ -96,6 +96,7 @@ class FXMLController extends Initializable {
         }
         listView.getSelectionModel().selectedItemProperty().addListener( personChangeListener )
 
+        // See code above, we cannot assign and pass the parameter at the same time in Scala
         // listView.getSelectionModel().selectedItemProperty().addListener(
         //         personChangeListener = (observable: ObservableValue[_ <:Person], oldValue:Person, newValue:Person) => {
         //             System.out.println("Selected item: " + newValue)
