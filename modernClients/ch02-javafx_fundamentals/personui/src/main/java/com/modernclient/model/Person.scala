@@ -67,9 +67,12 @@ class Person( private var firstname: StringProperty = SimpleStringProperty(this,
     override def equals(obj: Any): Boolean = {
         obj match {
             case person:Person =>
-                Objects.equals(firstname, person.firstname) &&
-                Objects.equals(lastname, person.lastname) &&
-                Objects.equals(notes, person.notes)
+                (this eq person) || 
+                (
+                  Objects.equals(firstname, person.firstname) &&
+                  Objects.equals(lastname, person.lastname) &&
+                  Objects.equals(notes, person.notes)
+                )
             case _ => 
                 false
 
