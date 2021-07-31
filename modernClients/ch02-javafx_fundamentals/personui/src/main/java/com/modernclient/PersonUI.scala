@@ -1,13 +1,14 @@
-package com.modernclientPersonUI
+package com.modernclient
+
 
 // cSpell:ignore javafx
 
-import javafx.application.ApplicationPersonUI
+import javafx.application.Application
 // import static javafx.application.Application.launchPersonUI
-import javafx.fxml.FXMLLoaderPersonUI
-import javafx.scene.ParentPersonUI
-import javafx.scene.ScenePersonUI
-import javafx.stage.StagePersonUI
+import javafx.fxml.FXMLLoader
+import javafx.scene.Parent
+import javafx.scene.Scene
+import javafx.stage.Stage
 
 
 /**
@@ -15,8 +16,8 @@ import javafx.stage.StagePersonUI
  * ./mill mill.scalalib.GenIdea/idea
  *
  * ./mill -i modernClients.ch02-javafx_fundamentals.personui.run
- * ./mill -i modernClients.ch02-javafx_fundamentals.personiu.runMain org.modernclient.PersonUI
- * ./mill -i --watch modernClients.ch02-javafx_fundamentals.personui.runMain org.modernclient.PersonUI
+ * ./mill -i modernClients.ch02-javafx_fundamentals.personui.runMain com.modernclient.PersonUI
+ * ./mill -i --watch modernClients.ch02-javafx_fundamentals.personui.runMain com.modernclient.PersonUI
  * 
  * Note on resources (see StackOverflow link below): Mill's convention is to 
  * place a resources directory on the lowest level Mill module. To access 
@@ -33,12 +34,12 @@ import javafx.stage.StagePersonUI
 class PersonUI extends Application {
 
     override def start(stage: Stage) = {
-        val root: Parent = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"))PersonUI
+        val root: Parent = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"))
         
-        Scene scene = new Scene(root)PersonUI
-        stage.setTitle("Person UI Example")PersonUI
-        stage.setScene(scene)PersonUI
-        stage.show()PersonUI
+        val scene = new Scene(root)
+        stage.setTitle("Person UI Example")
+        stage.setScene(scene)
+        stage.show()
     }
 
 

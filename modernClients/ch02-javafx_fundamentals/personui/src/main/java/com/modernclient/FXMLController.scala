@@ -1,6 +1,6 @@
 package com.modernclient
 
-// cSpell:ignore javafx
+// cSpell:ignore javafx, initializable, firstname, lastname
 
 import com.modernclient.model.Person
 import com.modernclient.model.SampleData
@@ -21,6 +21,8 @@ import javafx.scene.input.KeyEvent
 
 import java.net.URL
 import java.util.ResourceBundle
+import javafx.beans.value.ObservableValue
+
 
 class FXMLController extends Initializable {
 
@@ -32,9 +34,9 @@ class FXMLController extends Initializable {
     @FXML
     private var notesTextArea: TextArea = _
     @FXML
-    private var Button: removeButton = _
+    private var removeButton: Button = _
     @FXML
-    private var Button: createButton = _
+    private var createButton: Button = _
     @FXML
     private var updateButton: Button = _
     @FXML
@@ -44,13 +46,12 @@ class FXMLController extends Initializable {
     // Observable objects returned by extractor (applied to each list element) are listened for changes and
     // transformed into "update" change of ListChangeListener.
 
-    private Person selectedPerson
-    private final BooleanProperty modifiedProperty = new SimpleBooleanProperty(false)
-    private ChangeListener<Person> personChangeListener
+    private var selectedPerson: Person = _
+    private val modifiedProperty: BooleanProperty = new SimpleBooleanProperty(false)
+    private var personChangeListener: ChangeListener[Person] = _
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    override def initialize(url: URL, rb: ResourceBundle) = {
 
         // Disable the Remove/Edit buttons if nothing is selected in the ListView control
         removeButton.disableProperty().bind(listView.getSelectionModel().selectedItemProperty().isNull())
@@ -65,35 +66,53 @@ class FXMLController extends Initializable {
         SampleData.fillSampleData(personList)
 
         // Use a sorted list sort by lastname then by firstname
-        SortedList<Person> sortedList = new SortedList<>(personList)
+        val sortedList = SortedList(personList)
 
         // sort by lastname first, then by firstname ignore notes
-        sortedList.setComparator((p1, p2) -> {
-            int result = p1.getLastname().compareToIgnoreCase(p2.getLastname())
+        sortedList.setComparator((p1, p2) => {
+            var result = p1.getLastname().compareToIgnoreCase(p2.getLastname())
             if (result == 0) {
                 result = p1.getFirstname().compareToIgnoreCase(p2.getFirstname())
             }
-            return result
+            result
         })
         listView.setItems(sortedList)
 
-        listView.getSelectionModel().selectedItemProperty().addListener(
-                personChangeListener = (observable, oldValue, newValue) -> {
-                    System.out.println("Selected item: " + newValue)
-                    // newValue can be null if nothing is selected
-                    selectedPerson = newValue
-                    modifiedProperty.set(false)
-                    if (newValue != null) {
-                        // Populate controls with selected Person
-                        firstnameTextField.setText(selectedPerson.getFirstname())
-                        lastnameTextField.setText(selectedPerson.getLastname())
-                        notesTextArea.setText(selectedPerson.getNotes())
-                    } else {
-                        firstnameTextField.setText("")
-                        lastnameTextField.setText("")
-                        notesTextArea.setText("")
-                    }
-                })
+        personChangeListener = (observable: ObservableValue[_ <:Person], oldValue:Person, newValue:Person) => {
+            System.out.println("Selected item: " + newValue)
+            // newValue can be null if nothing is selected
+            selectedPerson = newValue
+            modifiedProperty.set(false)
+            if (newValue != null) {
+                // Populate controls with selected Person
+                firstnameTextField.setText(selectedPerson.getFirstname())
+                lastnameTextField.setText(selectedPerson.getLastname())
+                notesTextArea.setText(selectedPerson.getNotes())
+            } else {
+                firstnameTextField.setText("")
+                lastnameTextField.setText("")
+                notesTextArea.setText("")
+            }
+        }
+        listView.getSelectionModel().selectedItemProperty().addListener( personChangeListener )
+
+        // listView.getSelectionModel().selectedItemProperty().addListener(
+        //         personChangeListener = (observable: ObservableValue[_ <:Person], oldValue:Person, newValue:Person) => {
+        //             System.out.println("Selected item: " + newValue)
+        //             // newValue can be null if nothing is selected
+        //             selectedPerson = newValue
+        //             modifiedProperty.set(false)
+        //             if (newValue != null) {
+        //                 // Populate controls with selected Person
+        //                 firstnameTextField.setText(selectedPerson.getFirstname())
+        //                 lastnameTextField.setText(selectedPerson.getLastname())
+        //                 notesTextArea.setText(selectedPerson.getNotes())
+        //             } else {
+        //                 firstnameTextField.setText("")
+        //                 lastnameTextField.setText("")
+        //                 notesTextArea.setText("")
+        //             }
+        //         })
 
         // Pre-select the first item
         listView.getSelectionModel().selectFirst()
@@ -101,14 +120,14 @@ class FXMLController extends Initializable {
     }
 
     @FXML
-    private void handleKeyAction(KeyEvent keyEvent) {
+    private def handleKeyAction(keyEvent: KeyEvent) = {
         modifiedProperty.set(true)
     }
 
     @FXML
-    private void createButtonAction(ActionEvent actionEvent) {
+    private def createButtonAction(actionEvent: ActionEvent) = {
         System.out.println("Create")
-        Person person = new Person(firstnameTextField.getText(),
+        val person = Person(firstnameTextField.getText(),
                 lastnameTextField.getText(), notesTextArea.getText())
         personList.add(person)
         // and select it
@@ -116,15 +135,15 @@ class FXMLController extends Initializable {
     }
 
     @FXML
-    private void removeButtonAction(ActionEvent actionEvent) {
+    private def removeButtonAction(actionEvent: ActionEvent) = {
         System.out.println("Remove " + selectedPerson)
         personList.remove(selectedPerson)
     }
 
     @FXML
-    private void updateButtonAction(ActionEvent actionEvent) {
+    private def updateButtonAction(actionEvent: ActionEvent) = {
         System.out.println("Update " + selectedPerson)
-        Person p = listView.getSelectionModel().getSelectedItem()
+        val p = listView.getSelectionModel().getSelectedItem()
         listView.getSelectionModel().selectedItemProperty().removeListener(personChangeListener)
         p.setFirstname(firstnameTextField.getText())
         p.setLastname(lastnameTextField.getText())

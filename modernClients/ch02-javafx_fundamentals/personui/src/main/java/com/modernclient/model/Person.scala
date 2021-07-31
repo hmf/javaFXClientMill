@@ -1,83 +1,98 @@
-package com.modernclient.model;
+package com.modernclient.model
 
-import javafx.beans.Observable;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.util.Callback;
+// cSpell:ignore javafx, firstname, lastname
 
-import java.util.Objects;
 
-public class Person {
+import javafx.beans.Observable
+import javafx.beans.property.SimpleStringProperty
+import javafx.beans.property.StringProperty
+import javafx.util.Callback
 
-    private final StringProperty firstname = new SimpleStringProperty(this, "fistname", "");
-    private final StringProperty lastname = new SimpleStringProperty(this, "lastname", "");
-    private final StringProperty notes = new SimpleStringProperty(this, "notes", "sample notes");
+import java.util.Objects
 
-    public Person() {
+class Person( private var firstname: StringProperty = SimpleStringProperty(this, "firstname", ""), 
+              private var lastname: StringProperty = SimpleStringProperty(this, "lastname", ""), 
+              private var notes: StringProperty = SimpleStringProperty(this, "notes", "sample notes")) {
+
+
+    def getFirstname(): String = {
+        return firstname.get()
     }
 
-    public Person(String firstname, String lastname, String notes) {
-        this.firstname.set(firstname);
-        this.lastname.set(lastname);
-        this.notes.set(notes);
+    def firstnameProperty(): StringProperty = {
+        return firstname
     }
 
-    public String getFirstname() {
-        return firstname.get();
+    def setFirstname(firstname: String) = {
+        this.firstname.set(firstname)
     }
 
-    public StringProperty firstnameProperty() {
-        return firstname;
+    def getLastname(): String = {
+        return lastname.get()
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname.set(firstname);
+    def lastnameProperty(): StringProperty = {
+        return lastname
     }
 
-    public String getLastname() {
-        return lastname.get();
+    def setLastname(lastname: String) = {
+        this.lastname.set(lastname)
     }
 
-    public StringProperty lastnameProperty() {
-        return lastname;
+    def getNotes(): String = {
+        return notes.get()
     }
 
-    public void setLastname(String lastname) {
-        this.lastname.set(lastname);
+    def notesProperty(): StringProperty = {
+        return notes
     }
 
-    public String getNotes() {
-        return notes.get();
+    def setNotes(notes: String) = {
+        this.notes.set(notes)
     }
 
-    public StringProperty notesProperty() {
-        return notes;
+    override def toString(): String = {
+        return firstname.get() + " " + lastname.get()
     }
 
-    public void setNotes(String notes) {
-        this.notes.set(notes);
-    }
+    // override def equals(obj: Any): Boolean = {
+    //     if (this == obj) return true
+    //     if (obj == null || getClass() != obj.getClass()) return false
+    //     val person = obj.asInstanceOf[Person]
+    //     return Objects.equals(firstname, person.firstname) &&
+    //             Objects.equals(lastname, person.lastname) &&
+    //             Objects.equals(notes, person.notes)
+    // }
 
-    @Override
-    public String toString() {
-        return firstname.get() + " " + lastname.get();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Person person = (Person) obj;
-        return Objects.equals(firstname, person.firstname) &&
+    override def equals(obj: Any): Boolean = {
+        obj match {
+            case person:Person =>
+                Objects.equals(firstname, person.firstname) &&
                 Objects.equals(lastname, person.lastname) &&
-                Objects.equals(notes, person.notes);
+                Objects.equals(notes, person.notes)
+            case _ => 
+                false
+
+        }
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstname, lastname, notes);
+
+    override def hashCode(): Int = {
+        return Objects.hash(firstname, lastname, notes)
     }
 
-    public static Callback<Person, Observable[]> extractor = p -> new Observable[]
-            {p.lastnameProperty(), p.firstnameProperty()};
+}
+
+object Person {
+    def apply(firstname: String, lastname: String, notes: String) = {
+        val p = new Person()
+        p.setFirstname(firstname)
+        p.setLastname(lastname)
+        p.setNotes(notes)
+        p
+    }
+
+    def extractor: Callback[Person, Array[Observable]] = 
+        p => Array[Observable](p.lastnameProperty(), p.firstnameProperty())
+
 }

@@ -14,6 +14,7 @@ import scalalib._
 val ScalaVersion = "3.0.1"
 
 //val javaFXVersion = "11.0.2"
+//val javaFXVersion = "11"
 //val javaFXVersion = "12"
 //val javaFXVersion = "13.0.2"
 val javaFXVersion = "16"
@@ -183,6 +184,10 @@ Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
     Some((_: coursier.core.Resolution).withOsInfo(coursier.core.Activation.Os.fromProperties(sys.props.toMap)))
   }
 
+
+  // TODO: https://docs.oracle.com/en/java/javase/16/docs/api/jdk.incubator.foreign/jdk/incubator/foreign/LibraryLookup.html
+  // TODO: https://openjdk.java.net/projects/jigsaw/doc/topics/nativecode.html
+  // TODO: https://stackoverflow.com/questions/23189776/load-native-library-from-class-path
   /**
    * Here we setup the Java modules so that they can be loaded prior to
    * application boot. We can indicate which modules are visible and even opt
@@ -345,6 +350,36 @@ https://stackoverflow.com/questions/661320/how-to-add-native-library-to-java-lib
 
   }
 
+  object hanSoloChartsStd extends OpenJFX with ScalaModule {
+    def scalaVersion = T{ ScalaVersion }
+
+    //override def javacOptions = Seq("-source", "1.8", "-target", "1.8", "-Xlint")
+    //override def javacOptions = T{ Seq("-source", "11", "-target", "11", "-Xlint") }
+    //override def scalacOptions = T{ Seq("-deprecation", "-feature") }
+
+    // -Djdk.gtk.verbose=true -Djavafx.embed.singleThread=true -Dawt.useSystemAAFontSettings=on
+    // -Djava.library.path
+    override def forkArgs: Target[Seq[String]] = T {
+
+      //val t = Seq("-Dprism.verbose=true", "-Djavafx.verbose=true", "-ea") ++ // JavaFX
+      val t = Seq("-Djavafx.verbose=true") ++ // JavaFX
+        super[OpenJFX].forkArgs() //  OpenFX
+      println(t.mkString("\n"))
+      // we do not have here the hansolo module, loading s not the same
+      t
+      Seq("-Dprism.verbose=true", "-Djavafx.verbose=true", "-ea")// JavaFX
+    }
+
+
+    override def mainClass: T[Option[String]] = Some("hansolo.charts.LineChartTest")
+
+    override def ivyDeps = Agg(
+                                ivy"$CONTROLS",
+                                //ivy"$CONTROLSFX",      // TODO: bug - we should not need this
+                                ivy"$HANSOLO_CHARTS" // ivyHanSoloCharts 
+                              )
+
+  }
 
 object modernClients extends ScalaModule {
     def scalaVersion = T{ ScalaVersion }
@@ -413,7 +448,7 @@ object modernClients extends ScalaModule {
       override def ivyDeps = Agg(
                                   ivy"$CONTROLS",
                                   //ivy"$CONTROLSFX",
-                                  ivy"$HANSOLO_CHARTS",
+                                  //ivy"$HANSOLO_CHARTS",
                                   ivy"$FXML"
                                 )
 
@@ -433,7 +468,7 @@ object modernClients extends ScalaModule {
     object personui extends OpenJFX with ScalaModule {
       def scalaVersion = T{ ScalaVersion }
 
-      override def mainClass: T[Option[String]] = Some("org.modernclient.PersonUI")
+      override def mainClass: T[Option[String]] = Some("com.modernclient.PersonUI")
 
       override def ivyDeps = Agg(
                                   ivy"$CONTROLS",
