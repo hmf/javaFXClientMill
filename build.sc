@@ -4,6 +4,7 @@
 // cSpell:ignore javafx, controlsfx, openjfx, munit, myshapes, myshapesproperties, myshapesfxml
 // cSpell:ignore hansolo, personui
 // cSpell:ignore libprism, libglass, libgio, libgtk, xtst, libxslt, cuda, versionless, Djavafx, Djdk, Dawt, Djava
+// cSpell:ignore arraychangeevent, numericproperties
 
 import coursier.core.Resolution
 import mill._
@@ -480,5 +481,30 @@ object modernClients extends ScalaModule {
 
   }
 
+  object `ch03-PropertiesBindings` extends OpenJFX {
+    object arraychangeevent extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclients.propertiesandbindings.ArrayChangeEventExample")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  ivy"$FXML"
+                                )
+
+    }
+    object numericproperties extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclients.propertiesandbindings.NumericPropertiesExample")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  ivy"$FXML"
+                                )
+
+    }
+
+  }
 
 }
