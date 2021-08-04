@@ -19,6 +19,7 @@ import javafx.beans.binding.NumberBinding
 import javafx.beans.binding.Bindings
 import javafx.beans.binding.IntegerBinding
 import javafx.beans.binding.StringExpression
+import javafx.beans.binding.When
 
 /**
  *
@@ -169,14 +170,31 @@ object NumericPropertiesExample {
         println("area.get() = " + area.get())
     }
 
+
+    def printResult( x1:   IntegerProperty,
+                     y1:   IntegerProperty,
+                     x2:   IntegerProperty,
+                     y2:   IntegerProperty,
+                     x3:   IntegerProperty,
+                     y3:   IntegerProperty,
+                     area: NumberBinding) = {
+        println( "For A(" +
+                  x1.get() + "," + y1.get() + "), B(" +
+                  x2.get() + "," + y2.get() + "), C(" +
+                  x3.get() + "," + y3.get() +
+                  "), the area of triangle ABC is " +
+                  area.getValue()
+                  )
+     }
+
     def TriangleAreaExample: Unit = {
          
-        val x1: IntegerProperty = new SimpleIntegerProperty(0)
-        val y1: IntegerProperty = new SimpleIntegerProperty(0)
-        val x2: IntegerProperty = new SimpleIntegerProperty(0)
-        val y2: IntegerProperty = new SimpleIntegerProperty(0)
-        val x3: IntegerProperty = new SimpleIntegerProperty(0)
-        val y3: IntegerProperty = new SimpleIntegerProperty(0)
+        val x1: IntegerProperty = SimpleIntegerProperty(0)
+        val y1: IntegerProperty = SimpleIntegerProperty(0)
+        val x2: IntegerProperty = SimpleIntegerProperty(0)
+        val y2: IntegerProperty = SimpleIntegerProperty(0)
+        val x3: IntegerProperty = SimpleIntegerProperty(0)
+        val y3: IntegerProperty = SimpleIntegerProperty(0)
 
         val x1y2: NumberBinding = Bindings.multiply(x1, y2)
         val x2y3: NumberBinding = Bindings.multiply(x2, y3)
@@ -216,12 +234,12 @@ object NumericPropertiesExample {
     def TriangleAreaFluentExample: Unit = {
         println("\n\nTriangleAreaFluentExample")
 
-        val x1: IntegerProperty = new SimpleIntegerProperty(0)
-        val y1: IntegerProperty = new SimpleIntegerProperty(0)
-        val x2: IntegerProperty = new SimpleIntegerProperty(0)
-        val y2: IntegerProperty = new SimpleIntegerProperty(0)
-        val x3: IntegerProperty = new SimpleIntegerProperty(0)
-        val y3: IntegerProperty = new SimpleIntegerProperty(0)
+        val x1: IntegerProperty = SimpleIntegerProperty(0)
+        val y1: IntegerProperty = SimpleIntegerProperty(0)
+        val x2: IntegerProperty = SimpleIntegerProperty(0)
+        val y2: IntegerProperty = SimpleIntegerProperty(0)
+        val x3: IntegerProperty = SimpleIntegerProperty(0)
+        val y3: IntegerProperty = SimpleIntegerProperty(0)
 
         val area: NumberBinding = x1.multiply(y2)
                                     .add(x2.multiply(y3))
@@ -247,96 +265,85 @@ object NumericPropertiesExample {
     }
 
     def HeronsFormulaExample: Unit = {
-        DoubleProperty a = new SimpleDoubleProperty(0);
-        DoubleProperty b = new SimpleDoubleProperty(0);
-        DoubleProperty c = new SimpleDoubleProperty(0);
-        DoubleBinding s = a.add(b).add(c).divide(2.0d);
-        final DoubleBinding areaSquared = new When(
-                a.add(b).greaterThan(c)
-                        .and(b.add(c).greaterThan(a))
-                        .and(c.add(a).greaterThan(b)))
-                .then(s.multiply(s.subtract(a))
-                        .multiply(s.subtract(b))
-                        .multiply(s.subtract(c)))
-                .otherwise(0.0D);
-        a.set(3);
-        b.set(4);
-        c.set(5);
-        System.out.printf("Given sides a = %1.0f," +
-                        " b = %1.0f, and c = %1.0f," +
-                        " the area of the triangle is" +
-                        " %3.2f\n", a.get(), b.get(), c.get(),
-                Math.sqrt(areaSquared.get()));
-        a.set(2);
-        b.set(2);
-        c.set(2);
-        System.out.printf("Given sides a = %1.0f," +
-                        " b = %1.0f, and c = %1.0f," +
-                        " the area of the triangle is" +
-                        " %3.2f\n", a.get(), b.get(), c.get(),
-                Math.sqrt(areaSquared.get()));
-    }
+        println("\n\nHeronsFormulaExample")
+
+        val a: DoubleProperty = new SimpleDoubleProperty(0)
+        val b: DoubleProperty = new SimpleDoubleProperty(0)
+        val c: DoubleProperty = new SimpleDoubleProperty(0)
+
+        val s: DoubleBinding = a.add(b).add(c).divide(2.0d)
+
+        val areaSquared: DoubleBinding = When(
+                                                a.add(b).greaterThan(c)
+                                                        .and(b.add(c).greaterThan(a))
+                                                        .and(c.add(a).greaterThan(b))
+                                            )
+                                            .`then`(s.multiply(s.subtract(a))
+                                                     .multiply(s.subtract(b))
+                                                     .multiply(s.subtract(c)))
+                                            .otherwise(0.0D)
+        a.set(3)
+        b.set(4)
+        c.set(5)
+        printf( "Given sides a = %1.0f," +
+                " b = %1.0f, and c = %1.0f," +
+                " the area of the triangle is" +
+                " %3.2f\n", a.get(), b.get(), c.get(),
+                Math.sqrt(areaSquared.get()) )
+        a.set(2)
+        b.set(2)
+        c.set(2)
+        printf( "Given sides a = %1.0f," +
+                " b = %1.0f, and c = %1.0f," +
+                " the area of the triangle is" +
+                " %3.2f\n", a.get(), b.get(), c.get(),
+                Math.sqrt(areaSquared.get()) )
+    }
 
 
-public class HeronsFormulaDirectExtensionExample {
-    public static void main(String[] args) {
-        final DoubleProperty a = new SimpleDoubleProperty(0);
-        final DoubleProperty b = new SimpleDoubleProperty(0);
-        final DoubleProperty c = new SimpleDoubleProperty(0);
-        DoubleBinding area = new DoubleBinding() {
-            {
-                super.bind(a, b, c);
-            }
+    def HeronsFormulaDirectExtensionExample: Unit = {
+        println("\n\nHeronsFormulaDirectExtensionExample")
 
+        val a: DoubleProperty = SimpleDoubleProperty(0)
+        val b: DoubleProperty = SimpleDoubleProperty(0)
+        val c: DoubleProperty = SimpleDoubleProperty(0)
 
-            @Override
-            protected double computeValue() {
-                double a0 = a.get();
-                double b0 = b.get();
-                double c0 = c.get();
-                if ((a0 + b0 > c0) && (b0 + c0 > a0) &&
-                        (c0 + a0 > b0)) {
-                    double s = (a0 + b0 + c0) / 2.0D;
-                    return Math.sqrt(s * (s - a0) *
-                            (s - b0) * (s - c0));
-                } else {
-                    return 0.0D;
-                }
-            }
-        };
-        a.set(3);
-        b.set(4);
-        c.set(5);
-        System.out.printf("Given sides a = %1.0f," +
-                        " b = %1.0f, and c = %1.0f," +
-                        " the area of the triangle" +
-                        " is %3.2f\n", a.get(), b.get(),
-                c.get(), area.get());
-        a.set(2);
-        b.set(2);
-        c.set(2);
-        System.out.printf("Given sides a = %1.0f," +
-                        " b = %1.0f, and c = %1.0f," +
-                        " the area of the triangle" +
-                        " is %3.2f\n", a.get(), b.get(),
-                c.get(), area.get());
-    }
+        val area: DoubleBinding = new DoubleBinding() {
+            super.bind(a, b, c)
 
-    def printResult( x1:   IntegerProperty,
-                     y1:   IntegerProperty,
-                     x2:   IntegerProperty,
-                     y2:   IntegerProperty,
-                     x3:   IntegerProperty,
-                     y3:   IntegerProperty,
-                     area: NumberBinding) = {
-        println( "For A(" +
-                  x1.get() + "," + y1.get() + "), B(" +
-                  x2.get() + "," + y2.get() + "), C(" +
-                  x3.get() + "," + y3.get() +
-                  "), the area of triangle ABC is " +
-                  area.getValue()
-                  )
-     }
+            override def computeValue(): Double = {
+                val a0 = a.get()
+                val b0 = b.get()
+                val c0 = c.get()
+                if ((a0 + b0 > c0) && (b0 + c0 > a0) &&
+                    (c0 + a0 > b0)) {
+                    val s = (a0 + b0 + c0) / 2.0D
+                    Math.sqrt(s * (s - a0) *
+                             (s - b0) * (s - c0))
+                } else {
+                   0.0D
+                }
+            }
+        }
+
+        a.set(3)
+        b.set(4)
+        c.set(5)
+        printf( "Given sides a = %1.0f," +
+                " b = %1.0f, and c = %1.0f," +
+                " the area of the triangle is" +
+                " %3.2f\n", a.get(), b.get(), c.get(),
+                Math.sqrt(area.get()) )
+        a.set(2)
+        b.set(2)
+        c.set(2)
+        printf( "Given sides a = %1.0f," +
+                " b = %1.0f, and c = %1.0f," +
+                " the area of the triangle is" +
+                " %3.2f\n", a.get(), b.get(), c.get(),
+                Math.sqrt(area.get()) )
+    }
+
 
     def main(args: Array[String]) = {
 
@@ -345,6 +352,8 @@ public class HeronsFormulaDirectExtensionExample {
         DirectExtensionExample
         TriangleAreaExample
         TriangleAreaFluentExample
+        HeronsFormulaExample
+        HeronsFormulaDirectExtensionExample
     }
 }
 
