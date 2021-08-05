@@ -5,6 +5,17 @@ package org.modernclients.propertiesandbindings
 
 import javafx.collections.FXCollections
 import javafx.collections.ObservableIntegerArray
+import javafx.collections.ObservableList
+import javafx.collections.ObservableMap
+import javafx.collections.ObservableSet
+import javafx.collections.ObservableFloatArray
+import javafx.collections.ListChangeListener
+import javafx.collections.MapChangeListener
+import javafx.collections.SetChangeListener
+import javafx.collections.ArrayChangeListener
+import java.util.Comparator
+import java.util.Random
+import java.util.Arrays
 
 /**
  *
@@ -28,7 +39,7 @@ import javafx.collections.ObservableIntegerArray
  */
 object ArrayChangeEventExample {
 
-    def main(args: Array[String]): Unit = {
+    def ArrayChangeEventExample: Unit = {
 
         val ints: ObservableIntegerArray =
                 FXCollections.observableIntegerArray(10, 20)
@@ -74,6 +85,87 @@ object ArrayChangeEventExample {
         ints.copyTo(0, ints2, 0, ints.size())
 
         println("\tDestination = " + ints2)
+    }
+
+    def FXCollectionsExample: Unit = {
+
+        val list : ObservableList[String]         = FXCollections.observableArrayList()
+        val map  : ObservableMap[String, String]  = FXCollections.observableHashMap()
+        val set  : ObservableSet[Integer]         = FXCollections.observableSet()
+        val array: ObservableFloatArray           = FXCollections.observableFloatArray()
+
+        list.addListener( (c => println("\tlist = " + c.getList() )): ListChangeListener[String] )
+        //list.addListener( c => println("\tlist = " + c.getList() ))
+
+        map.addListener( (c => println("\tmap = " + c.getMap())): MapChangeListener[String, String] )
+
+        set.addListener( (c => println("\tset = " + c.getSet())): SetChangeListener[Integer] )
+
+        //array.addListener((observableArray, sizeChanged, from, to) => println("\tarray = " + observableArray) )
+        array.addListener( ( (observableArray, sizeChanged, from, to) => println("\tarray = " + observableArray)): ArrayChangeListener[ObservableFloatArray] )
+
+        manipulateList(list)
+        manipulateMap(map)
+        manipulateSet(set)
+        manipulateArray(array)
+    }
+
+    def manipulateList(list: ObservableList[String]): Unit = {
+        println("Calling list.addAll(\"Zero\"," +" \"One\", \"Two\", \"Three\"):")
+        list.addAll("Zero", "One", "Two", "Three")
+
+        println("Calling copy(list," +" Arrays.asList(\"Four\", \"Five\")):")
+        FXCollections.copy(list, Arrays.asList("Four", "Five"))
+
+        println("Calling replaceAll(list," + " \"Two\", \"Two_1\"):")
+        FXCollections.replaceAll(list, "Two", "Two_1")
+
+        println("Calling reverse(list):")
+        FXCollections.reverse(list)
+
+        println("Calling rotate(list, 2):")
+        FXCollections.rotate(list, 2)
+
+        println("Calling shuffle(list):");
+        FXCollections.shuffle(list)
+
+        println("Calling shuffle(list," + " new Random(0L)):")
+        FXCollections.shuffle(list, new Random(0L))
+
+        println("Calling sort(list):")
+        FXCollections.sort(list)
+
+        println("Calling sort(list, c)" + " with custom comparator: ")
+        FXCollections.sort(list, new Comparator[String]() {
+                                       override def compare(lhs: String, rhs: String) = {
+                                                        // Reverse the order
+                                                        rhs.compareTo(lhs) 
+                                                    }
+                                                }
+                            )
+
+        println("Calling fill(list," + " \"Ten\"): ")
+        FXCollections.fill(list, "Ten")
+    }
+
+    def manipulateMap(map: ObservableMap[String, String]) = {
+        println("Calling map.put(\"Key\"," + " \"Value\"):")
+        map.put("Key", "Value");
+    }
+
+    def manipulateSet(set: ObservableSet[Integer]) = {
+        println("Calling set.add(1024):")
+        set.add(1024)
+    }
+
+    def manipulateArray(array: ObservableFloatArray) = {
+        println("Calling  array.addAll(3.14159f," + " 2.71828f):")
+        array.addAll(3.14159f, 2.71828f)
+    }
+
+    def main(args: Array[String]): Unit = {
+        ArrayChangeEventExample
+        FXCollectionsExample
     }
 }
 
