@@ -16,6 +16,8 @@ import javafx.collections.ArrayChangeListener
 import java.util.Comparator
 import java.util.Random
 import java.util.Arrays
+import javafx.beans.Observable
+import javafx.collections.ListChangeListener.Change
 
 /**
  *
@@ -40,6 +42,7 @@ import java.util.Arrays
 object ArrayChangeEventExample {
 
     def ArrayChangeEventExample: Unit = {
+        println("\n\nArrayChangeEventExample")
 
         val ints: ObservableIntegerArray =
                 FXCollections.observableIntegerArray(10, 20)
@@ -88,6 +91,7 @@ object ArrayChangeEventExample {
     }
 
     def FXCollectionsExample: Unit = {
+        println("\n\nFXCollectionsExample")
 
         val list : ObservableList[String]         = FXCollections.observableArrayList()
         val map  : ObservableMap[String, String]  = FXCollections.observableHashMap()
@@ -163,9 +167,48 @@ object ArrayChangeEventExample {
         array.addAll(3.14159f, 2.71828f)
     }
 
+    def ObservableListExample: Unit = {
+        println("\n\nFXCollectionsExample")
+
+        val strings: ObservableList[String] = FXCollections.observableArrayList()
+
+        strings.addListener((observable: Observable) => println("\tlist invalidated") )
+        strings.addListener((change: Change[_ <: String]) => println("\tstrings = " + change.getList()) )
+
+        println("Calling add(\"First\"): ")
+        strings.add("First")
+        println("Calling add(0, \"Zeroth\"): ")
+        strings.add(0, "Zeroth")
+
+        println("Calling addAll(\"Second\"," + " \"Third\"): ")
+        strings.addAll("Second", "Third")
+
+        println("Calling set(1," + " \"New First\"): ")
+        strings.set(1, "New First")
+
+        val list: java.util.List[String] = Arrays.asList("Second_1", "Second_2")
+        println("Calling addAll(3, list): ")
+        strings.addAll(3, list)
+
+        println("Calling remove(2, 4): ")
+        strings.remove(2, 4)
+
+        val iterator: java.util.Iterator[String] = strings.iterator()
+        while (iterator.hasNext()) {
+            val next: String = iterator.next()
+            if (next.contains("t")) {
+                println("Calling remove()" + " on iterator: ")
+                iterator.remove()
+            }
+        }
+        println("Calling removeAll(" + "\"Third\", \"Fourth\"): ")
+        strings.removeAll("Third", "Fourth")
+    }
+
     def main(args: Array[String]): Unit = {
         ArrayChangeEventExample
         FXCollectionsExample
+        ObservableListExample
     }
 }
 
