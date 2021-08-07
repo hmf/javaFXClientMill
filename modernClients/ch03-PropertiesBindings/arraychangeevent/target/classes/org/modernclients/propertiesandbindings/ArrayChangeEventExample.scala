@@ -167,13 +167,30 @@ object ArrayChangeEventExample {
         array.addAll(3.14159f, 2.71828f)
     }
 
+    def typeOfChange(change: Change[_ <: String]): String = {
+        // just check the first change
+        if (change.next) {
+            val start = change.getFrom
+            val end = change.getTo
+            if (change.wasAdded ) s"wasAdded(${change.getAddedSize}): $start - $end"
+            // use getPermutation(int i)
+            else if (change.wasPermutated) s"wasPermuted: $start - $end"
+            else if (change.wasRemoved) s"wasRemoved(${change.getRemovedSize}): $start - $end"
+            else if (change.wasReplaced) s"wasReplaced: $start - $end"
+            else if (change.wasUpdated) s"wasUpdated: $start - $end"
+            else "?" 
+        }
+        else "no change"
+    }
+
     def ObservableListExample: Unit = {
         println("\n\nFXCollectionsExample")
 
         val strings: ObservableList[String] = FXCollections.observableArrayList()
 
         strings.addListener((observable: Observable) => println("\tlist invalidated") )
-        strings.addListener((change: Change[_ <: String]) => println("\tstrings = " + change.getList()) )
+        strings.addListener((change: Change[_ <: String]) => println(s"\tstrings (${typeOfChange(change)}) = ${change.getList()}") )
+        //strings.addListener((change: Change[_ <: String]) => println(s"\tstrings = ${change.getList()}") )
 
         println("Calling add(\"First\"): ")
         strings.add("First")
@@ -205,10 +222,117 @@ object ArrayChangeEventExample {
         strings.removeAll("Third", "Fourth")
     }
 
+    def ListChangeEventExample: Unit = {
+        println("\n\nListChangeEventExample")
+
+        val strings: ObservableList[String] = FXCollections.observableArrayList()
+
+        strings.addListener(new MyListener())
+        println("Calling addAll(\"Zero\"," +
+                " \"One\", \"Two\", \"Three\"): ")
+        strings.addAll("Zero", "One", "Two", "Three")
+
+        println("Calling" +
+                " FXCollections.sort(strings): ")
+        FXCollections.sort(strings)
+
+        println("Calling set(1, \"Three_1\"): ")
+        strings.set(1, "Three_1")
+
+        println("Calling setAll(\"One_1\"," +
+                " \"Three_1\", \"Two_1\", \"Zero_1\"): ")
+        strings.setAll("One_1", "Three_1", "Two_1", "Zero_1")
+
+        println("Calling removeAll(\"One_1\"," +
+                " \"Two_1\", \"Zero_1\"): ")
+        strings.removeAll("One_1", "Two_1", "Zero_1")
+    }
+
+    class MyListener extends ListChangeListener[String] {
+
+        override def onChanged(change: Change[_ <: String]) = {
+            println("\tlist = " + change.getList())
+            println(prettyPrint(change))
+        }
+
+        private def prettyPrint(change: Change[_ <: String]): String = {
+            val sb: StringBuilder = StringBuilder("\tChange event data:\n")
+            var i: Int = 0
+            while (change.next()) {
+                sb.append(s"\t\tcursor = ${i}\n")
+                i += 1
+                val kind: String =
+                                    if change.wasPermutated() then "permutated"  
+                                    else if change.wasReplaced() then "replaced"
+                                    else if change.wasRemoved() then "removed" 
+                                    else if change.wasAdded() then "added" 
+                                    else "none"
+
+                sb.append("\t\tKind of change: ")
+                        .append(kind)
+                        .append("\n")
+
+                sb.append("\t\tAffected range: [")
+                        .append(change.getFrom())
+                        .append(", ")
+                        .append(change.getTo())
+                        .append("]\n")
+
+                if (kind.equals("added") ||
+                    kind.equals("replaced")) {
+
+                    sb.append("\t\tAdded size: ")
+                        .append(change.getAddedSize())
+                        .append("\n")
+                    sb.append("\t\tAdded sublist: ")
+                        .append(change.getAddedSubList())
+                        .append("\n")
+                }
+
+                if (kind.equals("removed") ||
+                    kind.equals("replaced")) {
+                    sb.append("\t\tRemoved size: ")
+                        .append(change.getRemovedSize())
+                        .append("\n");
+                    sb.append("\t\tRemoved: ")
+                        .append(change.getRemoved())
+                        .append("\n");
+                }
+
+                if (kind.equals("permutated")) {
+                    val permutationSB: StringBuilder = StringBuilder("[")
+                    val from = change.getFrom()
+                    val to = change.getTo()
+
+                    val changes = from until to
+                    for ( k <- changes ) {
+                        val permutation =
+                                change.getPermutation(k)
+                        permutationSB.append(k)
+                                        .append("->")
+                                        .append(permutation)
+                        if (k < change.getTo() - 1) {
+                            permutationSB.append(", ")
+                        }
+                    }
+                    permutationSB.append("]")
+                    val permutation = permutationSB.toString()
+                    sb.append("\t\tPermutation: ")
+                        .append(permutation).append("\n")
+                }
+            }
+            sb.toString()
+        }
+    }
+
+
+
+
     def main(args: Array[String]): Unit = {
         ArrayChangeEventExample
         FXCollectionsExample
         ObservableListExample
+        ListChangeEventExample
     }
 }
 
