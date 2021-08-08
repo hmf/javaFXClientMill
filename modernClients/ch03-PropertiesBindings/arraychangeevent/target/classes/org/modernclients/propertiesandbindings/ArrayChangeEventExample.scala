@@ -2,6 +2,7 @@ package org.modernclients.propertiesandbindings
 
 // cSpell:ignore javafx, ints, stackoverflow, nullpointerexception
 
+import collection.JavaConverters._
 
 import javafx.collections.FXCollections
 import javafx.collections.ObservableIntegerArray
@@ -13,6 +14,7 @@ import javafx.collections.ListChangeListener
 import javafx.collections.MapChangeListener
 import javafx.collections.SetChangeListener
 import javafx.collections.ArrayChangeListener
+import javafx.beans.binding.Bindings
 import java.util.Comparator
 import java.util.Random
 import java.util.Arrays
@@ -157,7 +159,7 @@ object ArrayChangeEventExample {
 
     def manipulateMap(map: ObservableMap[String, String]) = {
         println("Calling map.put(\"Key\"," + " \"Value\"):")
-        map.put("Key", "Value");
+        map.put("Key", "Value")
     }
 
     def manipulateSet(set: ObservableSet[Integer]) = {
@@ -479,6 +481,63 @@ object ArrayChangeEventExample {
         println("\tDestination = " + ints2)
     }
 
+    def bindingsUtility: Unit = {
+        println("\n\nbindingsUtility")
+
+        val jmap: java.util.Map[String, Integer] = java.util.HashMap()
+        // Tgis data will be removed upon binding
+        jmap.put("a", 1)
+        jmap.put("b", 2)
+        jmap.put("c", 3)
+        jmap.put("d", 4)
+
+        val map: ObservableMap[String, Integer]  = FXCollections.observableHashMap()
+        val boundMap = Bindings.bindContent(jmap, map)
+
+        map.addListener(MyMapListener())
+
+        println("Calling put(\"First\", 1): ")
+        map.put("First", 1)
+        println(s"jmap = ${jmap.asScala.mkString("{", ",", "}")}")
+
+        println("Calling put(\"First\", 100): ")
+        map.put("First", 100)
+        println(s"jmap = ${jmap.asScala.mkString("{", ",", "}")}")
+
+        val anotherMap: java.util.Map[String, Integer] = HashMap()
+        anotherMap.put("Second", 2)
+        anotherMap.put("Third", 3)
+
+        println("Calling putAll(anotherMap): ")
+        map.putAll(anotherMap)
+        println(s"jmap = ${jmap.asScala.mkString("{", ",", "}")}")
+
+        val entryIterator: java.util.Iterator[java.util.Map.Entry[String, Integer]] = map.entrySet().iterator()
+        while (entryIterator.hasNext()) {
+            val next: java.util.Map.Entry[String, Integer] = entryIterator.next()
+            if (next.getKey().equals("Second")) {
+                println("Calling remove on entryIterator: ")
+                entryIterator.remove()
+            }
+        }
+        println(s"jmap = ${jmap.asScala.mkString("{", ",", "}")}")
+
+        val valueIterator: java.util.Iterator[Integer] = map.values().iterator()
+        while (valueIterator.hasNext()) {
+            val next = valueIterator.next()
+            if (next == 3) {
+                println("Calling remove on valueIterator: ")
+                valueIterator.remove()
+            }
+        }
+        println(s"jmap = ${jmap.asScala.mkString("{", ",", "}")}")
+
+        // Binding is uni-directtonal
+        println("""Calling jmap.put("e", 5): """)
+        jmap.put("e", 5)
+        println(s"jmap = ${jmap.asScala.mkString("{", ",", "}")}")
+
+    }
 
     def main(args: Array[String]): Unit = {
         ArrayChangeEventExample
@@ -488,6 +547,7 @@ object ArrayChangeEventExample {
         MapChangeEventExample
         SetChangeEventExample
         ArrayChangeEventExampleOriginal
+        bindingsUtility // experiment
     }
 }
 
