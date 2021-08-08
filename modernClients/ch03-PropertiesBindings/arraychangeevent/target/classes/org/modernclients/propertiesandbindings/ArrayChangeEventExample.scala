@@ -18,6 +18,8 @@ import java.util.Random
 import java.util.Arrays
 import javafx.beans.Observable
 import javafx.collections.ListChangeListener.Change
+import javafx.collections.MapChangeListener.{Change => MapChange}
+import java.util.HashMap
 
 /**
  *
@@ -325,7 +327,71 @@ object ArrayChangeEventExample {
         }
     }
 
+    def MapChangeEventExample: Unit = {
+        println("\n\nMapChangeEventExample")
+        
+        val map: ObservableMap[String, Integer] = FXCollections.observableHashMap()
+        map.addListener(MyMapListener())
 
+        println("Calling put(\"First\", 1): ")
+        map.put("First", 1)
+
+        println("Calling put(\"First\", 100): ")
+        map.put("First", 100)
+
+        val anotherMap: java.util.Map[String, Integer] = HashMap()
+        anotherMap.put("Second", 2)
+        anotherMap.put("Third", 3)
+
+        println("Calling putAll(anotherMap): ")
+        map.putAll(anotherMap)
+
+        val entryIterator: java.util.Iterator[java.util.Map.Entry[String, Integer]] = map.entrySet().iterator()
+        while (entryIterator.hasNext()) {
+            val next: java.util.Map.Entry[String, Integer] = entryIterator.next()
+            if (next.getKey().equals("Second")) {
+                println("Calling remove on entryIterator: ")
+                entryIterator.remove()
+            }
+        }
+        val valueIterator: java.util.Iterator[Integer] = map.values().iterator()
+        while (valueIterator.hasNext()) {
+            val next = valueIterator.next()
+            if (next == 3) {
+                println("Calling remove on valueIterator: ")
+                valueIterator.remove()
+            }
+        }
+    }
+
+    class MyMapListener extends MapChangeListener[String, Integer] {
+
+        override def onChanged(change: MapChange[_ <: String, _ <: Integer]) = {
+            println("\tmap = " + change.getMap())
+            println(prettyPrint(change))
+        }
+
+        private def prettyPrint(change: MapChange[_ <: String, _ <: Integer]): String =  {
+
+            val sb: StringBuilder = StringBuilder("\tChange event data:\n")
+            sb.append("\t\tWas added: ")
+                    .append(change.wasAdded())
+                    .append("\n")
+            sb.append("\t\tWas removed: ")
+                    .append(change.wasRemoved())
+                    .append("\n")
+            sb.append("\t\tKey: ")
+                    .append(change.getKey())
+                    .append("\n")
+            sb.append("\t\tValue added: ")
+                    .append(change.getValueAdded())
+                    .append("\n")
+            sb.append("\t\tValue removed: ")
+                    .append(change.getValueRemoved())
+                    .append("\n")
+            return sb.toString()
+        }
+    }
 
 
     def main(args: Array[String]): Unit = {
@@ -333,6 +399,7 @@ object ArrayChangeEventExample {
         FXCollectionsExample
         ObservableListExample
         ListChangeEventExample
+        MapChangeEventExample
     }
 }
 
