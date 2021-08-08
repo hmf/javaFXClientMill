@@ -19,6 +19,7 @@ import java.util.Arrays
 import javafx.beans.Observable
 import javafx.collections.ListChangeListener.Change
 import javafx.collections.MapChangeListener.{Change => MapChange}
+import javafx.collections.SetChangeListener.{Change => SetChange}
 import java.util.HashMap
 
 /**
@@ -389,9 +390,53 @@ object ArrayChangeEventExample {
             sb.append("\t\tValue removed: ")
                     .append(change.getValueRemoved())
                     .append("\n")
-            return sb.toString()
+            sb.toString()
         }
     }
+
+    def SetChangeEventExample: Unit = {
+        println("\n\nSetChangeEventExample")
+
+        val set: ObservableSet[String] = FXCollections.observableSet()
+        set.addListener(new MySetListener())
+
+        println("Calling add(\"First\"): ")
+        set.add("First")
+        
+        println("Calling addAll(Arrays.asList(\"Second\", \"Third\")): ")
+        set.addAll(Arrays.asList("Second", "Third"))
+
+        println("Calling remove(\"Third\"): ")
+        set.remove("Third")
+    }
+
+    class MySetListener extends SetChangeListener[String] {
+
+        override def onChanged(change: SetChange[_ <: String]) = {
+            println("\tset = " + change.getSet())
+            println(prettyPrint(change))
+        }
+        
+        private def prettyPrint(change: SetChange[_ <: String]): String = {
+            val sb: StringBuilder = StringBuilder("\tChange event data:\n")
+
+            sb.append("\t\tWas added: ")
+                    .append(change.wasAdded())
+                    .append("\n");
+            sb.append("\t\tWas removed: ")
+                    .append(change.wasRemoved())
+                    .append("\n");
+            sb.append("\t\tElement added: ")
+                    .append(change.getElementAdded())
+                    .append("\n");
+            sb.append("\t\tElement removed: ")
+                    .append(change.getElementRemoved())
+                    .append("\n");
+            sb.toString();
+        }
+    }
+
+
 
 
     def main(args: Array[String]): Unit = {
@@ -400,6 +445,7 @@ object ArrayChangeEventExample {
         ObservableListExample
         ListChangeEventExample
         MapChangeEventExample
+        SetChangeEventExample
     }
 }
 
