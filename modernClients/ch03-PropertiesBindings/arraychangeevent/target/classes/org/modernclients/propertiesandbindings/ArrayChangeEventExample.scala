@@ -436,7 +436,48 @@ object ArrayChangeEventExample {
         }
     }
 
+    def ArrayChangeEventExampleOriginal: Unit = {
+        println("\n\nArrayChangeEventExampleOriginal")
 
+        val ints: ObservableIntegerArray = FXCollections.observableIntegerArray(10, 20)
+        ints.addListener( 
+            (array, sizeChanged, from, to) => {
+                val sb: StringBuilder = StringBuilder("\tObservable Array = ")
+                                            .append(array)
+                                            .append("\n")
+                                            .append("\t\tsizeChanged = ")
+                                            .append(sizeChanged).append("\n")
+                                            .append("\t\tfrom = ")
+                                            .append(from).append("\n")
+                                            .append("\t\tto = ")
+                                            .append(to)
+                                            .append("\n")
+                println(sb.toString());
+            }
+        )
+        ints.ensureCapacity(20)
+
+        println("Calling addAll(30, 40):")
+        ints.addAll(30, 40)
+
+        val src = Array(50, 60, 70)
+        println("Calling addAll(src, 1, 2):")
+        ints.addAll(src, 1, 2)
+
+        println("Calling set(0, src, 0, 1):")
+        ints.set(0, src, 0, 1)
+
+        println("Calling setAll(src):")
+        ints.setAll(src:_*)
+        ints.trimToSize()
+
+        val ints2: ObservableIntegerArray = FXCollections.observableIntegerArray()
+        ints2.resize(ints.size())
+
+        println("Calling copyTo(0, ints2, 0, ints.size()):")
+        ints.copyTo(0, ints2, 0, ints.size())
+        println("\tDestination = " + ints2)
+    }
 
 
     def main(args: Array[String]): Unit = {
@@ -446,6 +487,7 @@ object ArrayChangeEventExample {
         ListChangeEventExample
         MapChangeEventExample
         SetChangeEventExample
+        ArrayChangeEventExampleOriginal
     }
 }
 
