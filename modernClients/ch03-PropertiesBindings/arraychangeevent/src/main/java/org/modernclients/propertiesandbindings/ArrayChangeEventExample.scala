@@ -1,9 +1,16 @@
 package org.modernclients.propertiesandbindings
 
-// cSpell:ignore javafx, ints, stackoverflow, nullpointerexception
+// cSpell:ignore javafx, ints, stackoverflow, nullpointerexception, permutated, jmap, Vetoable
 
 import collection.JavaConverters._
 
+import java.util.HashMap
+import java.util.Comparator
+import java.util.Random
+import java.util.Arrays
+import javafx.scene.paint.Color
+import javafx.scene.effect.Lighting
+import javafx.scene.effect.Light
 import javafx.collections.FXCollections
 import javafx.collections.ObservableIntegerArray
 import javafx.collections.ObservableList
@@ -14,15 +21,30 @@ import javafx.collections.ListChangeListener
 import javafx.collections.MapChangeListener
 import javafx.collections.SetChangeListener
 import javafx.collections.ArrayChangeListener
-import javafx.beans.binding.Bindings
-import java.util.Comparator
-import java.util.Random
-import java.util.Arrays
-import javafx.beans.Observable
 import javafx.collections.ListChangeListener.Change
 import javafx.collections.MapChangeListener.{Change => MapChange}
 import javafx.collections.SetChangeListener.{Change => SetChange}
-import java.util.HashMap
+import javafx.beans.binding.Bindings
+import javafx.beans.binding.ObjectBinding
+import javafx.beans.Observable
+import java.beans.VetoableChangeSupport
+import java.beans.PropertyChangeSupport
+import java.beans.PropertyChangeListener
+import java.beans.VetoableChangeListener
+import java.beans.PropertyVetoException
+import javafx.beans.property.IntegerProperty
+import javafx.beans.property.SimpleIntegerProperty
+import javafx.beans.property.StringProperty
+import javafx.beans.property.SimpleStringProperty
+import javafx.beans.property.SimpleObjectProperty
+import javafx.beans.property.ObjectProperty
+
+import scala.beans.BeanProperty
+import scala.beans.BooleanBeanProperty
+import scala.annotation.meta.beanGetter
+import scala.annotation.meta.beanSetter
+import javafx.beans.property.adapter.JavaBeanStringProperty
+import javafx.beans.property.adapter.JavaBeanStringPropertyBuilder
 
 /**
  *
@@ -135,11 +157,11 @@ object ArrayChangeEventExample {
         println("Calling rotate(list, 2):")
         FXCollections.rotate(list, 2)
 
-        println("Calling shuffle(list):");
+        println("Calling shuffle(list):")
         FXCollections.shuffle(list)
 
-        println("Calling shuffle(list," + " new Random(0L)):")
-        FXCollections.shuffle(list, new Random(0L))
+        println("Calling shuffle(list," + " Random(0L)):")
+        FXCollections.shuffle(list, Random(0L))
 
         println("Calling sort(list):")
         FXCollections.sort(list)
@@ -205,8 +227,8 @@ object ArrayChangeEventExample {
         println("Calling addAll(\"Second\"," + " \"Third\"): ")
         strings.addAll("Second", "Third")
 
-        println("Calling set(1," + " \"New First\"): ")
-        strings.set(1, "New First")
+        println("Calling set(1," + " \"First\"): ")
+        strings.set(1, "First")
 
         val list: java.util.List[String] = Arrays.asList("Second_1", "Second_2")
         println("Calling addAll(3, list): ")
@@ -232,7 +254,7 @@ object ArrayChangeEventExample {
 
         val strings: ObservableList[String] = FXCollections.observableArrayList()
 
-        strings.addListener(new MyListener())
+        strings.addListener(MyListener())
         println("Calling addAll(\"Zero\"," +
                 " \"One\", \"Two\", \"Three\"): ")
         strings.addAll("Zero", "One", "Two", "Three")
@@ -289,7 +311,7 @@ object ArrayChangeEventExample {
                     sb.append("\t\tAdded size: ")
                         .append(change.getAddedSize())
                         .append("\n")
-                    sb.append("\t\tAdded sublist: ")
+                    sb.append("\t\tAdded sub-list: ")
                         .append(change.getAddedSubList())
                         .append("\n")
                 }
@@ -298,10 +320,10 @@ object ArrayChangeEventExample {
                     kind.equals("replaced")) {
                     sb.append("\t\tRemoved size: ")
                         .append(change.getRemovedSize())
-                        .append("\n");
+                        .append("\n")
                     sb.append("\t\tRemoved: ")
                         .append(change.getRemoved())
-                        .append("\n");
+                        .append("\n")
                 }
 
                 if (kind.equals("permutated")) {
@@ -400,7 +422,7 @@ object ArrayChangeEventExample {
         println("\n\nSetChangeEventExample")
 
         val set: ObservableSet[String] = FXCollections.observableSet()
-        set.addListener(new MySetListener())
+        set.addListener(MySetListener())
 
         println("Calling add(\"First\"): ")
         set.add("First")
@@ -424,17 +446,17 @@ object ArrayChangeEventExample {
 
             sb.append("\t\tWas added: ")
                     .append(change.wasAdded())
-                    .append("\n");
+                    .append("\n")
             sb.append("\t\tWas removed: ")
                     .append(change.wasRemoved())
-                    .append("\n");
+                    .append("\n")
             sb.append("\t\tElement added: ")
                     .append(change.getElementAdded())
-                    .append("\n");
+                    .append("\n")
             sb.append("\t\tElement removed: ")
                     .append(change.getElementRemoved())
-                    .append("\n");
-            sb.toString();
+                    .append("\n")
+            sb.toString()
         }
     }
 
@@ -454,7 +476,7 @@ object ArrayChangeEventExample {
                                             .append("\t\tto = ")
                                             .append(to)
                                             .append("\n")
-                println(sb.toString());
+                println(sb.toString())
             }
         )
         ints.ensureCapacity(20)
@@ -532,7 +554,7 @@ object ArrayChangeEventExample {
         }
         println(s"jmap = ${jmap.asScala.mkString("{", ",", "}")}")
 
-        // Binding is uni-directtonal
+        // Binding is uni-directional
         println("""Calling jmap.put("e", 5): """)
         jmap.put("e", 5)
         println(s"jmap = ${jmap.asScala.mkString("{", ",", "}")}")
@@ -543,7 +565,7 @@ object ArrayChangeEventExample {
         println("\n\nbindingsUtilityBidirectional")
 
         val map0: ObservableMap[String, Integer]  = FXCollections.observableHashMap()
-        // Tgis data will be removed upon binding
+        // This data will be removed upon binding
         map0.put("a", 1)
         map0.put("b", 2)
         map0.put("c", 3)
@@ -597,6 +619,358 @@ object ArrayChangeEventExample {
 
     }
 
+    // https://alvinalexander.com/scala/how-to-create-scala-javabeans-beanproperty-java-libraries/
+    // https://www.programcreek.com/scala/scala.beans.BeanProperty
+    // class Person private (name: String)
+    class JavaFXBeanModelExample {
+
+        private val i: IntegerProperty = SimpleIntegerProperty(this, "i", 0)
+        private val str: StringProperty= SimpleStringProperty(this, "str", "Hello")
+        private val color: ObjectProperty[Color] = SimpleObjectProperty[Color](this, "color", Color.BLACK)
+
+        def getI(): Int = {
+            i.get()
+        }
+
+        def setI(i: Int):Unit = {
+            this.i.set(i)
+        }
+
+        def iProperty(): IntegerProperty = {
+            i
+        }
+
+        def getStr(): String = {
+            str.get()
+        }
+
+        def setStr(str: String): Unit = {
+            this.str.set(str)
+        }
+
+        def strProperty(): StringProperty = {
+            str
+        }
+
+        def getColor(): Color = {
+            color.get()
+        }
+
+        def setColor(color: Color) = {
+            this.color.set(color)
+        }
+        
+        def colorProperty(): ObjectProperty[Color] = {
+            color
+        }
+
+    }
+
+    class JavaFXBeanModelHalfLazyExample {
+
+        private val DEFAULT_STR: String = "Hello"
+        private var str: StringProperty = _
+
+        def getStr(): String = {
+            if (str != null) {
+                str.get()
+            } else {
+                DEFAULT_STR
+            }
+        }
+
+        def setStr(str: String): Unit = {
+            if ((this.str != null) ||
+                !(str.equals(DEFAULT_STR))) {
+                strProperty().set(str)
+            }
+        }
+
+        def strProperty(): StringProperty = {
+            if (str == null) {
+                str = SimpleStringProperty(this, "str", DEFAULT_STR)
+            }
+            str
+        }
+    }
+
+    class JavaFXBeanModelFullLazyExample {
+        private val DEFAULT_STR: String = "Hello"
+        private var str: StringProperty = _
+        private var _str: String = DEFAULT_STR
+
+        def getStr(): String = {
+            if (str != null) {
+                str.get()
+            } else {
+                _str
+            }   
+        }
+
+        def setStr(str: String): Unit = {
+            if (this.str != null) {
+                this.str.set(str)
+            } else {
+                _str = str
+            }
+        }
+
+        def strProperty(): StringProperty = {
+            if (str == null) {
+                str = SimpleStringProperty(this,"str", DEFAULT_STR)
+            }
+            str
+        }
+    }
+
+    def SelectBindingExample = {
+        println("\n\nSelectBindingExample")
+
+        val root: ObjectProperty[Lighting] = SimpleObjectProperty[Lighting]()
+        val colorBinding: ObjectBinding[Color] = Bindings.select(root, "light", "color")
+
+        colorBinding.addListener(
+            (o, oldValue, newValue) =>
+                println("\tThe color changed:\n" +
+                        "\t\told color = " + oldValue +
+                        ",\n\t\tcolor = " + newValue))
+
+        println("firstLight is black.")
+        val firstLight: Light = Light.Point()
+        firstLight.setColor(Color.BLACK)
+
+        println("secondLight is white.")
+        val secondLight: Light = Light.Point()
+        secondLight.setColor(Color.WHITE)
+
+        println("firstLighting has firstLight.")
+        val firstLighting: Lighting = Lighting()
+        firstLighting.setLight(firstLight)
+
+        println("secondLighting has secondLight.")
+        val secondLighting:Lighting = Lighting()
+        secondLighting.setLight(secondLight)
+        
+        println("Making root observe" +
+                " firstLighting.")
+        root.set(firstLighting)
+        
+        println("Making root observe" +
+                " secondLighting.")
+        root.set(secondLighting)
+        
+        println("Changing secondLighting's" +
+                " light to firstLight")
+        secondLighting.setLight(firstLight)
+        
+        println("Changing firstLight's" +
+                " color to red")
+        firstLight.setColor(Color.RED)
+    }
+
+
+    /*
+        Recall that a Java Bean property is a bound property if a PropertyChange event is
+        fired when the property is changed. It is a constrained property if a VetoableChange event
+        is fired when it is changed. And if a registered listener throws a PropertyVetoException,
+        the change does not take effect.
+
+        Person bean with a plain property name, a bound property address, and a constrained property phoneNumber.
+    */
+    
+    // Note that name changes events are not generated. See `JavaBeanStringPropertyBuilder`
+    class Person {
+        private var propertyChangeSupport: PropertyChangeSupport = _
+        private var vetoableChangeSupport: VetoableChangeSupport = _
+
+        private var name: String = _
+        private var address: String = _
+        private var phoneNumber: String = _
+
+        propertyChangeSupport = PropertyChangeSupport(this)
+        vetoableChangeSupport = VetoableChangeSupport(this)
+
+        def getName(): String = {
+              name
+        }
+
+        def setName(name: String): Unit = {
+            this.name = name
+        }
+
+        def getAddress(): String = {
+            address
+        }
+
+        def setAddress(address: String) = {
+            val oldAddress: String = this.address
+            this.address = address
+            propertyChangeSupport.firePropertyChange("address", oldAddress, this.address)
+        }
+
+        def getPhoneNumber(): String = {
+            phoneNumber
+        }
+
+        // throws PropertyVetoException
+        def setPhoneNumber(phoneNumber: String): Unit = {
+            val oldPhoneNumber: String = this.phoneNumber
+            vetoableChangeSupport.fireVetoableChange("phoneNumber", oldPhoneNumber, phoneNumber)
+            this.phoneNumber = phoneNumber
+            propertyChangeSupport.firePropertyChange("phoneNumber", oldPhoneNumber, this.phoneNumber)
+        }
+
+        def addPropertyChangeListener(l: PropertyChangeListener): Unit = {
+            propertyChangeSupport.addPropertyChangeListener(l)
+        }
+
+        def removePropertyChangeListener(l: PropertyChangeListener): Unit = {
+            propertyChangeSupport.removePropertyChangeListener(l)
+        }
+
+        def getPropertyChangeListeners(): Array[PropertyChangeListener] = {
+            propertyChangeSupport.getPropertyChangeListeners()
+        }
+
+        def addVetoableChangeListener(l: VetoableChangeListener) = {
+            vetoableChangeSupport.addVetoableChangeListener(l)
+        }
+
+        def removeVetoableChangeListener(l: VetoableChangeListener) = {
+            vetoableChangeSupport.removeVetoableChangeListener(l)
+        }
+
+        def getVetoableChangeListeners(): Array[VetoableChangeListener] = {
+            vetoableChangeSupport.getVetoableChangeListeners()
+        }
+    }
+
+    // throws NoSuchMethodException
+    def JavaBeanPropertiesExample = {
+        println("\n\nJavaBeanPropertiesExample")
+
+        adaptJavaBeansProperty()
+        adaptBoundProperty()
+        adaptConstrainedProperty()
+
+        // throws NoSuchMethodException
+        def adaptJavaBeansProperty() = {
+            val person: Person = Person()
+            val nameProperty: JavaBeanStringProperty = JavaBeanStringPropertyBuilder
+                                                            .create()
+                                                            .bean(person)
+                                                            .name("name")
+                                                            .build()
+            nameProperty.addListener(
+                (observable, oldValue, newValue) => {
+                        println("JavaFX Bean property " +
+                                observable + " changed:")
+                        println("\toldValue = " +
+                                oldValue + ", newValue = " + newValue)
+            })
+
+            println("Setting name on the" +
+                    " JavaBeans property")
+            person.setName("Weiqi Gao")
+
+            println("Calling fireValueChange")
+            nameProperty.fireValueChangedEvent()
+
+            println("nameProperty.get() = " +
+                    nameProperty.get())
+
+            println("Setting value on the" +
+                    " JavaFX property")
+            nameProperty.set("Johan Vos")
+
+            println("person.getName() = " +
+                    person.getName())
+        }
+
+        // throws NoSuchMethodException
+        def adaptBoundProperty() = {
+            println()
+
+            val person: Person = Person()
+            val addressProperty: JavaBeanStringProperty = JavaBeanStringPropertyBuilder
+                                                            .create()
+                                                            .bean(person)
+                                                            .name("address")
+                                                            .build()
+
+            addressProperty.addListener(
+                                (observable, oldValue, newValue) =>
+                                    println("JavaFX bound property " +
+                                            observable + " changed:")
+                                    println("\toldValue = " +
+                                            oldValue + ", newValue = " + newValue)
+                                        )
+
+            println("Setting address on the" +
+                    " JavaBeans property")
+            person.setAddress("12345 main Street")
+        }
+
+        // throws NoSuchMethodException
+        def adaptConstrainedProperty(): Unit = {
+            println()
+            val person: Person = Person()
+            val phoneNumberProperty: JavaBeanStringProperty = JavaBeanStringPropertyBuilder
+                                                                    .create()
+                                                                    .bean(person)
+                                                                    .name("phoneNumber")
+                                                                    .build()
+
+            phoneNumberProperty.addListener(
+                (observable, oldValue, newValue) => 
+                    println("JavaFX constraint property " +
+                            observable + " changed:")
+                    println("\toldValue = " +
+                            oldValue + ", newValue = " + newValue)
+            )
+
+            // Does not get vetoed?
+            println("Setting phoneNumber on the" +
+                    " JavaBeans property")
+            try {
+                person.setPhoneNumber("800-555-1212")
+            } catch {
+                case  e: PropertyVetoException =>
+                            println("A JavaBeans property" +
+                            " change is vetoed.")
+            }
+
+            println("Bind phoneNumberProperty" +
+                    " to another property")
+            val stringProperty: SimpleStringProperty = 
+                                    SimpleStringProperty("866-555-1212")
+            phoneNumberProperty.bind(stringProperty)
+
+            // Get vetoed
+            /*
+               For the constrained property phoneNumber, after we
+               bound the adapted phoneNumberProperty to another stringProperty, calling person.
+               setPhoneNumber() throws a PropertyVetoException, and the new value is rejected.            
+            */
+            println("Setting phoneNumber on the" +
+                    " JavaBeans property")
+            try {
+                person.setPhoneNumber("888-777-1212")
+            } catch {
+                case e: PropertyVetoException =>
+                    println("A JavaBeans property" +
+                            " change is vetoed.")
+            }
+
+            println("person.getPhoneNumber() = " +
+                    person.getPhoneNumber())
+        }
+
+
+    }
+
+
+
     def main(args: Array[String]): Unit = {
         ArrayChangeEventExample
         FXCollectionsExample
@@ -606,6 +980,8 @@ object ArrayChangeEventExample {
         SetChangeEventExample
         ArrayChangeEventExampleOriginal
         bindingsUtilityUnidirectional // experiment
+        SelectBindingExample
+        JavaBeanPropertiesExample
     }
 }
 
