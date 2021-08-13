@@ -1,4 +1,4 @@
-package org.modernclients.container
+package org.modernclients.advanced
 
 // cSpell:ignore javafx
 
@@ -8,9 +8,9 @@ import collection.JavaConverters._
  *
  * ./mill mill.scalalib.GenIdea/idea
  *
- * ./mill -i modernClients.ch04-javafx_controls.container.run
- * ./mill -i modernClients.ch04-javafx_controls.container.runMain org.modernclients.container.Container
- * ./mill -i --watch modernClients.ch04-javafx_controls.container.runMain org.modernclients.container.Container
+ * ./mill -i modernClients.ch04-javafx_controls.advanced.run
+ * ./mill -i modernClients.ch04-javafx_controls.advanced.runMain org.modernclients.advanced.Advanced
+ * ./mill -i --watch modernClients.ch04-javafx_controls.advanced.runMain org.modernclients.advanced.Advanced
  * 
  * Note on resources (see StackOverflow link below): Mill's convention is to 
  * place a resources directory on the lowest level Mill module. To access 
@@ -24,10 +24,10 @@ import collection.JavaConverters._
  * @see https://stackoverflow.com/questions/22000423/javafx-and-maven-nullpointerexception-location-is-required
  * @see https://stackoverflow.com/questions/12124657/getting-started-on-scala-javafx-desktop-application-development
  */
-object Container {
+object Advanced {
 
     def main(args: Array[String]): Unit = {
-      println("Hello container")
+      println("Hello advanced")
     }
 }
 
