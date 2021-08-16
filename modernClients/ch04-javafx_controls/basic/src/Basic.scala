@@ -19,6 +19,13 @@ import javafx.scene.control.Hyperlink
 import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
 import javafx.scene.paint.Color
+import javafx.scene.control.ToggleButton
+import javafx.scene.control.ToggleGroup
+import javafx.scene.layout.HBox
+import javafx.scene.control.RadioButton
+import javafx.scene.control.TextField
+import javafx.scene.control.PasswordField
+import javafx.scene.control.TextArea
 
 /**
  *
@@ -77,13 +84,90 @@ class HelloWorld extends Application {
 
       // Hyperlink
       val hyperlink = new Hyperlink("Click Me!")
-      val courierNewFontBold36 = Font.font("Courier New", FontWeight.BOLD, 11)
+      val courierNewBold11 = Font.font("Courier New", FontWeight.BOLD, 11)
       hyperlink.setOnAction(
         event => 
           println("Hyperlink was clicked")
-          hyperlink.setFont(courierNewFontBold36) 
+          hyperlink.setFont(courierNewBold11) 
           hyperlink.setTextFill(Color.RED)
         )
+
+      // ToggleButton, RadioButton, and RadioMenuItem
+      // ToggleGroup
+      // create a few toggle buttons
+      val tb1 = ToggleButton("Toggle button 1")
+      val tb2 = ToggleButton("Toggle button 2")
+      val tb3 = ToggleButton("Toggle button 3")
+      
+      // create a toggle group and add all the toggle buttons to it
+      // toggleButton1.setToggleGroup(toggleGroup);
+      val toggleGroup = ToggleGroup()
+      toggleGroup.getToggles().addAll(tb1, tb2, tb3)
+      val toggleHBox = HBox(tb1, tb2, tb3)
+      toggleHBox.setAlignment(Pos.BASELINE_CENTER)
+
+      // it is possible to add an onAction listener for each button
+      tb1.setOnAction(e => println("ToggleButton 1 was clicked on!"))
+      // but it is better to add a listener to the toggle group  selectedToggle property
+      toggleGroup.selectedToggleProperty()
+           .addListener(i => println("Selected toggle is " + toggleGroup.getSelectedToggle()) )
+
+      // ToggleButton, RadioButton, and RadioMenuItem
+      // ToggleGroup
+      // create a few toggle buttons
+      val rb1 = RadioButton("Toggle button 1")
+      val rb2 = RadioButton("Toggle button 2")
+      val rb3 = RadioButton("Toggle button 3")
+      
+      // create a toggle group and add all the toggle buttons to it
+      // toggleButton1.setToggleGroup(toggleGroup);
+      val radioGroup = ToggleGroup()
+      radioGroup.getToggles().addAll(tb1, tb2, tb3)
+      val radioHBox = HBox(rb1, rb2, rb3)
+      radioHBox.setAlignment(Pos.BASELINE_CENTER)
+
+      // it is possible to add an onAction listener for each button
+      rb1.setOnAction(e => println("RadioButton 1 was clicked on!"))
+      // but it is better to add a listener to the toggle group  selectedToggle property
+      radioGroup.selectedToggleProperty()
+           .addListener(i => println("Selected radio is " + radioGroup.getSelectedToggle()) )
+
+      // TextArea, TextField, and PasswordField
+      // Extend from TextInputControl
+      // See also TextFormatter
+      val textField = TextField()
+      textField.setPromptText("Enter name here")
+      // this is fired when the user hits the Enter key
+      textField.setOnAction(e => println("Entered text is: " + textField.getText()))
+      // we can also observe input in real time
+      textField.textProperty().addListener(
+        (o, oldValue, newValue) => 
+          println("current text input is " + newValue)
+        )
+
+      val passwordField = PasswordField()
+      passwordField.setPromptText("Enter password here")
+      // this is fired when the user hits the Enter key
+      passwordField.setOnAction(e => println("Entered password is: " + passwordField.getText()))
+      // we can also observe input in real time
+      passwordField.textProperty().addListener(
+        (o, oldValue, newValue) => 
+          println("current password input is " + newValue)
+        )
+
+      val textArea = TextArea()
+      textArea.setPromptText("Enter multi-line here")
+      // this is fired when the user hits the Enter key
+      //textArea.setOnAction(e => println("Entered multi-line is: " + textArea.getText()))
+      // Need his to avoid large gap between components
+      textArea.setPrefHeight(0)
+      textArea.setPrefRowCount(5)
+      // we can also observe input in real time
+      textArea.textProperty().addListener(
+        (o, oldValue, newValue) => 
+          println("current multi-line input is " + newValue)
+        )
+
 
       // http://tutorials.jenkov.com/javafx/vbox.html
       //val root = new StackPane()
@@ -93,8 +177,13 @@ class HelloWorld extends Application {
       root.getChildren().add(btn)
       root.getChildren().add(cb)
       root.getChildren().add(hyperlink)
+      root.getChildren().add(toggleHBox)
+      root.getChildren().add(radioHBox)
+      root.getChildren().add(textField)
+      root.getChildren().add(passwordField)
+      root.getChildren().add(textArea)
 
-      primaryStage.setScene(new Scene(root, 300, 250))
+      primaryStage.setScene(Scene(root, 500, 400))
       primaryStage.show()
     }
 }
