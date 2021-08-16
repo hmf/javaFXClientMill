@@ -1,6 +1,6 @@
 package org.modernclients.propertiesandbindings
 
-// cSpell:ignore javafx, ints, stackoverflow, nullpointerexception, permutated, jmap, Vetoable
+// cSpell:ignore javafx, ints, stackoverflow, nullpointerexception, permutated, jmap, Vetoable, Weiqi, Johan
 
 import collection.JavaConverters._
 
