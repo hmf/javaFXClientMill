@@ -131,9 +131,14 @@ class Others extends Application {
       val gradient = LinearGradient(0.0, 0.0, 1500.0, 1000.0, false, CycleMethod.NO_CYCLE, stops:_*)
 
       // we place the linear gradient inside a big rectangle
-      val RECT_X = 2000
-      val RECT_Y = 100
+      val RECT_X = 100
+      val RECT_Y = 50
       val rectangle = Rectangle(RECT_X, RECT_Y, gradient)
+      val rectangle1 = Rectangle(RECT_X, RECT_Y, gradient)
+      val rectangle2 = Rectangle(RECT_X, RECT_Y, gradient)
+
+      val colorLabel = Label(s"Color: ${color}")
+      colorLabel.setFont(Font("Verdana", 18))
 
       // val borderPane = BorderPane()
       // val colorLabel = Label(s"Color: ${color}")
@@ -144,13 +149,14 @@ class Others extends Application {
       // BorderPane.setAlignment(colorLabel, Pos.CENTER)
       // BorderPane.setMargin(colorLabel, Insets(20,10,5,10))
 
+      // Holds scrollable container + scrollbar at the same level
+      val vb = VBox()
       val hb = HBox()
-      // hb.setLayoutY(5)
-      // hb.setSpacing(10)
+      hb.setLayoutY(5)
+      hb.setSpacing(10)
 
-      val colorLabel = Label(s"Color: ${color}")
-      colorLabel.setFont(Font("Verdana", 18))
-      hb.getChildren().addAll( colorLabel, sc)
+      vb.getChildren().addAll( hb, sc)
+      hb.getChildren().addAll( colorLabel, rectangle, rectangle1, rectangle2)
 
 
       sc.valueProperty().addListener(new ChangeListener[Number]() {
@@ -173,7 +179,7 @@ class Others extends Application {
       //root.getChildren().add(btn)
       root.getChildren().add(htmlEditor)
       root.getChildren().add(pagination)
-      root.getChildren().add(hb)
+      root.getChildren().add(vb)
 
       primaryStage.setScene(scene)
       primaryStage.show()
