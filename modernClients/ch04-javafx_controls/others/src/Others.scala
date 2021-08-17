@@ -33,6 +33,9 @@ import javafx.scene.Group
 import javafx.beans.value.ChangeListener
 import javafx.beans.value.ObservableValue
 import javafx.scene.layout.HBox
+import javafx.scene.control.Spinner
+import javafx.scene.control.SpinnerValueFactory
+import javafx.scene.control.Tooltip
 
 /**
  *
@@ -116,12 +119,14 @@ class Others extends Application {
       // ScrollBar, ScrollBarMark
       // TODO not working
       val sc = ScrollBar()
-      sc.setLayoutX(scene.getWidth()-sc.getWidth())
+      //sc.setLayoutX(scene.getWidth()-sc.getWidth())
+      //sc.setLayoutY(scene.getHeight()-sc.getHeight())
       sc.setMin(0)
       sc.setMax(100)
-      sc.setValue(10)
+      sc.setValue(0)
       sc.setOrientation(Orientation.HORIZONTAL)
-      sc.setPrefWidth(50)
+      // Should be dynamically bound
+      sc.setPrefWidth(scene.getWidth())
 
       // https://docs.oracle.com/javafx/2/ui_controls/scrollbar.htm
       // is typically used as part of a more complex UI control. For example, it
@@ -131,32 +136,28 @@ class Others extends Application {
       val gradient = LinearGradient(0.0, 0.0, 1500.0, 1000.0, false, CycleMethod.NO_CYCLE, stops:_*)
 
       // we place the linear gradient inside a big rectangle
-      val RECT_X = 100
+      val RECT_X = 100  // If it exceeds the `hb`, then no scroll appears
       val RECT_Y = 50
       val rectangle = Rectangle(RECT_X, RECT_Y, gradient)
       val rectangle1 = Rectangle(RECT_X, RECT_Y, gradient)
       val rectangle2 = Rectangle(RECT_X, RECT_Y, gradient)
+      val rectangle3 = Rectangle(RECT_X, RECT_Y, gradient)
+      val rectangle4 = Rectangle(RECT_X, RECT_Y, gradient)
 
       val colorLabel = Label(s"Color: ${color}")
       colorLabel.setFont(Font("Verdana", 18))
-
-      // val borderPane = BorderPane()
-      // val colorLabel = Label(s"Color: ${color}")
-      // colorLabel.setFont(Font("Verdana", 18))
-      // borderPane.setTop(colorLabel)
-      // borderPane.setCenter(rectangle)
-      // borderPane.setBottom(sc)
-      // BorderPane.setAlignment(colorLabel, Pos.CENTER)
-      // BorderPane.setMargin(colorLabel, Insets(20,10,5,10))
-
-      // Holds scrollable container + scrollbar at the same level
-      val vb = VBox()
+      // Holds scroll container + scrollbar at the same level
+      val vb = Group()   // VBox() Fail, Group(), ok wrong location, BorderPane() // fail
       val hb = HBox()
-      hb.setLayoutY(5)
+      //hb.setLayoutY(5)
       hb.setSpacing(10)
 
+      hb.getChildren().addAll( colorLabel, rectangle, rectangle1, rectangle2, rectangle3, rectangle4)
       vb.getChildren().addAll( hb, sc)
-      hb.getChildren().addAll( colorLabel, rectangle, rectangle1, rectangle2)
+
+      // Use of setLayoutY/setLayoutX flawed. Does not work
+      // Should be set dynamically
+      sc.setLayoutY(rectangle.getHeight())
 
 
       sc.valueProperty().addListener(new ChangeListener[Number]() {
@@ -171,6 +172,29 @@ class Others extends Application {
 
       // Separator (see Container)
 
+      // Spinner
+      /*
+        Because a Spinner can be used to step through various types of value
+        (integer, float, double, or even a List of some type), the Spinner defers to a
+        SpinnerValueFactory to handle the actual process of stepping through the range
+        of values (and precisely how to step).
+      */
+      val spinner = Spinner[Integer]()
+      spinner.setValueFactory(SpinnerValueFactory.IntegerSpinnerValueFactory(5, 10)) 
+      spinner.valueProperty()
+              .addListener(
+                (o, oldValue, newValue) => {
+                  println("value changed: '" + oldValue + "' -> '" + newValue + "'")
+        })
+
+      // Tooltip
+      val rect = Rectangle(0, 0, 100, 100)
+      val t = Tooltip("A Square")
+      Tooltip.install(rect, t)
+
+      val toolTipButton = Button("Hover Over Me");
+      toolTipButton.setTooltip(Tooltip("Tooltip for Button"))
+      
 
       // http://tutorials.jenkov.com/javafx/vbox.html
       //root.setAlignment(Pos.BASELINE_CENTER)
@@ -179,6 +203,8 @@ class Others extends Application {
       //root.getChildren().add(btn)
       root.getChildren().add(htmlEditor)
       root.getChildren().add(pagination)
+      root.getChildren().add(spinner)
+      root.getChildren().add(toolTipButton)
       root.getChildren().add(vb)
 
       primaryStage.setScene(scene)
