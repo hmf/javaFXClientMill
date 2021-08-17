@@ -542,7 +542,8 @@ object modernClients extends ScalaModule {
 
       override def ivyDeps = Agg(
                                   ivy"$CONTROLS",
-                                  ivy"$FXML"
+                                  ivy"$FXML",
+                                  ivy"$WEB"
                                 )
 
     }

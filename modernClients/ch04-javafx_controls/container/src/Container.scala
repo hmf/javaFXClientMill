@@ -283,7 +283,10 @@ class Container extends Application {
                             Button("Run"),
                             Separator(),
                             Button("Debug"),
-                            Button("Profile")
+                            Button("Profile"),
+                            Separator(),
+                            Button("Overflow-1"),
+                            Button("Overflow-1")
       )
 
       // http://tutorials.jenkov.com/javafx/vbox.html

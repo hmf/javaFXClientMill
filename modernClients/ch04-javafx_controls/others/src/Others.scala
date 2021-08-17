@@ -1,17 +1,38 @@
 package org.modernclients.others
 
-// cSpell:ignore javafx
+// cSpell:ignore javafx, verdana
 
 import collection.JavaConverters._
 
 import javafx.application.Application
 import javafx.stage.Stage
+
 import javafx.scene.Scene
 import javafx.scene.control.Button
+import javafx.scene.layout.VBox
+import javafx.scene.web.HTMLEditor
+import javafx.scene.control.Pagination
+import javafx.scene.control.Hyperlink
+import javafx.scene.shape.Rectangle
+import javafx.scene.paint.Color
+import javafx.scene.paint.Stop
+import javafx.scene.paint.LinearGradient
+
 import javafx.event.EventHandler
 import javafx.event.ActionEvent
-import javafx.scene.layout.VBox
+
 import javafx.geometry.Pos
+import javafx.scene.paint.CycleMethod
+import javafx.scene.layout.BorderPane
+import javafx.scene.control.Label
+import javafx.scene.text.Font
+import javafx.geometry.Insets
+import javafx.scene.control.ScrollBar
+import javafx.geometry.Orientation
+import javafx.scene.Group
+import javafx.beans.value.ChangeListener
+import javafx.beans.value.ObservableValue
+import javafx.scene.layout.HBox
 
 /**
  *
@@ -39,30 +60,122 @@ class Others extends Application {
   override def start(primaryStage: Stage) = {
       primaryStage.setTitle("Others controls")
 
-      // Button 
-      val btn = new Button("Say 'Hello Others'")
-      btn.setOnAction( (event: ActionEvent) => {
-              println("Hello basic")
-          }
-      )
-      // See VBox.setFillWidth(true)
-      btn.setMaxWidth(99999D) //or Double.MAX_VALUE
-      btn.setText("Say 'Hello Others")
-      btn.setOnAction(new EventHandler[ActionEvent]() {
-           override def handle(event: ActionEvent) = {
-              println("Hello Others")
-          }
-      })
-      
-      // http://tutorials.jenkov.com/javafx/vbox.html
-      //val root = new StackPane()
       val root = VBox(5)
+      val scene = Scene(root, 650, 500)
+
+      // Button 
+      // val btn = Button("Say 'Hello Others'")
+      // btn.setOnAction( (event: ActionEvent) => {
+      //         println("Hello basic")
+      //     }
+      // )
+      // // See VBox.setFillWidth(true)
+      // btn.setMaxWidth(99999D) //or Double.MAX_VALUE
+      // btn.setText("Say 'Hello Others")
+      // btn.setOnAction(new EventHandler[ActionEvent]() {
+      //      override def handle(event: ActionEvent) = {
+      //         println("Hello Others")
+      //     }
+      // })
+
+      // HTMLEditor
+      /* 
+        dependent on the JavaFX WebView component for rendering the user 
+        input, this control does not ship in the javafx.controls module, 
+        but rather the javafx.web module
+      */
+      val htmlEditor = HTMLEditor()
+      val htmlText = "<b>Bold text</b>"
+      htmlEditor.setHtmlText(htmlText)
+      htmlEditor.setPrefHeight(200)
+      
+      // Pagination
+      /*
+        Pagination is an abstract way of representing multiple pages, where only
+        the currently showing page actually exists in the scene graph and all 
+        other pages are only generated upon request.
+
+        The callback pageFactory allows for on-demand generation of pages, as 
+        requested by the user
+      */
+      val pagination = Pagination(10, 0)
+      pagination.setPageFactory(
+        pageIndex => {
+          val box = VBox(5)
+          val len = 5
+          for (i <- 0 until 5) {
+              val linkNumber = pageIndex * len + i
+              val link = Hyperlink("Hyperlink #" + linkNumber)
+              link.setOnAction(e => println("Hyperlink #" + linkNumber + " clicked!"))
+              box.getChildren().add(link)
+          }
+          box
+      })
+      pagination.prefHeight(100)
+
+      // ScrollBar, ScrollBarMark
+      // TODO not working
+      val sc = ScrollBar()
+      sc.setLayoutX(scene.getWidth()-sc.getWidth())
+      sc.setMin(0)
+      sc.setMax(100)
+      sc.setValue(10)
+      sc.setOrientation(Orientation.HORIZONTAL)
+      sc.setPrefWidth(50)
+
+      // https://docs.oracle.com/javafx/2/ui_controls/scrollbar.htm
+      // is typically used as part of a more complex UI control. For example, it
+      // is used in the ScrollPane control to support vertical and horizontal scrolling
+      val color = Color.BLUE
+      val stops = Array[Stop](Stop(0, Color.BLACK), Stop(1,color))
+      val gradient = LinearGradient(0.0, 0.0, 1500.0, 1000.0, false, CycleMethod.NO_CYCLE, stops:_*)
+
+      // we place the linear gradient inside a big rectangle
+      val RECT_X = 2000
+      val RECT_Y = 100
+      val rectangle = Rectangle(RECT_X, RECT_Y, gradient)
+
+      // val borderPane = BorderPane()
+      // val colorLabel = Label(s"Color: ${color}")
+      // colorLabel.setFont(Font("Verdana", 18))
+      // borderPane.setTop(colorLabel)
+      // borderPane.setCenter(rectangle)
+      // borderPane.setBottom(sc)
+      // BorderPane.setAlignment(colorLabel, Pos.CENTER)
+      // BorderPane.setMargin(colorLabel, Insets(20,10,5,10))
+
+      val hb = HBox()
+      // hb.setLayoutY(5)
+      // hb.setSpacing(10)
+
+      val colorLabel = Label(s"Color: ${color}")
+      colorLabel.setFont(Font("Verdana", 18))
+      hb.getChildren().addAll( colorLabel, sc)
+
+
+      sc.valueProperty().addListener(new ChangeListener[Number]() {
+            def changed(ov: ObservableValue[_ <: Number], old_val: Number, new_val: Number) = {
+                  val delta = (new_val.doubleValue()/100.0)*RECT_X
+                  println(s"ScrollBar old = ${old_val.doubleValue()}  new = ${new_val.doubleValue()} ; delta = $delta")
+                  hb.setLayoutX(-delta)
+                  //hb.setLayoutX(-new_val.doubleValue())
+                  //rectangle.setLayoutX(-new_val.doubleValue())
+            }
+        })
+
+      // Separator (see Container)
+
+
+      // http://tutorials.jenkov.com/javafx/vbox.html
       //root.setAlignment(Pos.BASELINE_CENTER)
       root.setAlignment(Pos.TOP_CENTER)
       root.setFillWidth(true)
-      root.getChildren().add(btn)
+      //root.getChildren().add(btn)
+      root.getChildren().add(htmlEditor)
+      root.getChildren().add(pagination)
+      root.getChildren().add(hb)
 
-      primaryStage.setScene(Scene(root, 500, 400))
+      primaryStage.setScene(scene)
       primaryStage.show()
     }
 }
