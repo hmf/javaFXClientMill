@@ -51,7 +51,7 @@ import javafx.scene.control.Slider
  * @see https://stackoverflow.com/questions/22000423/javafx-and-maven-nullpointerexception-location-is-required
  * @see https://stackoverflow.com/questions/12124657/getting-started-on-scala-javafx-desktop-application-development
  */
-class HelloWorld extends Application {
+class Basic extends Application {
 
   /*
   1. "Labeled" controls: Button, CheckBox, Hyperlink, Label, RadioButton, and ToggleButton
@@ -241,7 +241,7 @@ class HelloWorld extends Application {
 object Basic {
 
     def main(args: Array[String]): Unit = {
-      Application.launch(classOf[HelloWorld], args: _*)
+      Application.launch(classOf[Basic], args: _*)
     }
 }
 
