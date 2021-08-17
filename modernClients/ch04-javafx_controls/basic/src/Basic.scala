@@ -26,6 +26,10 @@ import javafx.scene.control.RadioButton
 import javafx.scene.control.TextField
 import javafx.scene.control.PasswordField
 import javafx.scene.control.TextArea
+import javafx.scene.control.ProgressBar
+import javafx.scene.control.ProgressIndicator
+import javafx.scene.control.Label
+import javafx.scene.control.Slider
 
 /**
  *
@@ -168,11 +172,50 @@ class HelloWorld extends Application {
           println("current multi-line input is " + newValue)
         )
 
+      // ProgressBar and ProgressIndicator
+      val progress = 0.55F
+      val p2 = ProgressBar()
+      p2.setProgress(progress)
+
+      val p1 = ProgressIndicator()
+      p1.setProgress(progress)
+
+      val label = Label()
+      label.setText(s"progress: $progress")
+
+      val hb1 = HBox()
+      hb1.setSpacing(5)
+      hb1.setAlignment(Pos.CENTER)
+      hb1.getChildren().addAll(label, p2, p1)
+
+      // Nodes have only ne parent, so cannot be assigned to multiple containers
+      val p3 = ProgressBar()
+      p3.setProgress(progress)
+
+      val p4 = ProgressIndicator()
+      p4.setProgress(progress)
+
+      val slider = Slider(0.0f, 1.0f, progress)
+      slider.valueProperty()
+            .addListener(
+              (o, oldValue, newValue) => 
+                  p3.setProgress(newValue.doubleValue)
+                  p4.setProgress(newValue.doubleValue)
+                  println("Slider value is " + newValue)
+            )
+            
+      // Slider
+      val hb2 = HBox()
+      hb2.setSpacing(5)
+      hb2.setAlignment(Pos.CENTER)
+      hb2.getChildren().addAll(slider, p3, p4)
+
 
       // http://tutorials.jenkov.com/javafx/vbox.html
       //val root = new StackPane()
       val root = VBox(5)
-      root.setAlignment(Pos.BASELINE_CENTER)
+      //root.setAlignment(Pos.BASELINE_CENTER)
+      root.setAlignment(Pos.TOP_CENTER)
       root.setFillWidth(true)
       root.getChildren().add(btn)
       root.getChildren().add(cb)
@@ -182,6 +225,13 @@ class HelloWorld extends Application {
       root.getChildren().add(textField)
       root.getChildren().add(passwordField)
       root.getChildren().add(textArea)
+      // This causes a problem - the ProgressBar appears on top of the text area (ok with Pos.TOP_CENTER)
+      //root.getChildren().add(p2)
+      // Just the progress indicator does not appear? (ok with Pos.TOP_CENTER)
+      //root.getChildren().add(p1)
+      // Sort of ok. Still overlaps text area (ok with Pos.TOP_CENTER)
+      root.getChildren().add(hb1)
+      root.getChildren().add(hb2)
 
       primaryStage.setScene(Scene(root, 500, 400))
       primaryStage.show()
