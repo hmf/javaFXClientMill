@@ -88,10 +88,7 @@ trait OpenJFX extends JavaModule {
   val WEB            = s"org.openjfx:javafx-$WEB_:$javaFXVersion"
   val CONTROLSFX     = s"org.controlsfx:$CONTROLSFX_:$controlsFXVersion"
   val HANSOLO_CHARTS = s"eu.hansolo.fx:charts:$hanSoloChartsVersion"  // Java
-
-  // TODO: missing javafx-sdk
-  // https://stackoverflow.com/questions/76683529/error-javafx-runtime-components-are-missing-and-are-required-to-run-this-appl
-
+  
   // OpenFX/JavaFX libraries
   val javaFXModuleNames = Seq(BASE_, CONTROLS_, FXML_, GRAPHICS_, MEDIA_, SWING_, WEB_)
 
