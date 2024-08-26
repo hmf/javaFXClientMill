@@ -155,7 +155,7 @@ class Others extends Application {
       hb.getChildren().addAll( colorLabel, rectangle, rectangle1, rectangle2, rectangle3, rectangle4)
       vb.getChildren().addAll( hb, sc)
 
-      // Use of setLayoutY/setLayoutX flawed. Does not work
+      // Use of setLayoutY/setLayoutX flawed. Does not work. Thius is reserved for Group.
       // Should be set dynamically
       sc.setLayoutY(rectangle.getHeight())
 

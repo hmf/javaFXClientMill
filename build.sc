@@ -7,23 +7,25 @@
 // cSpell:ignore arraychangeevent, numericproperties
 
 import coursier.core.Resolution
-import mill._
 import mill.api.Loose
 import mill.define.{Target, Task}
-import scalalib._
+import mill._, scalalib._
 
-val ScalaVersion = "3.0.1"
+
+val ScalaVersion = "3.5.1-RC2" // "3.0.1"
 
 //val javaFXVersion = "11.0.2"
 //val javaFXVersion = "11"
 //val javaFXVersion = "12"
 //val javaFXVersion = "13.0.2"
-val javaFXVersion = "16"
+// val javaFXVersion = "16"
+val javaFXVersion = "22.0.2"
 
-val mUnitVersion         = "0.7.27"
+val mUnitVersion         = "0.8.4" // "0.7.27"
 val controlsFXVersion    = "11.1.0"
 //val hanSoloChartsVersion = "16.0.12" JDK16
-val hanSoloChartsVersion = "11.7"
+// val hanSoloChartsVersion = "11.7"
+val hanSoloChartsVersion = "21.0.19"
 
 
 /**
@@ -68,8 +70,8 @@ trait OpenJFX extends JavaModule {
   val CONTROLSFX_1 = "org.controlsfx.controls"
 
   // Charts
-  //val HANSOLO_CHARTS_ = "eu.hansolo.fx.charts"
-  val HANSOLO_CHARTS_ = "charts"
+  val HANSOLO_CHARTS_ = "eu.hansolo.fx.charts"
+  //val HANSOLO_CHARTS_ = "charts"
 
 
   // Extra modules
@@ -210,13 +212,18 @@ Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
                                       .filter{
                                          s =>
                                            val t = s.toLowerCase()
-                                           t.contains("javafx") || t.contains("controlsfx") || t.contains("hansolo")
+                                           t.contains("javafx") || t.contains("controlsfx") || 
+                                           t.contains("hansolo") || t.contains("logback") || t.contains("slf4j")
                                         }
     println(s.mkString("!\n"))                          
     val hasControls = strLibs.filter{ s => s.toLowerCase.contains("controlsfx") }.size > 0
     val hasCharts = strLibs.filter{ s => s.toLowerCase.contains("hansolo") }.size > 0
+    val hasLogback = strLibs.filter{ s => s.toLowerCase.contains("logback") }.size > 0
+    val hasSLF4j = strLibs.filter{ s => s.toLowerCase.contains("slf4j") }.size > 0
     println(if (hasControls) Seq(controlsFXModule) else Seq())
     println(if (hasCharts) Seq(HANSOLO_CHARTS_) else Seq())
+    println(if (hasLogback) Seq("?") else Seq())
+    println(if (hasSLF4j) Seq("?") else Seq())
 
     // Create the JavaFX module names (convention is amenable to automation)
     import scala.util.matching.Regex
@@ -255,7 +262,7 @@ Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
 
 
   // TODO: after version 0.10.0 of Mill put test in the managed/unmanaged classes
-  object test extends Tests {
+  object test extends JavaTests with TestModule.Munit  {
 
     // TODO: after version 0.10.0 of Mill remove this
     // sse https://github.com/com-lihaoyi/mill/issues/1406
@@ -344,6 +351,13 @@ https://stackoverflow.com/questions/661320/how-to-add-native-library-to-java-lib
     override def mainClass: T[Option[String]] = Some("hansolo.charts.LineChartTest")
 
     override def ivyDeps = Agg(
+                                // TODO: required by charts only
+                                ivy"org.slf4j:slf4j-api:2.0.16",
+                                // TODO: for tests only?
+                                // https://stackoverflow.com/questions/54777923/logback-in-a-java-9-modular-application-not-working
+                                // https://logback.qos.ch/
+                                // ivy"ch.qos.logback:logback-classic:1.3.0-alpha4",
+                                ivy"ch.qos.logback:logback-classic:1.5.7",
                                 ivy"$CONTROLS",
                                 //ivy"$CONTROLSFX",      // TODO: bug - we should not need this
                                 ivy"$HANSOLO_CHARTS" // ivyHanSoloCharts 

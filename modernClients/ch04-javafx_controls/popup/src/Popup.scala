@@ -4,8 +4,6 @@ package org.modernclients.popup
 
 import collection.JavaConverters._
 
-import collection.JavaConverters._
-
 import javafx.application.Application
 import javafx.stage.Stage
 import javafx.scene.Scene
@@ -37,7 +35,6 @@ import javafx.geometry.Pos
  */
 class Popup extends Application {
 
-
   override def start(primaryStage: Stage) = {
       primaryStage.setTitle("Popup controls")
 
@@ -55,7 +52,20 @@ class Popup extends Application {
               println("Hello Popup")
           }
       })
+
+      // Menu and MenuItem
+      // MenuItem simply extends from Object, on its own it is useless and cannot be added to a JavaFX user interface
+      // CheckMenuItem and RadioMenuItem
+      // RadioMenuItem – it should be associated with a ToggleGroup
+      // add a Separator directly into a Menu
+      // CustomMenuItem - embed any arbitrary Node
+      // MenuBar class has a useSystemMenuBar property that, if set to true, will 
+      // remove the MenuBar from the application window and instead render the 
+      // menu bar natively using the system menu bar
+      // see http://tutorials.jenkov.com/javafx/menubar.html
       
+      
+
       // http://tutorials.jenkov.com/javafx/vbox.html
       //val root = new StackPane()
       val root = VBox(5)
