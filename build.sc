@@ -22,7 +22,7 @@ val ScalaVersion = "3.5.1-RC2" // "3.0.1"
 val javaFXVersion = "22.0.2"
 
 val mUnitVersion         = "0.8.4" // "0.7.27"
-val controlsFXVersion    = "11.1.0"
+val controlsFXVersion    = "11.2.1" // "11.1.0"
 //val hanSoloChartsVersion = "16.0.12" JDK16
 // val hanSoloChartsVersion = "11.7"
 val hanSoloChartsVersion = "21.0.19"
@@ -88,6 +88,9 @@ trait OpenJFX extends JavaModule {
   val WEB            = s"org.openjfx:javafx-$WEB_:$javaFXVersion"
   val CONTROLSFX     = s"org.controlsfx:$CONTROLSFX_:$controlsFXVersion"
   val HANSOLO_CHARTS = s"eu.hansolo.fx:charts:$hanSoloChartsVersion"  // Java
+
+  // TODO: missing javafx-sdk
+  // https://stackoverflow.com/questions/76683529/error-javafx-runtime-components-are-missing-and-are-required-to-run-this-appl
 
   // OpenFX/JavaFX libraries
   val javaFXModuleNames = Seq(BASE_, CONTROLS_, FXML_, GRAPHICS_, MEDIA_, SWING_, WEB_)
