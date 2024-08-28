@@ -33,9 +33,9 @@ import javafx.scene.Scene
 /**
  * ./mill mill.scalalib.GenIdea/idea
  *
- * ./mill -i hanSoloCharts.run
- * ./mill -i hanSoloCharts.runMain hansolo.charts.LineChartTest
- * ./mill -i --watch hanSoloCharts.runMain hansolo.charts.LineChartTest
+ * ./mill -i hanSoloChartsStd.run
+ * ./mill -i hanSoloChartsStd.runMain hansolo.charts.LineChartTest
+ * ./mill -i --watch hanSoloChartsStd.runMain hansolo.charts.LineChartTest
  * 
  * Note on resources (see StackOverflow link below): Mill's convention is to 
  * place a resources directory on the lowest level Mill module. To access 

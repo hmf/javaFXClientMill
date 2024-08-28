@@ -56,19 +56,187 @@ Clean the project to start over:
 
 > ./mill -i clean
 
-
+After cleaning, all caches are also cleared, so 
 
 > ./mill -i hanSoloCharts.runMain hansolo.charts.LineChartTest
 
 
-
-  // TODO: missing javafx-sdk
-  // https://stackoverflow.com/questions/76683529/error-javafx-runtime-components-are-missing-and-are-required-to-run-this-appl
-  // /home/hmf/.cache/coursier/v1/https/repo1.maven.org/maven2/org/openjfx/javafx-graphics/22.0.2/
+## Samples
 
 
-WARNING: java.lang.UnsatisfiedLinkError: Can't load library: /home/user/.cache/coursier/v1/https/repo1.maven.org/maven2/org/openjfx/javafx-graphics/22.0.2/libglass.so
-Loaded library /libglass.so from resource
+hanSoloCharts/src/LineChartTest.scala
+
+ * ./mill -i hanSoloChartsStd.run
+ * ./mill -i hanSoloChartsStd.runMain hansolo.charts.LineChartTest
+ * ./mill -i --watch hanSoloChartsStd.runMain hansolo.charts.LineChartTest
+
+hanSoloChartsStd/src/LineChartTest.scala
+
+ * ./mill -i hanSoloCharts.run
+ * ./mill -i hanSoloCharts.runMain hansolo.charts.LineChartTest
+ * ./mill -i --watch hanSoloCharts.runMain hansolo.charts.LineChartTest
+
+/home/hmf/VSCodeProjects/javaFXClientMill/HelloWorldJava/src/button/Main.java
+
+ * ./mill -i HelloWorldJava.runMain button.Main
+ * ./mill -i --watch HelloWorldJava.runMain button.Main
+
+HelloWorldJava/src/helloworld/HelloWorld.java
+
+ * ./mill -i HelloWorldJava.run
+ * ./mill -i HelloWorldJava.runMain helloworld.HelloWorld
+ * ./mill -i --watch HelloWorldJava.run
+
+HelloWorldJava/test/src/PlotSpec.scala
+
+ * ./mill -i HelloWorld.test
+ * ./mill -i HelloWorld.test.testLocal
+ * ./mill -i HelloWorld.test HelloWorld.PlotSpec.*
+ * ./mill -i HelloWorld.test HelloWorld.PlotSpec.hello // test("hello")
+
+HelloWorldScala/src/button/Main.scala
+
+ * ./mill -i HelloWorldScala.runMain button.Main
+ * ./mill -i --watch HelloWorldScala.runMain button.Main
 
 
+HelloWorldScala/src/helloworld/HelloWorld.scala
 
+ * ./mill -i HelloWorldScala.run
+ * ./mill -i HelloWorldScala.runMain helloworld.HelloWorld
+ * ./mill -i --watch HelloWorldScala.run
+
+HelloWorldScala/test/src/PlotSpec.scala
+
+ * ./mill -i HelloWorld.test
+ * ./mill -i HelloWorld.test.testLocal
+ * ./mill -i HelloWorld.test HelloWorld.PlotSpec.*
+ * ./mill -i HelloWorld.test HelloWorld.PlotSpec.hello // test("hello")
+
+modernClients/ch02-javafx_fundamentals/myshapes/src/main/java/org/modernclient/MyShapes.scala
+
+ * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.run
+ * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
+ * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
+
+modernClients/ch02-javafx_fundamentals/myshapes2/src/main/java/org/modernclient/MyShapes2.scala
+modernClients/ch02-javafx_fundamentals/myshapes2/src/main/java/org/modernclient/MyShapes2.scala
+
+ * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes2.run
+ * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes2.runMain org.modernclient.MyShapes2
+ * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapes2.runMain org.modernclient.MyShapes2
+
+modernClients/ch02-javafx_fundamentals/myshapesfxml/src/main/java/org/modernclient/MyShapesFXML.scala
+modernClients/ch02-javafx_fundamentals/myshapesfxml/target/classes/org/modernclient/MyShapesFXML.scala
+
+ * ./mill -i modernClients.ch02-javafx_fundamentals.myshapesfxml.run
+ * ./mill -i modernClients.ch02-javafx_fundamentals.myshapesfxml.runMain org.modernclient.MyShapesFXML
+ * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapesfxml.runMain org.modernclient.MyShapesFXML
+
+
+modernClients/ch02-javafx_fundamentals/myshapesproperties/src/main/java/org/modernclient/MyShapesProperties.scala
+ * ./mill -i modernClients.ch02-javafx_fundamentals.myshapesproperties.run
+ * ./mill -i modernClients.ch02-javafx_fundamentals.myshapesproperties.runMain org.modernclient.MyShapesProperties
+ * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapesproperties.runMain org.modernclient.MyShapesProperties
+
+
+modernClients/ch02-javafx_fundamentals/myshapesproperties/src/main/java/org/modernclient/MyShapesProperties.scala
+modernClients/ch02-javafx_fundamentals/myshapesproperties/target/classes/org/modernclient/MyShapesProperties.scala
+
+ * ./mill -i modernClients.ch02-javafx_fundamentals.myshapesproperties.run
+ * ./mill -i modernClients.ch02-javafx_fundamentals.myshapesproperties.runMain org.modernclient.MyShapesProperties
+ * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapesproperties.runMain org.modernclient.MyShapesProperties
+
+
+modernClients/ch02-javafx_fundamentals/personui/src/main/java/com/modernclient/PersonUI.scala
+
+ * ./mill -i modernClients.ch02-javafx_fundamentals.personui.run
+ * ./mill -i modernClients.ch02-javafx_fundamentals.personui.runMain com.modernclient.PersonUI
+ * ./mill -i --watch modernClients.ch02-javafx_fundamentals.personui.runMain com.modernclient.PersonUI
+
+modernClients/ch03-PropertiesBindings/arraychangeevent/src/main/java/org/modernclients/propertiesandbindings/ArrayChangeEventExample.scala
+
+ * ./mill -i modernClients.ch03-PropertiesBindings.arraychangeevent.run
+ * ./mill -i modernClients.ch03-PropertiesBindings.arraychangeevent.runMain org.modernclients.propertiesandbindings.ArrayChangeEventExample
+ * ./mill -i --watch modernClients.ch03-PropertiesBindings.arraychangeevent.runMain org.modernclients.propertiesandbindings.ArrayChangeEventExample
+
+modernClients/ch03-PropertiesBindings/numericproperties/src/main/java/org/modernclients/propertiesandbindings/NumericPropertiesExample.scala
+
+
+ * ./mill -i modernClients.ch03-PropertiesBindings.numericproperties.run
+ * ./mill -i modernClients.ch03-PropertiesBindings.numericproperties.runMain org.modernclients.propertiesandbindings.NumericPropertiesExample
+ * ./mill -i --watch modernClients.ch03-PropertiesBindings.numericproperties.runMain org.modernclients.propertiesandbindings.NumericPropertiesExample
+
+modernClients/ch04-javafx_controls/advanced/src/Advanced.scala
+
+ * ./mill -i modernClients.ch04-javafx_controls.advanced.run
+ * ./mill -i modernClients.ch04-javafx_controls.advanced.runMain org.modernclients.advanced.Advanced
+ * ./mill -i --watch modernClients.ch04-javafx_controls.advanced.runMain org.modernclients.advanced.Advanced
+ * 
+
+modernClients/ch04-javafx_controls/basic/src/Basic.scala
+
+
+ * ./mill -i modernClients.ch04-javafx_controls.basic.run
+ * ./mill -i modernClients.ch04-javafx_controls.basic.runMain org.modernclients.controls.Basic
+ * ./mill -i --watch modernClients.ch04-javafx_controls.basic.runMain org.modernclients.controls.Basic
+
+
+/home/hmf/VSCodeProjects/javaFXClientMill/modernClients/ch04-javafx_controls/container/src/Container.scala
+
+ * ./mill -i modernClients.ch04-javafx_controls.container.run
+ * ./mill -i modernClients.ch04-javafx_controls.container.runMain org.modernclients.container.Container
+ * ./mill -i --watch modernClients.ch04-javafx_controls.container.runMain org.modernclients.container.Container
+
+
+modernClients/ch04-javafx_controls/dialog/src/Dialog.scala
+
+ * ./mill -i modernClients.ch04-javafx_controls.dialog.run
+ * ./mill -i modernClients.ch04-javafx_controls.dialog.runMain org.modernclients.dialog.Dialog
+ * ./mill -i --watch modernClients.ch04-javafx_controls.dialog.runMain org.modernclients.dialog.Dialog
+
+modernClients/ch04-javafx_controls/others/src/Others.scala
+
+
+ * ./mill -i modernClients.ch04-javafx_controls.others.run
+ * ./mill -i modernClients.ch04-javafx_controls.others.runMain org.modernclients.others.Others
+ * ./mill -i --watch modernClients.ch04-javafx_controls.others.runMain org.modernclients.others.Others
+
+
+modernClients/ch04-javafx_controls/popup/src/Popup.scala
+
+ * ./mill -i modernClients.ch04-javafx_controls.popup.run
+ * ./mill -i modernClients.ch04-javafx_controls.popup.runMain org.modernclients.popup.Popup
+ * ./mill -i --watch modernClients.ch04-javafx_controls.popup.runMain org.modernclients.popup.Popup
+ * 
+
+modernClients/ch04-javafx_controls/selectionAndFocus/src/SelectionAndFocus.scala
+
+ * ./mill -i modernClients.ch04-javafx_controls.selectionAndFocus.run
+ * ./mill -i modernClients.ch04-javafx_controls.selectionAndFocus.runMain org.modernclients.selectionAndFocus.SelectionAndFocus
+ * ./mill -i --watch modernClients.ch04-javafx_controls.selectionAndFocus.runMain org.modernclients.selectionAndFocus.SelectionAndFocus
+ * 
+
+modernClients/HelloModernWorld/src/sample/Main.scala
+
+ * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
+ * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
+
+modernClients/HelloWorldScala/src/button/Main.scala
+
+
+ * ./mill -i modernClients.HelloWorldScala.runMain button.Main
+ * ./mill -i --watch modernClients.HelloWorldScala.runMain button.Main
+
+modernClients/HelloWorldScala/src/helloworld/HelloWorld.scala
+
+ * ./mill -i modernClients.HelloWorldScala.run
+ * ./mill -i modernClients.HelloWorldScala.runMain helloworld.HelloWorld
+ * ./mill -i --watch modernClients.HelloWorldScala.run
+
+modernClients/HelloWorldScala/test/src/PlotSpec.scala
+
+ * ./mill -i HelloWorld.test
+ * ./mill -i HelloWorld.test.testLocal
+ * ./mill -i HelloWorld.test HelloWorld.PlotSpec.*
+ * ./mill -i HelloWorld.test HelloWorld.PlotSpec.hello // test("hello")
