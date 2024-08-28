@@ -60,8 +60,20 @@ After cleaning, all caches are also cleared, so when we execute the application,
 
 > ./mill -i hanSoloCharts.runMain hansolo.charts.LineChartTest
 
-
 ## Samples
+
+### Java Examples
+
+
+The [HelloWorldJava/src/helloworld/HelloWorld.java](HelloWorldJava/src/helloworld/HelloWorld.java) shows how to start a OpenFX Java application using [Mill (HelloWorldJava module)](build.sc#L296). Here is a list of possible commands:
+
+```bash
+$ ./mill -i HelloWorldJava.run
+$ ./mill -i HelloWorldJava.runMain helloworld.HelloWorld
+$ ./mill -i --watch HelloWorldJava.run
+```
+
+Note that the first command execute a default applications. A module may have several applications. To execute such a class explicitly indicate the class name sing the `runMain` command. Press the button to print a hello message to the console. 
 
 
 hanSoloCharts/src/LineChartTest.scala
@@ -80,12 +92,6 @@ hanSoloChartsStd/src/LineChartTest.scala
 
  * ./mill -i HelloWorldJava.runMain button.Main
  * ./mill -i --watch HelloWorldJava.runMain button.Main
-
-HelloWorldJava/src/helloworld/HelloWorld.java
-
- * ./mill -i HelloWorldJava.run
- * ./mill -i HelloWorldJava.runMain helloworld.HelloWorld
- * ./mill -i --watch HelloWorldJava.run
 
 HelloWorldJava/test/src/PlotSpec.scala
 

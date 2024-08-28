@@ -137,14 +137,16 @@ trait OpenJFX extends JavaModule {
    * 
    * @see https://github.com/com-lihaoyi/mill/pull/775 (commit ab4d61a)
    * 
-   * After version 0.10.0 of Mill this is not required anymore
+   * We had to add this same override explicitly to the test module. After version 
+   * 0.10.0 of Mill this is not required anymore because it is automatically inherited.
    * @see https://github.com/com-lihaoyi/mill/issues/1406
    *
    * @return OS specific resolution mapping
-   */
+  */ 
   override def resolutionCustomizer: Task[Option[Resolution => Resolution]] = T.task {
     Some((_: coursier.core.Resolution).withOsInfo(coursier.core.Activation.Os.fromProperties(sys.props.toMap)))
   }
+  
 
   // Logging utilities
   def underline(a: fansi.Attr) = fansi.Underlined.On ++ a
@@ -280,11 +282,11 @@ trait OpenJFX extends JavaModule {
 
   object test extends JavaTests with TestModule.Munit  {
 
-    // TODO: after version 0.10.0 of Mill remove this
-    // sse https://github.com/com-lihaoyi/mill/issues/1406
-    override def resolutionCustomizer: Task[Option[Resolution => Resolution]] = T.task {
-      Some((_: coursier.core.Resolution).withOsInfo(coursier.core.Activation.Os.fromProperties(sys.props.toMap)))
-    }
+    //  Not required after version 0.10.0 of Mill 
+    // see https://github.com/com-lihaoyi/mill/issues/1406
+    // override def resolutionCustomizer: Task[Option[Resolution => Resolution]] = T.task {
+    //   Some((_: coursier.core.Resolution).withOsInfo(coursier.core.Activation.Os.fromProperties(sys.props.toMap)))
+    // }
 
     //def testFrameworks = Seq(ivyMunitInterface)
     def testFramework = ivyMunitInterface
