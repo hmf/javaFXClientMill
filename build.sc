@@ -206,8 +206,44 @@ Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
   def darkOrange(s: String): String = darkOrange_(s).render
   def underlineDarkOrange(s: String): String = fansi.Underlined.On(darkOrange_(s)).render
   
-  
+  def showManagedLibs(libs: Loose.Agg[String]) = {
+    println(underlineOrange("Manged modules found from dependencies:"))
+    println(lightYellow(libs.mkString("!\n")))
+  }
 
+  def showModuleChecks(
+      hasJavaFX:   Boolean,
+      hasControls: Boolean,
+      hasCharts:   Boolean,
+      hasLogback:  Boolean,
+      hasSLF4j:    Boolean ) = {
+
+    println(underlineOrange("Module checks:"))
+    println(lightYellow(s"hasJavaFX:   $hasJavaFX"))
+    println(lightYellow(s"hasControls: $hasControls"))
+    println(lightYellow(s"hasCharts:   $hasCharts"))
+    println(lightYellow(s"hasLogback:  $hasLogback"))
+    println(lightYellow(s"hasSLF4j:    $hasSLF4j"))
+  }
+
+  def mkStringOrEmpty(s: Seq[String], delimiter: String = ", ") : String = {
+    if (s.size > 0) s.mkString(delimiter) else "-"
+  }
+
+  def showModuleNames(
+      javafx:   Seq[String],
+      controls: Seq[String],
+      charts:   Seq[String],
+      logBack:  Seq[String],
+      sl4J:     Seq[String] ) = {
+
+    println(underlineOrange("Module names:"))
+    println(lightYellow(s"javafx:   ${mkStringOrEmpty(javafx)}"))
+    println(lightYellow(s"controls: ${mkStringOrEmpty(controls)}"))
+    println(lightYellow(s"charts:   ${mkStringOrEmpty(charts)}"))
+    println(lightYellow(s"logBack:  ${mkStringOrEmpty(logBack)}"))
+    println(lightYellow(s"sl4J:     ${mkStringOrEmpty(sl4J)}"))
+  }
 
   // TODO: https://docs.oracle.com/en/java/javase/16/docs/api/jdk.incubator.foreign/jdk/incubator/foreign/LibraryLookup.html
   // TODO: https://openjdk.java.net/projects/jigsaw/doc/topics/nativecode.html
@@ -225,7 +261,7 @@ Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
    * @return the list of parameters for the JVM
    */
   override def forkArgs: Target[Seq[String]] = T {
-    println("build.sc.forkArgs")
+    println(orange("build.sc.forkArgs"))
 
     // get the managed libraries
     val allLibs: Loose.Agg[PathRef] = runClasspath()
@@ -238,39 +274,42 @@ Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
                                            t.contains("javafx") || t.contains("controlsfx") || 
                                            t.contains("hansolo") || t.contains("logback") || t.contains("slf4j")
                                         }
-    println(underlineYellow("Manged modules found from dependencies:"))
-    println(lightYellow(s.mkString("!\n")))
+    showManagedLibs(s)
 
-    // Check for each module type by name
+    // Check for each module by name
     val hasControls = strLibs.filter{ s => s.toLowerCase.contains("controlsfx") }.size > 0
-    val hasCharts = strLibs.filter{ s => s.toLowerCase.contains("hansolo") }.size > 0
-    val hasLogback = strLibs.filter{ s => s.toLowerCase.contains("logback") }.size > 0
-    val hasSLF4j = strLibs.filter{ s => s.toLowerCase.contains("slf4j") }.size > 0
-    println(if (hasControls) Seq(controlsFXModule) else Seq())
-    println(if (hasCharts) Seq(HANSOLO_CHARTS_) else Seq())
-    println(if (hasLogback) Seq("?") else Seq())
-    println(if (hasSLF4j) Seq("?") else Seq())
-
-    println(underlineYellow("Module checks:"))
-    println(lightYellow(s"hasControls: $hasControls"))
-    println(lightYellow(s"hasCharts:   $hasCharts"))
-    println(lightYellow(s"hasLogback:  $hasLogback"))
-    println(lightYellow(s"hasSLF4j:    $hasSLF4j"))
-
+    val hasCharts   = strLibs.filter{ s => s.toLowerCase.contains("hansolo") }.size > 0
+    val hasLogback  = strLibs.filter{ s => s.toLowerCase.contains("logback") }.size > 0
+    val hasSLF4j    = strLibs.filter{ s => s.toLowerCase.contains("slf4j") }.size > 0
+    // Match is a little more complicated
     // Create the JavaFX module names (convention is amenable to automation)
-    import scala.util.matching.Regex
-
-    // First get the javaFX only libraries
+    // import scala.util.matching.Regex
     val javaFXLibs = raw".*javafx-(.+?)-.*".r
     val javaFXModules = s.iterator.map(m => javaFXLibs.findFirstMatchIn(m).map(_.group(1)) )
                       .toSet
                       .filter(_.isDefined)
                       .map(_.get)
-    // Now generate the module names
+                      .toSeq
+    val hasJavaFX   = javaFXModules.size > 0
+
+    showModuleChecks( hasJavaFX, hasControls, hasCharts,  hasLogback, hasSLF4j )
+
+    // Now collect the module names based on the modules found
+    // First get the javaFX only libraries
+    val javafx   = if (hasJavaFX)   javaFXModules.map( m => s"javafx.$m") else Seq()
+    val controls = if (hasControls) Seq(controlsFXModule)                 else Seq()
+    val charts   = if (hasCharts)   Seq(HANSOLO_CHARTS_)                  else Seq()
+    val logBack  = if (hasLogback)  Seq()                                 else Seq() // only path required
+    val sl4J     = if (hasSLF4j)    Seq()                                 else Seq() // only path required
+
+    showModuleNames( javafx, controls, charts,  logBack, sl4J )
+
+    // Now combine all the module names
     val modulesNames = javaFXModules.map( m => s"javafx.$m") ++
                           // no standard convention, so add it manually
                           (if (hasControls) Seq(controlsFXModule) else Seq()) ++
                           (if (hasCharts) Seq(HANSOLO_CHARTS_) else Seq())
+
 
     println(modulesNames.mkString("?\n"))                          
     // Experiment
