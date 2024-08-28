@@ -29,7 +29,7 @@ Here are some examples of usage (we only need the second one):
 > * sudo update-alternatives --config jarsigner
 <!-- https://askubuntu.com/questions/315646/update-java-alternatives-vs-update-alternatives-config-java -->
 
-## CAching the OS libraries
+## Caching the OS libraries
 
 When executing the application, the following warning will appear:
 
@@ -56,7 +56,7 @@ Clean the project to start over:
 
 > ./mill -i clean
 
-After cleaning, all caches are also cleared, so 
+After cleaning, all caches are also cleared, so when we execute the application, the `forkArgs` method is override to construct the command line arguments that include the libraries and modules. This methods will list all of the managed class paths that are used to identify the module names. It also lists which module libraries are detected and the corresponding module names. Note that the JavaFX/OpenFX library consists of several JARs and contains multiple modules. The `forkArgs` method can ne overridden. In several examples we do this to change the command line and print the full command line arguments that are used.  The following executes a simple example that shows a simple line chart. 
 
 > ./mill -i hanSoloCharts.runMain hansolo.charts.LineChartTest
 

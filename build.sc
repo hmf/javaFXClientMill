@@ -13,7 +13,6 @@ import mill._, scalalib._
 
 import $ivy.`com.lihaoyi::pprint:0.9.0`
 import $ivy.`com.lihaoyi::fansi:0.5.0`
-// import pprint
 
 val ScalaVersion = "3.5.1-RC2" // "3.0.1"
 
@@ -57,6 +56,7 @@ val hanSoloChartsVersion = "21.0.19"
  */
 trait OpenJFX extends JavaModule {
 
+  // Start of example of manual setup. Note used
   // Modules 
 
   // OpenFX
@@ -74,7 +74,7 @@ trait OpenJFX extends JavaModule {
 
   // Charts
   val HANSOLO_CHARTS_ = "eu.hansolo.fx.charts"
-  //val HANSOLO_CHARTS_ = "charts"
+  val HANSOLO_CHARTS_1 = "charts"
 
 
   // Extra modules
@@ -90,15 +90,15 @@ trait OpenJFX extends JavaModule {
   val SWING          = s"org.openjfx:javafx-$SWING_:$javaFXVersion"
   val WEB            = s"org.openjfx:javafx-$WEB_:$javaFXVersion"
   val CONTROLSFX     = s"org.controlsfx:$CONTROLSFX_:$controlsFXVersion"
-  val HANSOLO_CHARTS = s"eu.hansolo.fx:charts:$hanSoloChartsVersion"  // Java
+  val HANSOLO_CHARTS = s"eu.hansolo.fx:charts:$hanSoloChartsVersion"  
   
   // OpenFX/JavaFX libraries
-  val javaFXModuleNames = Seq(BASE_, CONTROLS_, FXML_, GRAPHICS_, MEDIA_, SWING_, WEB_)
+  val javaFXLibraryNames = Seq(BASE_, CONTROLS_, FXML_, GRAPHICS_, MEDIA_, SWING_, WEB_)
 
 
   def jfx(s:String): String = s"javafx.$s"
 
-  val javaFXModuleNamesX = Map(
+  val javaFXModuleNames = Map(
                              jfx(BASE_)      -> BASE, 
                              jfx(CONTROLS_)  -> CONTROLS, 
                              jfx(FXML_)      -> FXML, 
@@ -110,70 +110,22 @@ trait OpenJFX extends JavaModule {
                              HANSOLO_CHARTS_ -> HANSOLO_CHARTS
                              )
 
-/*
-Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
- eu.hansolo.fx.charts.event,eu.hansolo.fx.charts.series,eu.hansolo.fx.
- charts.tools,javafx.application,javafx.beans,javafx.beans.property,ja
- vafx.collections,javafx.geometry,javafx.scene,javafx.scene.input,java
- fx.scene.layout,javafx.scene.paint,javafx.stage";version="11.7.0",eu.
- hansolo.fx.charts.data;uses:="eu.hansolo.fx.charts,eu.hansolo.fx.char
- ts.event,eu.hansolo.fx.charts.tools,javafx.beans.property,javafx.scen
- e.paint";version="11.7.0",eu.hansolo.fx.charts.event;uses:="eu.hansol
- o.fx.charts.data,eu.hansolo.fx.charts.series,eu.hansolo.fx.charts.too
- ls";version="11.7.0",eu.hansolo.fx.charts.series;uses:="eu.hansolo.fx
- .charts,eu.hansolo.fx.charts.data,eu.hansolo.fx.charts.event,javafx.b
- eans.property,javafx.collections,javafx.scene.paint";version="11.7.0"
- ,eu.hansolo.fx.charts.tools;uses:="eu.hansolo.fx.charts,eu.hansolo.fx
- .charts.data,eu.hansolo.fx.charts.event,javafx.beans.property,javafx.
- event,javafx.geometry,javafx.scene,javafx.scene.canvas,javafx.scene.i
- nput,javafx.scene.paint,javafx.scene.shape,javafx.scene.text,javafx.s
- tage";version="11.7.0",eu.hansolo.fx.geometry;uses:="eu.hansolo.fx.ge
- ometry.tools,eu.hansolo.fx.geometry.transform,javafx.scene.canvas,jav
- afx.scene.paint";version="11.7.0",eu.hansolo.fx.geometry.tools;uses:=
- "eu.hansolo.fx.geometry,javafx.scene.paint";version="11.7.0",eu.hanso
- lo.fx.geometry.transform;uses:="eu.hansolo.fx.geometry,eu.hansolo.fx.
- geometry.tools";version="11.7.0"
 
- https://github.com/HanSolo/charts/blob/master/src/main/java/module-info.java
- exports eu.hansolo.fx.geometry;
-    exports eu.hansolo.fx.geometry.tools;
-    exports eu.hansolo.fx.geometry.transform;
-    exports eu.hansolo.fx.charts;
-    exports eu.hansolo.fx.charts.areaheatmap;
-    exports eu.hansolo.fx.charts.color;
-    exports eu.hansolo.fx.charts.converter;
-    exports eu.hansolo.fx.charts.data;
-    exports eu.hansolo.fx.charts.event;
-    exports eu.hansolo.fx.charts.font;
-    exports eu.hansolo.fx.charts.forcedirectedgraph;
-    exports eu.hansolo.fx.charts.heatmap;
-    exports eu.hansolo.fx.charts.pareto;
-    exports eu.hansolo.fx.charts.series;
-    exports eu.hansolo.fx.charts.tools;
-    exports eu.hansolo.fx.charts.world;
-*/
-
-  val xxx = "eu.hansolo.fx.charts"
-
-  /* TODO: we need a better way to identify modules in the JARs
-  see: https://stackoverflow.com/questions/46616520/list-modules-in-jar-file
-  see: https://www.daniweb.com/programming/software-development/threads/291837/best-way-executing-jar-from-java-code-then-killing-parent-java-code
-  see: https://in.relation.to/2017/12/06/06-calling-jdk-tools-programmatically-on-java-9/
-  see: https://www.pluralsight.com/guides/creating-opening-jar-files-java-programming-language
-  see: https://stackoverflow.com/questions/320510/viewing-contents-of-a-jar-file
-  see: https://www.baeldung.com/java-compress-and-uncompress
-  see: https://github.com/srikanth-lingala/zip4j
-  // List of modules (note that a single Jar may have ore than one module)
+  /* 
+  // This is an example snippet of how to use the library and  module names listed above.
+  // This not required because we now get this information from semi-automatically from
+  // the managed libraries. 
+  // List of modules (note that a single Jar may have more than one module)
   val modules = javaFXModuleNames.map(n => n -> s"org.openjfx:javafx-$n:$javaFXVersion") // OpenFX
                                   .toMap 
                 ++  // Other modules
                 Map( "controlsfx" -> s"org.controlsfx:controlsfx:$controlsFXVersion")    // ControlsFX
   println(modules)
   */
+  // End of example of manual setup. Note used
+
 
   // Standard libraries
-
-  // TODO: after version 0.10.0 if Mill put test in the managed/unmanaged classes
   val ivyMunit          = ivy"org.scalameta::munit::$mUnitVersion"
   val ivyMunitInterface = "munit.Framework"
 
@@ -182,14 +134,19 @@ Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
    * In order to use OS specific libraries (such as JavaFX or OpenJFX), we
    * must set-up the OS flags appropriately for Maven download via Coursier.
    * This is only available **after** version **0.9.6** of Mill.
-   *
+   * 
    * @see https://github.com/com-lihaoyi/mill/pull/775 (commit ab4d61a)
+   * 
+   * After version 0.10.0 of Mill this is not required anymore
+   * @see https://github.com/com-lihaoyi/mill/issues/1406
+   *
    * @return OS specific resolution mapping
    */
   override def resolutionCustomizer: Task[Option[Resolution => Resolution]] = T.task {
     Some((_: coursier.core.Resolution).withOsInfo(coursier.core.Activation.Os.fromProperties(sys.props.toMap)))
   }
 
+  // Logging utilities
   def underline(a: fansi.Attr) = fansi.Underlined.On ++ a
   def lightYellow_ : fansi.Attr = fansi.Color.LightYellow
   def lightYellow(s:java.lang.String): String = lightYellow_(s).render
@@ -245,9 +202,6 @@ Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
     println(lightYellow(s"sl4J:     ${mkStringOrEmpty(sl4J)}"))
   }
 
-  // TODO: https://docs.oracle.com/en/java/javase/16/docs/api/jdk.incubator.foreign/jdk/incubator/foreign/LibraryLookup.html
-  // TODO: https://openjdk.java.net/projects/jigsaw/doc/topics/nativecode.html
-  // TODO: https://stackoverflow.com/questions/23189776/load-native-library-from-class-path
   /**
    * Here we setup the Java modules so that they can be loaded prior to
    * application boot. We can indicate which modules are visible and even opt
@@ -305,17 +259,9 @@ Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
     showModuleNames( javafx, controls, charts,  logBack, sl4J )
 
     // Now combine all the module names
-    val modulesNames = javaFXModules.map( m => s"javafx.$m") ++
-                          // no standard convention, so add it manually
-                          (if (hasControls) Seq(controlsFXModule) else Seq()) ++
-                          (if (hasCharts) Seq(HANSOLO_CHARTS_) else Seq())
+    val modulesNames = javafx ++ controls ++ charts ++ logBack ++ sl4J
 
-
-    println(modulesNames.mkString("?\n"))                          
-    // Experiment
-
-
-    // Add to the modules list
+    // Add to the modules list and paths for the command line arguments
     Seq(
         "--module-path", s.iterator.mkString(":"),
         "--add-modules", modulesNames.iterator.mkString(",")
@@ -332,7 +278,6 @@ Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
   }
 
 
-  // TODO: after version 0.10.0 of Mill put test in the managed/unmanaged classes
   object test extends JavaTests with TestModule.Munit  {
 
     // TODO: after version 0.10.0 of Mill remove this
@@ -341,7 +286,6 @@ Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
       Some((_: coursier.core.Resolution).withOsInfo(coursier.core.Activation.Os.fromProperties(sys.props.toMap)))
     }
 
-    // https://github.com/com-lihaoyi/mill#097---2021-05-14
     //def testFrameworks = Seq(ivyMunitInterface)
     def testFramework = ivyMunitInterface
   }
@@ -409,11 +353,11 @@ https://stackoverflow.com/questions/661320/how-to-add-native-library-to-java-lib
     // -Djdk.gtk.verbose=true -Djavafx.embed.singleThread=true -Dawt.useSystemAAFontSettings=on
     // -Djava.library.path
     override def forkArgs: Target[Seq[String]] = T {
+      println(darkOrange(s"build.sc.${getClass.getSimpleName}.forkArgs"))
 
       //val t = Seq("-Dprism.verbose=true", "-Djavafx.verbose=true", "-ea") ++ // JavaFX
-      val t = Seq("-Djavafx.verbose=true") ++ // JavaFX
-        super[OpenJFX].forkArgs() //  OpenFX
-      println(t.mkString("\n"))
+      val t = Seq("-Djavafx.verbose=true") ++  super[OpenJFX].forkArgs() //  OpenFX
+      println(orange(t.mkString("\n")))
       // we do not have here the hansolo module, loading s not the same
       t
     }
