@@ -11,6 +11,9 @@ import mill.api.Loose
 import mill.define.{Target, Task}
 import mill._, scalalib._
 
+import $ivy.`com.lihaoyi::pprint:0.9.0`
+import $ivy.`com.lihaoyi::fansi:0.5.0`
+// import pprint
 
 val ScalaVersion = "3.5.1-RC2" // "3.0.1"
 
@@ -170,7 +173,7 @@ Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
 
   // Standard libraries
 
-  // TODO: after version 0.10.0 iof Mill put test in the managed/unmanaged classes
+  // TODO: after version 0.10.0 if Mill put test in the managed/unmanaged classes
   val ivyMunit          = ivy"org.scalameta::munit::$mUnitVersion"
   val ivyMunitInterface = "munit.Framework"
 
@@ -186,6 +189,24 @@ Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
   override def resolutionCustomizer: Task[Option[Resolution => Resolution]] = T.task {
     Some((_: coursier.core.Resolution).withOsInfo(coursier.core.Activation.Os.fromProperties(sys.props.toMap)))
   }
+
+  def underline(a: fansi.Attr) = fansi.Underlined.On ++ a
+  def lightYellow_ : fansi.Attr = fansi.Color.LightYellow
+  def lightYellow(s:java.lang.String): String = lightYellow_(s).render
+  //def underlineYellow(s:java.lang.String): String = fansi.Underlined.On(fansi.Color.LightYellow(s)).render
+  def underlineYellow(s:java.lang.String): String = underline(fansi.Color.Yellow)(s).render
+  def underlineLYellow(s:java.lang.String): String = underline(lightYellow_)(s).render
+
+  // https://www.rapidtables.com/web/color/orange-color.html
+  def orange_ : fansi.Attr = fansi.Color.True(255,165,0)
+  def orange(s: String): String = orange_(s).render
+  def underlineOrange(s: String): String = fansi.Underlined.On(orange_(s)).render
+
+  def darkOrange_ : fansi.Attr = fansi.Color.True(255,140,0)
+  def darkOrange(s: String): String = darkOrange_(s).render
+  def underlineDarkOrange(s: String): String = fansi.Underlined.On(darkOrange_(s)).render
+  
+  
 
 
   // TODO: https://docs.oracle.com/en/java/javase/16/docs/api/jdk.incubator.foreign/jdk/incubator/foreign/LibraryLookup.html
@@ -204,10 +225,12 @@ Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
    * @return the list of parameters for the JVM
    */
   override def forkArgs: Target[Seq[String]] = T {
+    println("build.sc.forkArgs")
+
     // get the managed libraries
     val allLibs: Loose.Agg[PathRef] = runClasspath()
     val strLibs = allLibs.map(_.path.toString())
-    // get the OpenJFX and related managed libraries
+    // get the OpenJFX and related managed libraries that have/are modules
     val s: Loose.Agg[String] = allLibs.map(_.path.toString())
                                       .filter{
                                          s =>
@@ -215,7 +238,10 @@ Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
                                            t.contains("javafx") || t.contains("controlsfx") || 
                                            t.contains("hansolo") || t.contains("logback") || t.contains("slf4j")
                                         }
-    println(s.mkString("!\n"))                          
+    println(underlineYellow("Manged modules found from dependencies:"))
+    println(lightYellow(s.mkString("!\n")))
+
+    // Check for each module type by name
     val hasControls = strLibs.filter{ s => s.toLowerCase.contains("controlsfx") }.size > 0
     val hasCharts = strLibs.filter{ s => s.toLowerCase.contains("hansolo") }.size > 0
     val hasLogback = strLibs.filter{ s => s.toLowerCase.contains("logback") }.size > 0
@@ -224,6 +250,12 @@ Export-Package: eu.hansolo.fx.charts;uses:="eu.hansolo.fx.charts.data,
     println(if (hasCharts) Seq(HANSOLO_CHARTS_) else Seq())
     println(if (hasLogback) Seq("?") else Seq())
     println(if (hasSLF4j) Seq("?") else Seq())
+
+    println(underlineYellow("Module checks:"))
+    println(lightYellow(s"hasControls: $hasControls"))
+    println(lightYellow(s"hasCharts:   $hasCharts"))
+    println(lightYellow(s"hasLogback:  $hasLogback"))
+    println(lightYellow(s"hasSLF4j:    $hasSLF4j"))
 
     // Create the JavaFX module names (convention is amenable to automation)
     import scala.util.matching.Regex
