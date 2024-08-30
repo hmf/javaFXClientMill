@@ -29,6 +29,12 @@ val controlsFXVersion    = "11.2.1" // "11.1.0"
 // val hanSoloChartsVersion = "11.7"
 val hanSoloChartsVersion = "21.0.19"
 
+// https://mvnrepository.com/artifact/com.github.sbt.junit/sbt-jupiter-interface_2.12_1.0/0.13.0
+object LibsScala extends ScalaModule {
+  // def scalaVersion = T{ "2.12.1" }
+  def scalaVersion = T{ "2.12_1.0" }
+  override def ivyDeps = T { Agg(ivy"com.github.sbt.junit::sbt-jupiter-interface:0.13.0") }
+}
 
 /**
  * When working with JavaFX/OpenFX in JDK 1.9 and later, the libraries are
@@ -55,6 +61,8 @@ val hanSoloChartsVersion = "21.0.19"
  * @see https://github.com/com-lihaoyi/mill/pull/775#issuecomment-826091576
  */
 trait OpenJFX extends JavaModule {
+
+  // override def moduleDeps = Seq(LibsScala)
 
   // Start of example of manual setup. Note used
   // Modules 
