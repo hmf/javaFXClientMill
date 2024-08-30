@@ -294,9 +294,15 @@ trait OpenJFX extends JavaModule {
     //   Some((_: coursier.core.Resolution).withOsInfo(coursier.core.Activation.Os.fromProperties(sys.props.toMap)))
     // }
 
-    //def ivyDeps = Agg(ivy"org.junit.jupiter:junit-jupiter-engine:5.11.0")
-    //  ivy"com.github.sbt:junit-interface:0.13.2",
-    // "com.github.sbt.junit" % "sbt-jupiter-interface" % "x.y.z"
+    // Cannot be sued because IvyDeps checks: transitiveIvyDeps java.lang.AssertionError
+    // https://github.com/com-lihaoyi/mill/issues/860
+    // https://mvnrepository.com/artifact/com.github.sbt.junit
+    def ivyDeps = Agg(
+    ivy"org.junit.jupiter:junit-jupiter-engine:5.11.0",
+    //ivy"com.github.sbt.junit::sbt-jupiter-interface:0.13.0",
+    ivy"com.github.sbt.junit:sbt-jupiter-interface_2.12_1.0:0.13.0",
+    
+    )
   }
 
 }

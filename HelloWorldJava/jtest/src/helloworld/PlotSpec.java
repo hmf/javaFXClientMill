@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
  * ./mill -i HelloWorldJava.jtest
  * ./mill -i HelloWorldJava.jtest.testLocal
  * ./mill -i HelloWorldJava.jtest --tests=hello.*
+ * ./mill -i HelloWorldJava.jtest --tests=he.*o.*
  *
  * Extending `TestCase` to get access to `setUp`
  *
