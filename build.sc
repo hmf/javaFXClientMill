@@ -204,6 +204,11 @@ trait OpenJFX extends JavaModule {
     println(lightYellow(s"sl4J:     ${mkStringOrEmpty(sl4J)}"))
   }
 
+  val JAVAFX_  = "javafx"
+  val HANSOLO_ = "hansolo"
+  val LOGBACK_ = "logback"
+  val SLF4J_   = "slf4j"
+
   /**
    * Here we setup the Java modules so that they can be loaded prior to
    * application boot. We can indicate which modules are visible and even opt
@@ -223,36 +228,35 @@ trait OpenJFX extends JavaModule {
     val allLibs: Loose.Agg[PathRef] = runClasspath()
     val strLibs = allLibs.map(_.path.toString())
     // get the OpenJFX and related managed libraries that have/are modules
-    val s: Loose.Agg[String] = allLibs.map(_.path.toString())
-                                      .filter{
+    val s: Loose.Agg[String] = strLibs.filter{
                                          s =>
                                            val t = s.toLowerCase()
-                                           t.contains("javafx") || t.contains("controlsfx") || 
-                                           t.contains("hansolo") || t.contains("logback") || t.contains("slf4j")
+                                           t.contains(JAVAFX_) || t.contains(CONTROLSFX_) || 
+                                           t.contains(HANSOLO_) || t.contains(LOGBACK_) || t.contains(SLF4J_)
                                         }
     showManagedLibs(s)
 
     // Check for each module by name
-    val hasControls = strLibs.filter{ s => s.toLowerCase.contains("controlsfx") }.size > 0
-    val hasCharts   = strLibs.filter{ s => s.toLowerCase.contains("hansolo") }.size > 0
-    val hasLogback  = strLibs.filter{ s => s.toLowerCase.contains("logback") }.size > 0
-    val hasSLF4j    = strLibs.filter{ s => s.toLowerCase.contains("slf4j") }.size > 0
+    val hasControls = s.filter{ s => s.toLowerCase.contains(CONTROLSFX_) }.size > 0
+    val hasCharts   = s.filter{ s => s.toLowerCase.contains(HANSOLO_) }.size > 0
+    val hasLogback  = s.filter{ s => s.toLowerCase.contains(LOGBACK_) }.size > 0
+    val hasSLF4j    = s.filter{ s => s.toLowerCase.contains(SLF4J_) }.size > 0
     // Match is a little more complicated
     // Create the JavaFX module names (convention is amenable to automation)
     // import scala.util.matching.Regex
     val javaFXLibs = raw".*javafx-(.+?)-.*".r
     val javaFXModules = s.iterator.map(m => javaFXLibs.findFirstMatchIn(m).map(_.group(1)) )
-                      .toSet
-                      .filter(_.isDefined)
-                      .map(_.get)
-                      .toSeq
+                         .toSet
+                         .filter(_.isDefined)
+                         .map(_.get)
+                         .toSeq
     val hasJavaFX   = javaFXModules.size > 0
 
     showModuleChecks( hasJavaFX, hasControls, hasCharts,  hasLogback, hasSLF4j )
 
     // Now collect the module names based on the modules found
     // First get the javaFX only libraries
-    val javafx   = if (hasJavaFX)   javaFXModules.map( m => s"javafx.$m") else Seq()
+    val javafx   = if (hasJavaFX)   javaFXModules.map( m => s"$JAVAFX_.$m") else Seq()
     val controls = if (hasControls) Seq(controlsFXModule)                 else Seq()
     val charts   = if (hasCharts)   Seq(HANSOLO_CHARTS_)                  else Seq()
     val logBack  = if (hasLogback)  Seq()                                 else Seq() // only path required
@@ -293,6 +297,7 @@ trait OpenJFX extends JavaModule {
   }
 
 }
+
 object HelloWorldJava extends OpenJFX {
   
   override def mainClass: T[Option[String]] = Some("helloworld.HelloWorld")
@@ -301,9 +306,6 @@ object HelloWorldJava extends OpenJFX {
                               ivy"$CONTROLS",
                               ivy"$CONTROLSFX"
                              )
-
-
-
 }
 
 object HelloWorldScala extends OpenJFX with ScalaModule {

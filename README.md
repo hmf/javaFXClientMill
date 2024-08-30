@@ -65,7 +65,7 @@ After cleaning, all caches are also cleared, so when we execute the application,
 ### Java Examples
 
 
-The [HelloWorldJava/src/helloworld/HelloWorld.java](HelloWorldJava/src/helloworld/HelloWorld.java) shows how to start a OpenFX Java application using [Mill (HelloWorldJava module)](build.sc#L296). Here is a list of possible commands:
+The [HelloWorldJava/src/helloworld/HelloWorld.java](HelloWorldJava/src/helloworld/HelloWorld.java) shows how to start a OpenFX Java application using the [Mill HelloWorldJava module](build.sc#L301). Here is a list of possible commands:
 
 ```bash
 $ ./mill -i HelloWorldJava.run
@@ -74,6 +74,40 @@ $ ./mill -i --watch HelloWorldJava.run
 ```
 
 Note that the first command execute a default applications. A module may have several applications. To execute such a class explicitly indicate the class name sing the `runMain` command. Press the button to print a hello message to the console. 
+
+Another option is to use to extend the `javafx.application.Application` class and use it indirectly. The [HelloWorldJava/src/button/Main.java](HelloWorldJava/src/button/Main.java) shows how to start a OpenFX Java application using the [Mill HelloWorldJava module](build.sc#L301). Here is a list of possible commands:
+
+```bash
+$ ./mill -i HelloWorldJava.runMain button.Main
+$ ./mill -i --watch HelloWorldJava.runMain button.Main
+```
+
+> Note: although we use the same Mill mode, we are not running the default, so we must explicitly name the class. 
+
+### Scala Examples
+
+The [HelloWorldScala/src/helloworld/HelloWorld.scala](HelloWorldScala/src/helloworld/HelloWorld.scala) shows how to start a OpenFX Scala application using the [Mill HelloWorldScala module](build.sc#L311). Here is a list of possible commands:
+
+```bash
+ * ./mill -i HelloWorldScala.run
+ * ./mill -i HelloWorldScala.runMain helloworld.HelloWorld
+ * ./mill -i --watch HelloWorldScala.run
+```
+
+> **NOTE**: the application class cannot be called directly. It must be called as follows:
+
+```scala
+Application.launch(classOf[HelloWorld], args: _*)
+```
+
+Another option is to use to extend the `javafx.application.Application` class and use it indirectly. The [HelloWorldScala/src/button/Main.scala](HelloWorldScala/src/button/Main.scala) shows how to start a OpenFX Java application using the [Mill HelloWorldScala module](build.sc#L311). Here is a list of possible commands:
+
+```bash
+$ ./mill -i HelloWorldScala.runMain button.Main
+$ ./mill -i --watch HelloWorldScala.runMain button.Main
+```
+
+At this point, you should be able to code your own OpenFX/JavaFX applications ion Java or Scala using Mill. 
 
 
 hanSoloCharts/src/LineChartTest.scala
