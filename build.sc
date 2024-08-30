@@ -294,7 +294,9 @@ trait OpenJFX extends JavaModule {
     //   Some((_: coursier.core.Resolution).withOsInfo(coursier.core.Activation.Os.fromProperties(sys.props.toMap)))
     // }
 
-    def ivyDeps = Agg(ivy"org.junit.jupiter:junit-jupiter-engine:5.11.0")
+    //def ivyDeps = Agg(ivy"org.junit.jupiter:junit-jupiter-engine:5.11.0")
+    //  ivy"com.github.sbt:junit-interface:0.13.2",
+    // "com.github.sbt.junit" % "sbt-jupiter-interface" % "x.y.z"
   }
 
 }

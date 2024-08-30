@@ -41,4 +41,4 @@ class HelloWorld extends Application {
 
 object HelloWorld:
   def main(args: Array[String]) =
-    Application.launch(classOf[HelloWorld], args: _*)
+    Application.launch(classOf[HelloWorld], args*)

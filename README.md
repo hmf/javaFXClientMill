@@ -9,6 +9,7 @@ Examples of Scala using JavaFX as modules. It is now referred to as [OpenFX](htt
 * The [Hansolo charts library](https://github.com/HanSolo/charts)
 * [Chart-Fx](https://github.com/fair-acc/chart-fx) TODO
 * [TestFX](https://github.com/TestFX/TestFX) TODO
+* TODO: https://github.com/brunomnsilva/JavaFXSmartGraph 
 
 ## Installing Libraries
 
@@ -92,6 +93,9 @@ $ ./mill -i --watch HelloWorldJava.runMain button.Main
 [`TestModule.Junit5`](build.sc#L289)
 [`def ivyDeps = Agg(ivy"org.junit.jupiter:junit-jupiter-engine:5.11.0")`](build.sc#L297)
 
+
+https://github.com/sbt/junit-interface
+https://github.com/sbt/sbt-jupiter-interface
 
 
 ### Scala Examples
