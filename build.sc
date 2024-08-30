@@ -23,7 +23,7 @@ val ScalaVersion = "3.5.1-RC2" // "3.0.1"
 // val javaFXVersion = "16"
 val javaFXVersion = "22.0.2"
 
-val mUnitVersion         = "0.8.4" // "0.7.27"
+val mUnitVersion         = "1.0.1" // "0.8.4" // "0.7.27"
 val controlsFXVersion    = "11.2.1" // "11.1.0"
 //val hanSoloChartsVersion = "16.0.12" JDK16
 // val hanSoloChartsVersion = "11.7"
@@ -126,7 +126,8 @@ trait OpenJFX extends JavaModule {
 
 
   // Standard libraries
-  val ivyMunit          = ivy"org.scalameta::munit::$mUnitVersion"
+  //val ivyMunit          = ivy"org.scalameta::munit::$mUnitVersion"
+  val ivyMunit          = ivy"org.scalameta::munit:$mUnitVersion"
   val ivyMunitInterface = "munit.Framework"
 
 
@@ -283,8 +284,9 @@ trait OpenJFX extends JavaModule {
       Seq("-Dprism.verbose=true", "-ea")
   }
 
-
-  object test extends JavaTests with TestModule.Munit  {
+  // JavaTests now checks for and fails if any Scala dependencies are used
+  // So we use a different module because it is not possible to redefine an object method
+  object jtest extends JavaTests with TestModule.Junit5 {
 
     //  Not required after version 0.10.0 of Mill 
     // see https://github.com/com-lihaoyi/mill/issues/1406
@@ -292,8 +294,7 @@ trait OpenJFX extends JavaModule {
     //   Some((_: coursier.core.Resolution).withOsInfo(coursier.core.Activation.Os.fromProperties(sys.props.toMap)))
     // }
 
-    //def testFrameworks = Seq(ivyMunitInterface)
-    def testFramework = ivyMunitInterface
+    def ivyDeps = Agg(ivy"org.junit.jupiter:junit-jupiter-engine:5.11.0")
   }
 
 }
@@ -315,8 +316,13 @@ object HelloWorldScala extends OpenJFX with ScalaModule {
 
   override def ivyDeps = Agg(
                               ivy"$CONTROLS",
-                              ivy"$CONTROLSFX"
+                              ivy"$CONTROLSFX",
+                              ivyMunit
                              )
+  object test extends ScalaTests with TestModule.Munit  {
+    def ivyDeps = Agg(ivyMunit) // not required
+    //def testFramework = ivyMunitInterface 
+  }
 }
 
 
