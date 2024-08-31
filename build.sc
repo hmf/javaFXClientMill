@@ -29,7 +29,34 @@ val controlsFXVersion    = "11.2.1" // "11.1.0"
 // val hanSoloChartsVersion = "11.7"
 val hanSoloChartsVersion = "21.0.19"
 
-// https://mvnrepository.com/artifact/com.github.sbt.junit/sbt-jupiter-interface_2.12_1.0/0.13.0
+
+/**
+ * Mill now checks that a JavaModule does not use any scala dependencies. In 
+ * general this is desired, ensuring the project model is pure Java. However
+ * there are always cases were a java project may legitimately require scala 
+ * libraries. In this case to use the JUnit 5 tests API, we need to use the
+ * SBT jupiter interface. 
+ * 
+ * According to the github issue below 2 solutions exist:
+ * - Define a ScalaModule and use that as a dependency
+ * - Explicitly set the JAR version so that it is downloaded as a standard Java library
+ * 
+ * In the case of the SBT jupiter interface, this will not work. The problem is
+ * that the JAR's name used in the Maven repository is not standard. It uses the 
+ * extended Scala version `2.12_1.0`, where the `1.0` referes to the SBT version. 
+ * This means that under the hood Coursier will grab the correct SBT jupiter 
+ * interface library, but ot will also try and download a Scala library version 
+ * `2.12_1.0`. which does no exist. If the version number wa standard one could  
+ * simply add the `override def moduleDeps = Seq(LibsScala)` dependency to the 
+ * `JavaModule` that required this library. 
+ * 
+ * Because of this,  the current solution explicitly sets the exact library
+ * version directly in the `OpenJFX` `JavaModule`. 
+ * 
+ * @see https://github.com/com-lihaoyi/mill/issues/860 
+ * @see https://mvnrepository.com/artifact/com.github.sbt.junit
+ * @see https://mvnrepository.com/artifact/com.github.sbt.junit/sbt-jupiter-interface_2.12_1.0/0.13.0
+ */ 
 object LibsScala extends ScalaModule {
   // def scalaVersion = T{ "2.12.1" }
   def scalaVersion = T{ "2.12_1.0" }
@@ -292,8 +319,20 @@ trait OpenJFX extends JavaModule {
       Seq("-Dprism.verbose=true", "-ea")
   }
 
-  // JavaTests now checks for and fails if any Scala dependencies are used
-  // So we use a different module because it is not possible to redefine an object method
+  /**
+   * We test the use of a pure Java module that only uses Java libraries. 
+   * Accordingly, `JavaTests` now checks for and fails if any Scala dependencies 
+   * are used. Two workarounds exist. See the comments in the [[LibsScala]] 
+   * module. Here we add the JAR version using the Java ivy directives as second
+   * workaround solution.
+   * 
+   * Note: the use of requestion a specific version for the SBT jupiter interface
+   * is not necessary. Simply adding `TestModule.Junit5` is enough as it already 
+   * pulls in the required Scala API library. This servers only as an example.
+   * 
+   * @see https://github.com/com-lihaoyi/mill/issues/860
+   * @see https://mvnrepository.com/artifact/com.github.sbt.junit
+   */
   object jtest extends JavaTests with TestModule.Junit5 {
 
     //  Not required after version 0.10.0 of Mill 
@@ -303,8 +342,6 @@ trait OpenJFX extends JavaModule {
     // }
 
     // Cannot be sued because IvyDeps checks: transitiveIvyDeps java.lang.AssertionError
-    // https://github.com/com-lihaoyi/mill/issues/860
-    // https://mvnrepository.com/artifact/com.github.sbt.junit
     def ivyDeps = Agg(
     ivy"org.junit.jupiter:junit-jupiter-engine:5.11.0",
     //ivy"com.github.sbt.junit::sbt-jupiter-interface:0.13.0",
@@ -335,6 +372,11 @@ object HelloWorldScala extends OpenJFX with ScalaModule {
                               ivy"$CONTROLSFX",
                               ivyMunit
                              )
+
+  /** 
+   * Add support for Scala MUnit testing because it is not available from the 
+   * Java `OpenJFX` 
+   * */                           
   object test extends ScalaTests with TestModule.Munit  {
     def ivyDeps = Agg(ivyMunit) // not required
     //def testFramework = ivyMunitInterface 
