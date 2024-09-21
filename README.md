@@ -62,14 +62,13 @@ Clean the project to start over:
 
 > ./mill -i clean
 
-After cleaning, all caches are also cleared, so when we execute the application, the `forkArgs` method is override to construct the command line arguments that include the libraries and modules. This methods will list all of the managed class paths that are used to identify the module names. It also lists which module libraries are detected and the corresponding module names. Note that the JavaFX/OpenFX library consists of several JARs and contains multiple modules. The `forkArgs` method can ne overridden. In several examples we do this to change the command line and print the full command line arguments that are used.  The following executes a simple example that shows a simple line chart. 
+After cleaning, all caches are also cleared, so when we execute the application, the `forkArgs` method, which is overridden to construct the command line arguments that include the libraries and modules, is also executed. This methods will list all of the managed class paths that are used to identify the module names. It also lists which module libraries are detected and the corresponding module names. Note that the JavaFX/OpenFX library consists of several JARs and contains multiple modules. The `forkArgs` method of your module class that extends the `OpenJFX` can be overridden according to your requirements. In several examples we do this to change and print the full command line arguments that are used. The following executes an example that shows a simple line chart. 
 
 > `./mill -i hanSoloCharts.runMain hansolo.charts.LineChartTest`
 
 ## Samples
 
 ### Java Examples
-
 
 The [HelloWorldJava/src/helloworld/HelloWorld.java](HelloWorldJava/src/helloworld/HelloWorld.java) shows how to start a OpenFX Java application using the [Mill HelloWorldJava module](build.sc#L355). Here is a list of possible commands:
 
@@ -79,7 +78,7 @@ $ ./mill -i HelloWorldJava.runMain helloworld.HelloWorld
 $ ./mill -i --watch HelloWorldJava.run
 ```
 
-Note that the first command execute a default applications. A module may have several applications. To execute such a class explicitly indicate the class name sing the `runMain` command. Press the button to print a hello message to the console. 
+Press the button to print a hello message to the console. Note that the first command executes the default applications. A module may have several applications. To execute one of these applications, explicitly indicate the class name using the `runMain` command.  
 
 Another option is to use to extend the `javafx.application.Application` class and use it indirectly. The [HelloWorldJava/src/button/Main.java](HelloWorldJava/src/button/Main.java) shows how to start a OpenFX Java application using the [Mill HelloWorldJava module](build.sc#L355). Here is a list of possible commands:
 
@@ -88,15 +87,39 @@ $ ./mill -i HelloWorldJava.runMain button.Main
 $ ./mill -i --watch HelloWorldJava.runMain button.Main
 ```
 
-> Note: although we use the same Mill mode, we are not running the default, so we must explicitly name the class. 
+> Note: although we use the same Mill module, we are not running the default application, so we must explicitly name the class. 
 
-[`TestModule.Junit5`](build.sc#L336)
+We can also [setup Java test modules](https://mill-build.org/mill/Java_Build_Examples.html#_java_module_with_test_suite). Mill documentation include [examples](https://mill-build.org/mill/Java_Build_Examples.html). Here we have an example that uses the base [`TestModule.Junit5`](build.sc#L336). To provide a means to execute [Junit5](https://junit.org/junit5) test suites, an implementation of sbt's test interface for [JUnit Jupiter](https://github.com/sbt/sbt-jupiter-interface) must be included in the project. The library is added in the build script as shown next:
+
 [`def ivyDeps = Agg(ivy"org.junit.jupiter:junit-jupiter-engine:5.11.0")`](build.sc#L348)
 
+For JUnit 4, the [SBT Junit interface](https://github.com/sbt/junit-interface) can be used instead. The test example[HelloWorldJava/jtest/src/helloworld/PlotSpec.java](HelloWorldJava/jtest/src/helloworld/PlotSpec.java) can be executed with the following commands:
 
-https://github.com/sbt/junit-interface
-https://github.com/sbt/sbt-jupiter-interface
+```shell
+./mill -i HelloWorldJava.jtest
+./mill -i HelloWorldJava.jtest.testLocal
+./mill -i HelloWorldJava.jtest --tests=hello.*
+./mill -i HelloWorldJava.jtest --tests=he.*o.* 
+```
 
+Unlike equivalent scala test frameworks, when using Mill we can only match test on names and not the class path. SBT already has support for selecting test suites via class paths, which we don't have im Mill. One can however use the Scala test frameworks to test Java code and reap benefits from their class path selection capabilities. The test is designed to fail. Here is an example of the result:
+
+```shell
+[72/72] HelloWorldJava.jtest.test 
+Test run started (JUnit Jupiter)
+Test #hello() started
+Test helloworld.PlotSpec.hello failed: org.opentest4j.AssertionFailedError: expected: <2> but was: <1>, took 0.034s
+    at helloworld.PlotSpec.hello(PlotSpec.java:30)
+    at java.lang.reflect.Method.invoke(Method.java:580)
+    at java.util.ArrayList.forEach(ArrayList.java:1596)
+    at java.util.ArrayList.forEach(ArrayList.java:1596)
+Test  finished, took 0.058s
+Test  finished, took 0.088s
+Test run finished: 1 failed, 0 ignored, 1 total, 0.123s
+1 targets failed
+HelloWorldJava.jtest.test 1 tests failed: 
+  helloworld.PlotSpec hello()
+```
 
 ### Scala Examples
 
