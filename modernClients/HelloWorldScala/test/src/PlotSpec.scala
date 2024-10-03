@@ -6,10 +6,10 @@ package HelloWorld
 /**
  * ./mill mill.scalalib.GenIdea/idea
  *
- * ./mill -i HelloWorld.test
- * ./mill -i HelloWorld.test.testLocal
- * ./mill -i HelloWorld.test HelloWorld.PlotSpec.*
- * ./mill -i HelloWorld.test HelloWorld.PlotSpec.hello // test("hello")
+ * ./mill -i HelloWorldScala.test
+ * ./mill -i HelloWorldScala.test.testLocal
+ * ./mill -i HelloWorldScala.test HelloWorld.PlotSpec.*
+ * ./mill -i HelloWorldScala.test HelloWorld.PlotSpec.hello // test("hello")
  *
  * Extending `TestCase` to get access to `setUp`
  *

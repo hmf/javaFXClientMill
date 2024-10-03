@@ -9,9 +9,16 @@ import javafx.scene.Scene
 import javafx.stage.Stage
 
 /**
- *
+ * Example of the javaFX 17 book. It creates a window and shows an image that
+ * is loaded via a Java resource file. In this case the resources is the 
+ * `sample.fxml` which is created with an [interactive GUI builder](https://github.com/gluonhq/scenebuilder).
+ * When loaded using the JavaFX loader the file is interpreted and the 
+ * GUI is automatically generated.
+ * 
  * ./mill mill.scalalib.GenIdea/idea
  *
+ * ./mill -i modernClients.HelloModernWorld.runMain sample.Main
+ * ./mill -i --watch modernClients.HelloModernWorld.runMain sample.Main
  * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
  * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
  * 
@@ -44,11 +51,12 @@ class Main extends Application {
 }
 
 /**
- *
+ * Example of the javaFX 17 book. 
+ * 
  * ./mill mill.scalalib.GenIdea/idea
  *
- * ./mill -i managed.runMain button.Main
- * ./mill -i --watch managed.runMain button.Main
+ * ./mill -i modernClients.HelloModernWorld.runMain sample.Main
+ * ./mill -i --watch modernClients.HelloModernWorld.runMain sample.Main
  *
  * @see https://stackoverflow.com/questions/12124657/getting-started-on-scala-javafx-desktop-application-development
  */

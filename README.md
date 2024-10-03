@@ -144,17 +144,35 @@ $ ./mill -i HelloWorldScala.runMain button.Main
 $ ./mill -i --watch HelloWorldScala.runMain button.Main
 ```
 
-An example of using an [MUnit](https://github.com/scalameta/munit) test is shown.  In this case we need to define a `test` module that is a mixin with [TestModule.Munit](build.sc#L380).
+An example of using an [MUnit](https://github.com/scalameta/munit) test is shown. In this case we need to define a `test` module that is a mixin with [TestModule.Munit](build.sc#L380). The list of commands below show how one can execute all test suites or select a test suite or a single test using MUnit:
 
 ```bash
  $ ./mill -i HelloWorldScala.test
  $ ./mill -i HelloWorldScala.test.testLocal
  $ ./mill -i HelloWorldScala.test HelloWorld.PlotSpec.*
- $ ./mill -i HelloWorldScala.test HelloWorld.PlotSpec.hello // test("hello")
+ $ ./mill -i HelloWorldScala.test HelloWorld.PlotSpec.hello
+```
+
+At this point, you should be able to code your own OpenFX/JavaFX applications in Java or Scala using Mill. Th next set of examples focuses on the use of OneFX (previously JavaFX). I found the [github examples](https://github.com/Apress/definitive-guide-modern-java-clients-javafx17) of the book [The Definitive Guide to Modern Java Clients with JavaFX 17: Cross-Platform Mobile and Cloud Development](https://link.springer.com/book/10.1007/978-1-4842-7268-8). 
+
+We start off with a very simple Scala application [`HelloModernWorld`](modernClients/HelloModernWorld/src/sample/Main.scala). In this example a window is created that shows an image, which is loaded via a Java resource file. In this case the resources is the single [`sample.fxml`](modernClients/HelloModernWorld/resources/sample.fxml) file, which is created with the [Gluon interactive scene builder](https://github.com/gluonhq/scenebuilder). When loaded using the JavaFX loader, the resource file is interpreted and the GUI is automatically generated. In this case, an [image](modernClients/HelloModernWorld/resources/1024px-ISS-RapidScat_nadir_adapter_removed_from_CRS-4_Dragon_trunk_(ISS041E049097).jpg) is shown. Here are the commands to execute the simple application:
+
+```bash
+ $ ./mill -i modernClients.HelloModernWorld.runMain sample.Main
+ $ ./mill -i --watch modernClients.HelloModernWorld.runMain sample.Main
+```
+
+No tests are provided for this example. Note that the [modernClients/HelloWorldScala/src/helloworld/HelloWorld.scala](modernClients/HelloWorldScala/src/helloworld/HelloWorld.scala) example is just used for checking the setup. You can execute this application with the commands:
+
+```bash
+ $ ./mill -i modernClients.HelloWorldScala.run
+ $ ./mill -i modernClients.HelloWorldScala.runMain helloworld.HelloWorld
+ $ ./mill -i --watch modernClients.HelloWorldScala.run
 ```
 
 
-At this point, you should be able to code your own OpenFX/JavaFX applications ion Java or Scala using Mill. 
+
+
 
 
 hanSoloCharts/src/LineChartTest.scala
