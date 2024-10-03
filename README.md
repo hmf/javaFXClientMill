@@ -155,14 +155,19 @@ An example of using an [MUnit](https://github.com/scalameta/munit) test is shown
 
 At this point, you should be able to code your own OpenFX/JavaFX applications in Java or Scala using Mill. Th next set of examples focuses on the use of OneFX (previously JavaFX). I found the [github examples](https://github.com/Apress/definitive-guide-modern-java-clients-javafx17) of the book [The Definitive Guide to Modern Java Clients with JavaFX 17: Cross-Platform Mobile and Cloud Development](https://link.springer.com/book/10.1007/978-1-4842-7268-8). 
 
-We start off with a very simple Scala application [`HelloModernWorld`](modernClients/HelloModernWorld/src/sample/Main.scala). In this example a window is created that shows an image, which is loaded via a Java resource file. In this case the resources is the single [`sample.fxml`](modernClients/HelloModernWorld/resources/sample.fxml) file, which is created with the [Gluon interactive scene builder](https://github.com/gluonhq/scenebuilder). When loaded using the JavaFX loader, the resource file is interpreted and the GUI is automatically generated. In this case, an [image](modernClients/HelloModernWorld/resources/1024px-ISS-RapidScat_nadir_adapter_removed_from_CRS-4_Dragon_trunk_(ISS041E049097).jpg) is shown. Here are the commands to execute the simple application:
+We start off with a very simple Scala application [`HelloModernWorld`](modernClients/HelloModernWorld/src/sample/Main.scala). The application module is in fact a **submodule** with the path [modernClients.HelloModernWorld](build.sc#L391). Mill allows us to have modules within modules, which helps us more easily organize our code. 
+
+In this example the application creates a window that shows an image, which is loaded via a Java resource file. In this case, the resources is the single [`sample.fxml`](modernClients/HelloModernWorld/resources/sample.fxml) file that encodes a GUI, which is created with the [Gluon interactive scene builder](https://github.com/gluonhq/scenebuilder). When loaded using the JavaFX loader, the resource file is interpreted and the GUI is automatically generated. In this case, an [image](modernClients/HelloModernWorld/resources/1024px-ISS-RapidScat_nadir_adapter_removed_from_CRS-4_Dragon_trunk_(ISS041E049097).jpg) is shown. Here are the commands to execute the simple application:
 
 ```bash
+ $ ./mill -i modernClients.HelloModernWorld.run
  $ ./mill -i modernClients.HelloModernWorld.runMain sample.Main
  $ ./mill -i --watch modernClients.HelloModernWorld.runMain sample.Main
 ```
 
-No tests are provided for this example. Note that the [modernClients/HelloWorldScala/src/helloworld/HelloWorld.scala](modernClients/HelloWorldScala/src/helloworld/HelloWorld.scala) example is just used for checking the setup. You can execute this application with the commands:
+Note that we have only one application class, so we have set the default runtime class to `sample.Main`. No tests are provided for this example. 
+
+The [modernClients/HelloWorldScala/src/helloworld/HelloWorld.scala](modernClients/HelloWorldScala/src/helloworld/HelloWorld.scala) example is just used for checking the setup (module [modernClients.HelloWorldScala](build.sc#404)). You can execute this application with the commands:
 
 ```bash
  $ ./mill -i modernClients.HelloWorldScala.run
@@ -170,6 +175,16 @@ No tests are provided for this example. Note that the [modernClients/HelloWorldS
  $ ./mill -i --watch modernClients.HelloWorldScala.run
 ```
 
+The next set of examples were found in the [`modernClients.ch02-javafx_fundamentals` module](build.sc#417). 
+
+```bash
+ $ ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.run
+ $ ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
+ $ ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
+```
+
+ * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
+ * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
 
 
 

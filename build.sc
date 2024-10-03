@@ -383,6 +383,108 @@ object HelloWorldScala extends OpenJFX with ScalaModule {
   }
 }
 
+// JavaFX
+
+object modernClients extends ScalaModule {
+    def scalaVersion = T{ ScalaVersion }
+
+  object HelloModernWorld extends OpenJFX with ScalaModule {
+    def scalaVersion = T{ ScalaVersion }
+
+    override def mainClass: T[Option[String]] = Some("sample.Main")
+
+    override def ivyDeps = Agg(
+                                ivy"$CONTROLS",
+                                //ivy"$CONTROLSFX",
+                                ivy"$FXML"
+                              )
+
+  }
+
+  object HelloWorldScala extends OpenJFX with ScalaModule {
+    def scalaVersion = T{ ScalaVersion }
+
+    override def mainClass: T[Option[String]] = Some("helloworld.HelloWorld")
+
+    override def ivyDeps = Agg(
+                                ivy"$CONTROLS"
+                                //ivy"$CONTROLSFX"
+                              )
+
+  }
+
+
+  object `ch02-javafx_fundamentals` extends OpenJFX {
+    object myshapes extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclient.MyShapes")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  //ivy"$CONTROLSFX",
+                                  ivy"$FXML"
+                                )
+
+    }
+    object myshapes2 extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclient.MyShapes2")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  //ivy"$CONTROLSFX",
+                                  ivy"$FXML"
+                                )
+
+    }
+    object myshapesproperties extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclient.MyShapesProperties")
+
+      override def forkArgs: Target[Seq[String]] = T {
+        val t = Seq("-Djavafx.verbose=true", "-ea") ++ // JavaFX
+          super[OpenJFX].forkArgs() //  OpenFX
+        println(t.mkString("\n"))
+        t
+      }
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  //ivy"$CONTROLSFX",
+                                  //ivy"$HANSOLO_CHARTS",
+                                  ivy"$FXML"
+                                )
+
+    }
+    object myshapesfxml extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclient.MyShapesFXML")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  //ivy"$CONTROLSFX",
+                                  ivy"$FXML"
+                                )
+
+    }
+    object personui extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("com.modernclient.PersonUI")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  //ivy"$CONTROLSFX",
+                                  ivy"$FXML"
+                                )
+
+    }
+
+  }
 
   // https://stackoverflow.com/questions/21185156/javafx-on-linux-is-showing-a-graphics-device-initialization-failed-for-es2-s
   // locate -i libprism_es2.so
@@ -479,104 +581,6 @@ https://stackoverflow.com/questions/661320/how-to-add-native-library-to-java-lib
 
   }
 
-object modernClients extends ScalaModule {
-    def scalaVersion = T{ ScalaVersion }
-
-  object HelloWorldScala extends OpenJFX with ScalaModule {
-    def scalaVersion = T{ ScalaVersion }
-
-    override def mainClass: T[Option[String]] = Some("helloworld.HelloWorld")
-
-    override def ivyDeps = Agg(
-                                ivy"$CONTROLS"
-                                //ivy"$CONTROLSFX"
-                              )
-
-  }
-
-  object HelloModernWorld extends OpenJFX with ScalaModule {
-    def scalaVersion = T{ ScalaVersion }
-
-    override def mainClass: T[Option[String]] = Some("helloworld.HelloWorld")
-
-    override def ivyDeps = Agg(
-                                ivy"$CONTROLS",
-                                //ivy"$CONTROLSFX",
-                                ivy"$FXML"
-                              )
-
-  }
-  object `ch02-javafx_fundamentals` extends OpenJFX {
-    object myshapes extends OpenJFX with ScalaModule {
-      def scalaVersion = T{ ScalaVersion }
-
-      override def mainClass: T[Option[String]] = Some("org.modernclient.MyShapes")
-
-      override def ivyDeps = Agg(
-                                  ivy"$CONTROLS",
-                                  //ivy"$CONTROLSFX",
-                                  ivy"$FXML"
-                                )
-
-    }
-    object myshapes2 extends OpenJFX with ScalaModule {
-      def scalaVersion = T{ ScalaVersion }
-
-      override def mainClass: T[Option[String]] = Some("org.modernclient.MyShapes2")
-
-      override def ivyDeps = Agg(
-                                  ivy"$CONTROLS",
-                                  //ivy"$CONTROLSFX",
-                                  ivy"$FXML"
-                                )
-
-    }
-    object myshapesproperties extends OpenJFX with ScalaModule {
-      def scalaVersion = T{ ScalaVersion }
-
-      override def mainClass: T[Option[String]] = Some("org.modernclient.MyShapesProperties")
-
-      override def forkArgs: Target[Seq[String]] = T {
-        val t = Seq("-Djavafx.verbose=true", "-ea") ++ // JavaFX
-          super[OpenJFX].forkArgs() //  OpenFX
-        println(t.mkString("\n"))
-        t
-      }
-
-      override def ivyDeps = Agg(
-                                  ivy"$CONTROLS",
-                                  //ivy"$CONTROLSFX",
-                                  //ivy"$HANSOLO_CHARTS",
-                                  ivy"$FXML"
-                                )
-
-    }
-    object myshapesfxml extends OpenJFX with ScalaModule {
-      def scalaVersion = T{ ScalaVersion }
-
-      override def mainClass: T[Option[String]] = Some("org.modernclient.MyShapesFXML")
-
-      override def ivyDeps = Agg(
-                                  ivy"$CONTROLS",
-                                  //ivy"$CONTROLSFX",
-                                  ivy"$FXML"
-                                )
-
-    }
-    object personui extends OpenJFX with ScalaModule {
-      def scalaVersion = T{ ScalaVersion }
-
-      override def mainClass: T[Option[String]] = Some("com.modernclient.PersonUI")
-
-      override def ivyDeps = Agg(
-                                  ivy"$CONTROLS",
-                                  //ivy"$CONTROLSFX",
-                                  ivy"$FXML"
-                                )
-
-    }
-
-  }
 
   object `ch03-PropertiesBindings` extends OpenJFX {
     object arraychangeevent extends OpenJFX with ScalaModule {

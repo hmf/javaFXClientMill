@@ -19,8 +19,6 @@ import javafx.stage.Stage
  *
  * ./mill -i modernClients.HelloModernWorld.runMain sample.Main
  * ./mill -i --watch modernClients.HelloModernWorld.runMain sample.Main
- * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
- * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
  * 
  * Note on resources (see StackOverflow link below): Mill's convention is to 
  * place a resources directory on the lowest level Mill module. To access 
