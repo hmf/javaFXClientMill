@@ -53,7 +53,7 @@ class MyShapes extends Application {
         stackPane.getChildren().addAll(ellipse, text)
 
         val scene = new Scene(stackPane, 350, 230, Color.LIGHTYELLOW)
-        //scene.getStylesheets().add("/styles/Styles.css")
+        // scene.getStylesheets().add("/styles/Styles.css")
         
         stage.setTitle("MyShapes with JavaFX")
         stage.setScene(scene)

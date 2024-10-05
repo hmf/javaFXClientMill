@@ -175,16 +175,28 @@ The [modernClients/HelloWorldScala/src/helloworld/HelloWorld.scala](modernClient
  $ ./mill -i --watch modernClients.HelloWorldScala.run
 ```
 
-The next set of examples were found in the [`modernClients.ch02-javafx_fundamentals` module](build.sc#417). 
+The next set of examples were found in the [`modernClients.ch02-javafx_fundamentals` module](build.sc#417). Under this 
+module we have a set of modules that show the basic functionality generating elements or loading them from resources 
+to be shown visually. We will succinctly describe these below.
+
+The first example is [`myshapes`](build.sc#418) module that has the class [MyShapes](modernClients/ch02-javafx_fundamentals/myshapes/src/modernclient/MyShapes.scala) that creates an ellipse with text inside it. The following commands can be used to run the application:
 
 ```bash
- $ ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.run
- $ ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
- $ ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
+$ ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.run
+$ ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
+$ ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
 ```
 
- * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
- * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
+The [`MyShapes2`](modernClients/ch02-javafx_fundamentals/myshapes2/src/modernclient/MyShapes2.scala) extends the previous 
+example with special visual effects (reflection) and animation (rotation). To make the ellipse rotate, simply
+click on the pane. The application is configured in the [`myshapes2`](build.sc#430) module and can be executed
+with the following commands:
+
+```bash
+$ ./mill -i modernClients.ch02-javafx_fundamentals.myshapes2.run
+$ ./mill -i modernClients.ch02-javafx_fundamentals.myshapes2.runMain org.modernclient.MyShapes2
+$ ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapes2.runMain org.modernclient.MyShapes2
+```
 
 
 
