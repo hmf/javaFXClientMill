@@ -60,7 +60,7 @@ class MyShapesProperties extends Application {
                 new Stop(0.5, Color.LIGHTBLUE),
                 new Stop(1.0, Color.LIGHTGREEN))
         val gradient = new LinearGradient(1, 1, 1, 0, true,
-                CycleMethod.NO_CYCLE, stops:_*)
+                CycleMethod.NO_CYCLE, stops*)
 
         // Create an Ellipse, set dropshadow, fill with gradient
         val ellipse = new Ellipse(110, 70)
@@ -124,7 +124,7 @@ class MyShapesProperties extends Application {
         */
         
         // Change Listener using lambda expression
-        rotate.statusProperty().addListener(( observableValue: ObservableValue[_ <:Animation.Status], 
+        rotate.statusProperty().addListener(( observableValue: ObservableValue[? <:Animation.Status], 
                                               oldValue: Animation.Status, 
                                               newValue: Animation.Status) => {
             text2.setText("Was " + oldValue + ", Now " + newValue)

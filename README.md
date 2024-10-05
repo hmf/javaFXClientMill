@@ -198,6 +198,27 @@ $ ./mill -i modernClients.ch02-javafx_fundamentals.myshapes2.runMain org.modernc
 $ ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapes2.runMain org.modernclient.MyShapes2
 ```
 
+The [`myshapesproperties`](build.sc#442) configures the [`MyShapesProperties`](modernClients/ch02-javafx_fundamentals/myshapesproperties/src/modernclient/MyShapesProperties.scala) application. The `MyShapesProperties` class
+extends the previous class with property listeners that change according the the property values. When
+rotating the text and its color is changed. The application can be executed with the following commands:
+
+```bash
+$ ./mill -i modernClients.ch02-javafx_fundamentals.myshapesproperties.run
+$ ./mill -i modernClients.ch02-javafx_fundamentals.myshapesproperties.runMain org.modernclient.MyShapesProperties
+$ ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapesproperties.runMain org.modernclient.MyShapesProperties
+```
+
+> Note: the commented sections of the code show alternate coding styles for the property changes.
+
+[myshapesfxml](build.sc#462)
+[`MyShapesFXML`](modernClients/ch02-javafx_fundamentals/myshapesfxml/src/modernclient/MyShapesFXML.scala)
+
+
+```bash
+$ ./mill -i modernClients.ch02-javafx_fundamentals.myshapesfxml.run
+$ ./mill -i modernClients.ch02-javafx_fundamentals.myshapesfxml.runMain org.modernclient.MyShapesFXML
+$ ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapesfxml.runMain org.modernclient.MyShapesFXML
+```
 
 
 

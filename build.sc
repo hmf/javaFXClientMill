@@ -1,5 +1,5 @@
 
-// cSpell:ignore javac, xlint
+// cSpell:ignore javac, xlint, pprint, fansi, sbt, agg, jfx, logback, slf, jini
 // cSpell:ignore scalalib, helloworld, coursier, Deps, unmanaged, classpath, JVM's, customizer, dprism
 // cSpell:ignore javafx, controlsfx, openjfx, munit, myshapes, myshapesproperties, myshapesfxml
 // cSpell:ignore hansolo, personui

@@ -17,13 +17,15 @@ import javafx.util.Duration
 import java.net.URL
 import java.util.ResourceBundle
 
+import scala.compiletime.uninitialized
+
 class FXMLController extends Initializable {
 
     @FXML
-    private var stackPane: StackPane = _
+    private var stackPane: StackPane = uninitialized
     @FXML
-    private var  text2: Text = _ 
-    private var rotate: RotateTransition = _
+    private var  text2: Text = uninitialized
+    private var rotate: RotateTransition = uninitialized
 
     override def initialize(url: URL, rb: ResourceBundle) = {
         rotate = new RotateTransition(Duration.millis(2500), stackPane)

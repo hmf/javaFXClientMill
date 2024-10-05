@@ -57,7 +57,7 @@ class MyShapes2 extends Application {
                 new Stop(0.5, Color.LIGHTBLUE),
                 new Stop(1.0, Color.LIGHTGREEN))
         val gradient = new LinearGradient(1.0, 1.0, 1.0, 0.0, true, 
-                CycleMethod.NO_CYCLE, stops:_*)
+                CycleMethod.NO_CYCLE, stops*)
 
         // Create an Ellipse, set dropshadow, fill with gradient
         val ellipse = new Ellipse(110, 70)
