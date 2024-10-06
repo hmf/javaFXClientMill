@@ -133,7 +133,7 @@ class Others extends Application {
       // is used in the ScrollPane control to support vertical and horizontal scrolling
       val color = Color.BLUE
       val stops = Array[Stop](Stop(0, Color.BLACK), Stop(1,color))
-      val gradient = LinearGradient(0.0, 0.0, 1500.0, 1000.0, false, CycleMethod.NO_CYCLE, stops:_*)
+      val gradient = LinearGradient(0.0, 0.0, 1500.0, 1000.0, false, CycleMethod.NO_CYCLE, stops*)
 
       // we place the linear gradient inside a big rectangle
       val RECT_X = 100  // If it exceeds the `hb`, then no scroll appears
@@ -161,7 +161,7 @@ class Others extends Application {
 
 
       sc.valueProperty().addListener(new ChangeListener[Number]() {
-            def changed(ov: ObservableValue[_ <: Number], old_val: Number, new_val: Number) = {
+            def changed(ov: ObservableValue[? <: Number], old_val: Number, new_val: Number) = {
                   val delta = (new_val.doubleValue()/100.0)*RECT_X
                   println(s"ScrollBar old = ${old_val.doubleValue()}  new = ${new_val.doubleValue()} ; delta = $delta")
                   hb.setLayoutX(-delta)
@@ -215,7 +215,7 @@ class Others extends Application {
 object Others {
 
     def main(args: Array[String]): Unit = {
-      Application.launch(classOf[Others], args: _*)
+      Application.launch(classOf[Others], args*)
     }
 }
 

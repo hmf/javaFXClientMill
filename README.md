@@ -303,6 +303,12 @@ are available in JavaFX. The submodules and the exemplified elements are:
   * Horizontal box
   * Vertical box
 * [`others`](build.sc#544)
+  * HTMLEditor
+  * Pagination
+  * BorderPane
+  * ScrollBar
+  * Spinner
+  * Tooltip
 * [`popup`](build.sc#557)
 * [`dialog`](build.sc#569)
 * [`advanced`](build.sc#581)
@@ -325,11 +331,17 @@ $ ./mill -i modernClients.ch04-javafx_controls.container.runMain org.modernclien
 $ ./mill -i --watch modernClients.ch04-javafx_controls.container.runMain org.modernclients.container.Container
 ```
 
+[Others](modernClients/ch04-javafx_controls/others/src/Others.scala):
 ```bash
+$ ./mill -i modernClients.ch04-javafx_controls.others.run
+$ ./mill -i modernClients.ch04-javafx_controls.others.runMain org.modernclients.others.Others
+$ ./mill -i --watch modernClients.ch04-javafx_controls.others.runMain org.modernclients.others.Others
 ```
 
 ```bash
 ```
+
+
 ```bash
 ```
 
