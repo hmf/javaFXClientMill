@@ -185,7 +185,7 @@ class Container extends Application {
       // ScrollPane
       // in this sample we create a linear gradient to make the scrolling visible
       val stops = Array[Stop](Stop(0, Color.BLACK), Stop(1,Color.RED))
-      val gradient = LinearGradient(0.0, 0.0, 1500.0, 1000.0, false, CycleMethod.NO_CYCLE, stops:_*)
+      val gradient = LinearGradient(0.0, 0.0, 1500.0, 1000.0, false, CycleMethod.NO_CYCLE, stops*)
 
       // we place the linear gradient inside a big rectangle
       val rect = Rectangle(2000, 2000, gradient)
@@ -196,7 +196,7 @@ class Container extends Application {
       scrollPane.setContent(rect)
 
       // and we then listen (and log) when the user is scrolling vertically or horizontally
-      val o: ChangeListener[_ >: Number] = 
+      val o: ChangeListener[? >: Number] = 
         (obs, oldValue, newValue) => {
             println(s"x / y values are: ( ${scrollPane.getHvalue()} , ${scrollPane.getVvalue()} )")
       }
@@ -313,7 +313,7 @@ class Container extends Application {
 object Container {
 
     def main(args: Array[String]): Unit = {
-      Application.launch(classOf[Container], args: _*)
+      Application.launch(classOf[Container], args*)
     }
 }
 

@@ -241,7 +241,7 @@ class Basic extends Application {
 object Basic {
 
     def main(args: Array[String]): Unit = {
-      Application.launch(classOf[Basic], args: _*)
+      Application.launch(classOf[Basic], args*)
     }
 }
 

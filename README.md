@@ -283,6 +283,7 @@ The `ch04-javafx_controls` module contains a set of submodules that exemplify th
 are available in JavaFX. The submodules and the exemplified elements are:
 * [`basic`](build.sc#518): 
   * Standard buttons 
+  * Hyperlink
   * Single check box
   * Toggle buttons
   * Radio buttons
@@ -291,7 +292,16 @@ are available in JavaFX. The submodules and the exemplified elements are:
   * Multi-line text input boxes
   * Progress bar 
   * Slide ruler
-* [`container`](build.sc#530)
+* [`container`](build.sc#530):
+  * Title pane
+  * Scroll pane
+  * Stack Pane
+  * Split Pane
+  * Tab Pane
+  * Tool bar
+  * Accordion
+  * Horizontal box
+  * Vertical box
 * [`others`](build.sc#544)
 * [`popup`](build.sc#557)
 * [`dialog`](build.sc#569)
@@ -307,7 +317,12 @@ $ ./mill -i modernClients.ch04-javafx_controls.basic.runMain org.modernclients.c
 $ ./mill -i --watch modernClients.ch04-javafx_controls.basic.runMain org.modernclients.controls.Basic
 ```
 
+[Container](modernClients/ch04-javafx_controls/container/src/Container.scala):
+
 ```bash
+$ ./mill -i modernClients.ch04-javafx_controls.container.run
+$ ./mill -i modernClients.ch04-javafx_controls.container.runMain org.modernclients.container.Container
+$ ./mill -i --watch modernClients.ch04-javafx_controls.container.runMain org.modernclients.container.Container
 ```
 
 ```bash
