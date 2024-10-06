@@ -210,9 +210,11 @@ $ ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapesproperties.ru
 
 > Note: the commented sections of the code show alternate coding styles for the property changes.
 
-[myshapesfxml](build.sc#462)
-[`MyShapesFXML`](modernClients/ch02-javafx_fundamentals/myshapesfxml/src/modernclient/MyShapesFXML.scala)
-
+The [myshapesfxml](build.sc#462) module configures the [`MyShapesFXML`](modernClients/ch02-javafx_fundamentals/myshapesfxml/src/modernclient/MyShapesFXML.scala) application. This application has the same functionality as the application
+above. However, the GUI description is stored in the [`Scene.fxml`](modernClients/ch02-javafx_fundamentals/myshapesfxml/resources/fxml/Scene.fxml) file, which is loaded parsed and used to create the GUI on the fly. Note that the variables
+that hold state and are used in the XML scene description, are declared in the code. They are linked to the
+GUI via the [`@FXML` annotation](https://dev.java/learn/javafx/fxml/). The application can be executed
+with the following commands:
 
 ```bash
 $ ./mill -i modernClients.ch02-javafx_fundamentals.myshapesfxml.run
