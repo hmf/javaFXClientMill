@@ -222,7 +222,17 @@ $ ./mill -i modernClients.ch02-javafx_fundamentals.myshapesfxml.runMain org.mode
 $ ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapesfxml.runMain org.modernclient.MyShapesFXML
 ```
 
+The [personui](build.sc#474) module configures the [`PersonUI`](modernClients/ch02-javafx_fundamentals/personui/src/modernclient/PersonUI.scala) application. The application shows how to use te Model-View-Controller (MVC) architecture using
+the GUI techniques of the previous application. The code simulates DAO (data access objects) to emulate a
+database of people. The application can be executed with the following commands:
 
+```bash
+$ ./mill -i modernClients.ch02-javafx_fundamentals.personui.run
+$ ./mill -i modernClients.ch02-javafx_fundamentals.personui.runMain com.modernclient.PersonUI
+$ ./mill -i --watch modernClients.ch02-javafx_fundamentals.personui.runMain com.modernclient.PersonUI
+```
+
+> Note: the *"create"* does not seem to work because their is no way to have the listbox deselect any element. 
 
 
 hanSoloCharts/src/LineChartTest.scala

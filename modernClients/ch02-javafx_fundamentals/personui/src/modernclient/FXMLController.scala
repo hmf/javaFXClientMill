@@ -24,32 +24,33 @@ import java.util.ResourceBundle
 import javafx.beans.value.ObservableValue
 import javafx.scene.control.SelectionMode
 
+import scala.compiletime.uninitialized
 
 class FXMLController extends Initializable {
 
 
     @FXML
-    private var firstnameTextField: TextField = _
+    private var firstnameTextField: TextField = uninitialized
     @FXML
-    private var lastnameTextField: TextField = _
+    private var lastnameTextField: TextField = uninitialized
     @FXML
-    private var notesTextArea: TextArea = _
+    private var notesTextArea: TextArea = uninitialized
     @FXML
-    private var removeButton: Button = _
+    private var removeButton: Button = uninitialized
     @FXML
-    private var createButton: Button = _
+    private var createButton: Button = uninitialized
     @FXML
-    private var updateButton: Button = _
+    private var updateButton: Button = uninitialized
     @FXML
-    private var listView: ListView[Person] = _
+    private var listView: ListView[Person] = uninitialized
 
     private val personList: ObservableList[Person] = FXCollections.observableArrayList(Person.extractor)
     // Observable objects returned by extractor (applied to each list element) are listened for changes and
     // transformed into "update" change of ListChangeListener.
 
-    private var selectedPerson: Person = _
+    private var selectedPerson: Person = uninitialized
     private val modifiedProperty: BooleanProperty = new SimpleBooleanProperty(false)
-    private var personChangeListener: ChangeListener[Person] = _
+    private var personChangeListener: ChangeListener[Person] = uninitialized
 
 
     override def initialize(url: URL, rb: ResourceBundle) = {
@@ -79,7 +80,7 @@ class FXMLController extends Initializable {
         })
         listView.setItems(sortedList)
 
-        personChangeListener = (observable: ObservableValue[_ <:Person], oldValue:Person, newValue:Person) => {
+        personChangeListener = (observable: ObservableValue[? <:Person], oldValue:Person, newValue:Person) => {
             System.out.println("Selected item: " + newValue)
             // newValue can be null if nothing is selected
             selectedPerson = newValue
