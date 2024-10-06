@@ -46,6 +46,9 @@ import scala.annotation.meta.beanSetter
 import javafx.beans.property.adapter.JavaBeanStringProperty
 import javafx.beans.property.adapter.JavaBeanStringPropertyBuilder
 
+
+import scala.compiletime.uninitialized
+
 /**
  *
  * ./mill mill.scalalib.GenIdea/idea
@@ -102,7 +105,7 @@ object ArrayChangeEventExample {
         ints.set(0, src, 0, 1)
 
         println("Calling setAll(src):")
-        ints.setAll(src:_*)
+        ints.setAll(src*)
 
         ints.trimToSize()
 
@@ -190,11 +193,11 @@ object ArrayChangeEventExample {
     }
 
     def manipulateArray(array: ObservableFloatArray) = {
-        println("Calling  array.addAll(3.14159f," + " 2.71828f):")
+        println("Calling array.addAll(3.14159f," + " 2.71828f):")
         array.addAll(3.14159f, 2.71828f)
     }
 
-    def typeOfChange(change: Change[_ <: String]): String = {
+    def typeOfChange(change: Change[? <: String]): String = {
         // just check the first change
         if (change.next) {
             val start = change.getFrom
@@ -216,8 +219,8 @@ object ArrayChangeEventExample {
         val strings: ObservableList[String] = FXCollections.observableArrayList()
 
         strings.addListener((observable: Observable) => println("\tlist invalidated") )
-        strings.addListener((change: Change[_ <: String]) => println(s"\tstrings (${typeOfChange(change)}) = ${change.getList()}") )
-        //strings.addListener((change: Change[_ <: String]) => println(s"\tstrings = ${change.getList()}") )
+        strings.addListener((change: Change[? <: String]) => println(s"\tstrings (${typeOfChange(change)}) = ${change.getList()}") )
+        //strings.addListener((change: Change[? <: String]) => println(s"\tstrings = ${change.getList()}") )
 
         println("Calling add(\"First\"): ")
         strings.add("First")
@@ -277,12 +280,12 @@ object ArrayChangeEventExample {
 
     class MyListener extends ListChangeListener[String] {
 
-        override def onChanged(change: Change[_ <: String]) = {
+        override def onChanged(change: Change[? <: String]) = {
             println("\tlist = " + change.getList())
             println(prettyPrint(change))
         }
 
-        private def prettyPrint(change: Change[_ <: String]): String = {
+        private def prettyPrint(change: Change[? <: String]): String = {
             val sb: StringBuilder = StringBuilder("\tChange event data:\n")
             var i: Int = 0
             while (change.next()) {
@@ -391,12 +394,12 @@ object ArrayChangeEventExample {
 
     class MyMapListener extends MapChangeListener[String, Integer] {
 
-        override def onChanged(change: MapChange[_ <: String, _ <: Integer]) = {
+        override def onChanged(change: MapChange[? <: String, ? <: Integer]) = {
             println("\tmap = " + change.getMap())
             println(prettyPrint(change))
         }
 
-        private def prettyPrint(change: MapChange[_ <: String, _ <: Integer]): String =  {
+        private def prettyPrint(change: MapChange[? <: String, ? <: Integer]): String =  {
 
             val sb: StringBuilder = StringBuilder("\tChange event data:\n")
             sb.append("\t\tWas added: ")
@@ -436,12 +439,12 @@ object ArrayChangeEventExample {
 
     class MySetListener extends SetChangeListener[String] {
 
-        override def onChanged(change: SetChange[_ <: String]) = {
+        override def onChanged(change: SetChange[? <: String]) = {
             println("\tset = " + change.getSet())
             println(prettyPrint(change))
         }
         
-        private def prettyPrint(change: SetChange[_ <: String]): String = {
+        private def prettyPrint(change: SetChange[? <: String]): String = {
             val sb: StringBuilder = StringBuilder("\tChange event data:\n")
 
             sb.append("\t\tWas added: ")
@@ -492,7 +495,7 @@ object ArrayChangeEventExample {
         ints.set(0, src, 0, 1)
 
         println("Calling setAll(src):")
-        ints.setAll(src:_*)
+        ints.setAll(src*)
         ints.trimToSize()
 
         val ints2: ObservableIntegerArray = FXCollections.observableIntegerArray()
@@ -669,7 +672,7 @@ object ArrayChangeEventExample {
     class JavaFXBeanModelHalfLazyExample {
 
         private val DEFAULT_STR: String = "Hello"
-        private var str: StringProperty = _
+        private var str: StringProperty = uninitialized
 
         def getStr(): String = {
             if (str != null) {
@@ -696,7 +699,7 @@ object ArrayChangeEventExample {
 
     class JavaFXBeanModelFullLazyExample {
         private val DEFAULT_STR: String = "Hello"
-        private var str: StringProperty = _
+        private var str: StringProperty = uninitialized
         private var _str: String = DEFAULT_STR
 
         def getStr(): String = {
@@ -780,12 +783,12 @@ object ArrayChangeEventExample {
     
     // Note that name changes events are not generated. See `JavaBeanStringPropertyBuilder`
     class Person {
-        private var propertyChangeSupport: PropertyChangeSupport = _
-        private var vetoableChangeSupport: VetoableChangeSupport = _
+        private var propertyChangeSupport: PropertyChangeSupport = uninitialized
+        private var vetoableChangeSupport: VetoableChangeSupport = uninitialized
 
-        private var name: String = _
-        private var address: String = _
-        private var phoneNumber: String = _
+        private var name: String = uninitialized
+        private var address: String = uninitialized
+        private var phoneNumber: String = uninitialized
 
         propertyChangeSupport = PropertyChangeSupport(this)
         vetoableChangeSupport = VetoableChangeSupport(this)

@@ -486,6 +486,35 @@ object modernClients extends ScalaModule {
 
   }
 
+
+  object `ch03-PropertiesBindings` extends OpenJFX {
+    object arraychangeevent extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclients.propertiesandbindings.ArrayChangeEventExample")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  ivy"$FXML"
+                                )
+
+    }
+    object numericproperties extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclients.propertiesandbindings.NumericPropertiesExample")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  ivy"$FXML"
+                                )
+
+    }
+
+  }
+
+
+
   // https://stackoverflow.com/questions/21185156/javafx-on-linux-is-showing-a-graphics-device-initialization-failed-for-es2-s
   // locate -i libprism_es2.so
   // locate -i libglass.so
@@ -578,33 +607,6 @@ https://stackoverflow.com/questions/661320/how-to-add-native-library-to-java-lib
                                 //ivy"$CONTROLSFX",      // TODO: bug - we should not need this
                                 ivy"$HANSOLO_CHARTS" // ivyHanSoloCharts 
                               )
-
-  }
-
-
-  object `ch03-PropertiesBindings` extends OpenJFX {
-    object arraychangeevent extends OpenJFX with ScalaModule {
-      def scalaVersion = T{ ScalaVersion }
-
-      override def mainClass: T[Option[String]] = Some("org.modernclients.propertiesandbindings.ArrayChangeEventExample")
-
-      override def ivyDeps = Agg(
-                                  ivy"$CONTROLS",
-                                  ivy"$FXML"
-                                )
-
-    }
-    object numericproperties extends OpenJFX with ScalaModule {
-      def scalaVersion = T{ ScalaVersion }
-
-      override def mainClass: T[Option[String]] = Some("org.modernclients.propertiesandbindings.NumericPropertiesExample")
-
-      override def ivyDeps = Agg(
-                                  ivy"$CONTROLS",
-                                  ivy"$FXML"
-                                )
-
-    }
 
   }
 

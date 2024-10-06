@@ -234,6 +234,56 @@ $ ./mill -i --watch modernClients.ch02-javafx_fundamentals.personui.runMain com.
 
 > Note: the *"create"* does not seem to work because their is no way to have the listbox deselect any element. 
 
+The next set of applications in the `ch03-PropertiesBindings` module provide more examples on the use
+of events and bindings. The first examples is coded in the [arraychangeevent](build.sc#491) module and it
+builds the [`ArrayChangeEventExample`](modernClients/ch03-PropertiesBindings/arraychangeevent/src/main/java/org/modernclients/propertiesandbindings/ArrayChangeEventExample.scala) application. This application does **not** create  and 
+show a GUI. It consists of the following tests:
+* `ArrayChangeEventExample`
+* `FXCollectionsExample`
+* `ObservableListExample`
+* `ListChangeEventExample`
+* `MapChangeEventExample`
+* `SetChangeEventExample`
+* `ArrayChangeEventExampleOriginal`
+* `bindingsUtilityUnidirectional`
+* `SelectBindingExample`
+* `JavaBeanPropertiesExample`
+
+Each of the examples above creates a certain type of observable value, assigns an observable to an update event, 
+and then updates the event. During execution, you show see a message of setting up and updating a value, and then
+observe the event being detected with another message. You can use these to select and test a value update using
+the MVC model. These examples assume we use containers, and update specific elements of those containers. To run
+these examples you can execute one of the following commands:
+
+```bash
+$ ./mill -i modernClients.ch03-PropertiesBindings.arraychangeevent.run
+$ ./mill -i modernClients.ch03-PropertiesBindings.arraychangeevent.runMain org.modernclients.propertiesandbindings.ArrayChangeEventExample
+$ ./mill -i --watch modernClients.ch03-PropertiesBindings.arraychangeevent.runMain org.modernclients.propertiesandbindings.ArrayChangeEventExample
+```
+
+The [numericproperties](build.sc#502) module configures the [`NumericPropertiesExample`](modernClients/ch03-PropertiesBindings/numericproperties/src/main/java/org/modernclients/propertiesandbindings/NumericPropertiesExample.scala) that performs essentially the same type of tests as the above examples, but for numeric values. The non-GUI appliation contais the 
+following tests:
+* `NumericPropertiesExample`
+* `BidirectionalBindingExample`
+* `DirectExtensionExample`
+* `TriangleAreaExample`
+* `TriangleAreaFluentExample`
+* `HeronsFormulaExample`
+* `HeronsFormulaDirectExtensionExample`
+
+To run these examples you can execute one of the following commands:
+
+```bash
+$ ./mill -i modernClients.ch03-PropertiesBindings.numericproperties.run
+$ ./mill -i modernClients.ch03-PropertiesBindings.numericproperties.runMain org.modernclients.propertiesandbindings.NumericPropertiesExample
+$ ./mill -i --watch modernClients.ch03-PropertiesBindings.numericproperties.runMain org.modernclients.propertiesandbindings.NumericPropertiesExample
+```
+
+
+
+
+
+
 
 hanSoloCharts/src/LineChartTest.scala
 
