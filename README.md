@@ -279,9 +279,58 @@ $ ./mill -i modernClients.ch03-PropertiesBindings.numericproperties.runMain org.
 $ ./mill -i --watch modernClients.ch03-PropertiesBindings.numericproperties.runMain org.modernclients.propertiesandbindings.NumericPropertiesExample
 ```
 
+The `ch04-javafx_controls` module contains a set of submodules that exemplify the use of the GUI controls thar 
+are available in JavaFX. The submodules and the exemplified elements are:
+* [`basic`](build.sc#518): 
+  * Standard buttons 
+  * Single check box
+  * Toggle buttons
+  * Radio buttons
+  * Single line text input boxes
+  * Single line password input boxes
+  * Multi-line text input boxes
+  * Progress bar 
+  * Slide ruler
+* [`container`](build.sc#530)
+* [`others`](build.sc#544)
+* [`popup`](build.sc#557)
+* [`dialog`](build.sc#569)
+* [`advanced`](build.sc#581)
+* [`selectionAndFocus`](build.sc#593)
 
 
+[Basic](/home/hmf/VSCodeProjects/javaFXClientMill/modernClients/ch04-javafx_controls/basic/src/Basic.scala):
 
+```bash
+$ ./mill -i modernClients.ch04-javafx_controls.basic.run
+$ ./mill -i modernClients.ch04-javafx_controls.basic.runMain org.modernclients.controls.Basic
+$ ./mill -i --watch modernClients.ch04-javafx_controls.basic.runMain org.modernclients.controls.Basic
+```
+
+```bash
+```
+
+```bash
+```
+
+```bash
+```
+```bash
+```
+
+```bash
+```
+```bash
+```
+
+```bash
+```
+
+```bash
+```
+
+```bash
+```
 
 
 

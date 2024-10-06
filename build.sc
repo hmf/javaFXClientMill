@@ -514,6 +514,96 @@ object modernClients extends ScalaModule {
   }
 
 
+  object `ch04-javafx_controls` extends OpenJFX {
+    object basic extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclients.controls.Basic")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  ivy"$FXML"
+                                )
+
+    }
+
+    object container extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclients.container.Container")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  ivy"$FXML"
+                                )
+
+    }
+
+    // others, popup, dialog, advanced, selectionAndFocus
+
+    object others extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclients.others.Others")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  ivy"$FXML",
+                                  ivy"$WEB"
+                                )
+
+    }
+
+    object popup extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclients.popup.Popup")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  ivy"$FXML"
+                                )
+
+    }
+
+    object dialog extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclients.dialog.Dialog")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  ivy"$FXML"
+                                )
+
+    }
+
+    object advanced extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclients.advanced.Advanced")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  ivy"$FXML"
+                                )
+
+    }
+
+    object selectionAndFocus extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
+
+      override def mainClass: T[Option[String]] = Some("org.modernclients.selectionAndFocus.SelectionAndFocus")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  ivy"$FXML"
+                                )
+
+    }
+
+  }
+
 
   // https://stackoverflow.com/questions/21185156/javafx-on-linux-is-showing-a-graphics-device-initialization-failed-for-es2-s
   // locate -i libprism_es2.so
@@ -611,95 +701,6 @@ https://stackoverflow.com/questions/661320/how-to-add-native-library-to-java-lib
   }
 
 
-  object `ch04-javafx_controls` extends OpenJFX {
-    object basic extends OpenJFX with ScalaModule {
-      def scalaVersion = T{ ScalaVersion }
-
-      override def mainClass: T[Option[String]] = Some("org.modernclients.controls.Basic")
-
-      override def ivyDeps = Agg(
-                                  ivy"$CONTROLS",
-                                  ivy"$FXML"
-                                )
-
-    }
-
-    object container extends OpenJFX with ScalaModule {
-      def scalaVersion = T{ ScalaVersion }
-
-      override def mainClass: T[Option[String]] = Some("org.modernclients.container.Container")
-
-      override def ivyDeps = Agg(
-                                  ivy"$CONTROLS",
-                                  ivy"$FXML"
-                                )
-
-    }
-
-    // others, popup, dialog, advanced, selectionAndFocus
-
-    object others extends OpenJFX with ScalaModule {
-      def scalaVersion = T{ ScalaVersion }
-
-      override def mainClass: T[Option[String]] = Some("org.modernclients.others.Others")
-
-      override def ivyDeps = Agg(
-                                  ivy"$CONTROLS",
-                                  ivy"$FXML",
-                                  ivy"$WEB"
-                                )
-
-    }
-
-    object popup extends OpenJFX with ScalaModule {
-      def scalaVersion = T{ ScalaVersion }
-
-      override def mainClass: T[Option[String]] = Some("org.modernclients.popup.Popup")
-
-      override def ivyDeps = Agg(
-                                  ivy"$CONTROLS",
-                                  ivy"$FXML"
-                                )
-
-    }
-
-    object dialog extends OpenJFX with ScalaModule {
-      def scalaVersion = T{ ScalaVersion }
-
-      override def mainClass: T[Option[String]] = Some("org.modernclients.dialog.Dialog")
-
-      override def ivyDeps = Agg(
-                                  ivy"$CONTROLS",
-                                  ivy"$FXML"
-                                )
-
-    }
-
-    object advanced extends OpenJFX with ScalaModule {
-      def scalaVersion = T{ ScalaVersion }
-
-      override def mainClass: T[Option[String]] = Some("org.modernclients.advanced.Advanced")
-
-      override def ivyDeps = Agg(
-                                  ivy"$CONTROLS",
-                                  ivy"$FXML"
-                                )
-
-    }
-
-    object selectionAndFocus extends OpenJFX with ScalaModule {
-      def scalaVersion = T{ ScalaVersion }
-
-      override def mainClass: T[Option[String]] = Some("org.modernclients.selectionAndFocus.SelectionAndFocus")
-
-      override def ivyDeps = Agg(
-                                  ivy"$CONTROLS",
-                                  ivy"$FXML"
-                                )
-
-    }
-
-  }
 
 
 }
