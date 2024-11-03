@@ -605,15 +605,27 @@ object modernClients extends ScalaModule {
   }
 
 object `chapter5-mastering_Visuals-CSS_Design` extends OpenJFX {
-    object introduction extends OpenJFX with ScalaModule {
-      def scalaVersion = T{ ScalaVersion }
+  object introduction extends OpenJFX with ScalaModule {
+    def scalaVersion = T{ ScalaVersion }
 
-      override def mainClass: T[Option[String]] = Some("chapter5.introduction.HelloCSS")
+    override def mainClass: T[Option[String]] = Some("chapter5.introduction.HelloCSS")
 
-      override def ivyDeps = Agg(
-                                  ivy"$CONTROLS",
-                                  ivy"$FXML"
-                                )
+    override def ivyDeps = Agg(
+                                ivy"$CONTROLS",
+                                ivy"$FXML"
+                              )
+
+  }
+
+  object cssapi extends OpenJFX with ScalaModule {
+    def scalaVersion = T{ ScalaVersion }
+
+    override def mainClass: T[Option[String]] = Some("chapter5.cssapi.WeatherApp")
+
+    override def ivyDeps = Agg(
+                                ivy"$CONTROLS",
+                                ivy"$FXML"
+                              )
 
     }
 

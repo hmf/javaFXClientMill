@@ -17,5 +17,5 @@ javafx {
 }
 
 application {
-    mainClassName = 'chapter.five.introduction/chapter5.introduction.HelloCSS'
+    mainClassName = 'chapter.five.applying/chapter5.applying.ApplyingStyles'
 }

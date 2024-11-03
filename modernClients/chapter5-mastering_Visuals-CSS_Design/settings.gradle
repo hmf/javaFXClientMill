@@ -1,2 +1,0 @@
-rootProject.name = 'chapter5'
-include 'introduction', 'applying', 'cssapi'

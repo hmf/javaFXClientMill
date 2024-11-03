@@ -381,8 +381,11 @@ $ ./mill -i modernClients.ch04-javafx_controls.advanced.runMain org.modernclient
 $ ./mill -i --watch modernClients.ch04-javafx_controls.advanced.runMain org.modernclients.advanced.Advanced
 ```
 
-./mill -i `modernClients.chapter5-mastering_Visuals+CSS_Design.introduction.run`
-./mill -i modernClients.chapter5-mastering_Visuals+CSS_Design.introduction.run
+[WeatherApp](modernClients/chapter5-mastering_Visuals-CSS_Design/cssapi/src/WeatherApp.scala)
+
+ * ./mill -i modernClients.chapter5-mastering_Visuals-CSS_Design.cssapi.run
+ * ./mill -i modernClients.chapter5-mastering_Visuals-CSS_Design.cssapi.runMain chapter5.cssapi.WeatherApp
+ * ./mill -i --watch modernClients.chapter5-mastering_Visuals-CSS_Design.cssapi.runMain chapter5.cssapi.WeatherApp
 
 
 ```bash
