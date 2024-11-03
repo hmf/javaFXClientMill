@@ -153,7 +153,7 @@ An example of using an [MUnit](https://github.com/scalameta/munit) test is shown
  $ ./mill -i HelloWorldScala.test HelloWorld.PlotSpec.hello
 ```
 
-At this point, you should be able to code your own OpenFX/JavaFX applications in Java or Scala using Mill. Th next set of examples focuses on the use of OneFX (previously JavaFX). I found the [github examples](https://github.com/Apress/definitive-guide-modern-java-clients-javafx17) of the book [The Definitive Guide to Modern Java Clients with JavaFX 17: Cross-Platform Mobile and Cloud Development](https://link.springer.com/book/10.1007/978-1-4842-7268-8). 
+At this point, you should be able to code your own OpenFX/JavaFX applications in Java or Scala using Mill. Th next set of examples focuses on the use of OneFX (previously JavaFX). I found the [github examples](https://github.com/Apress/definitive-guide-modern-java-clients-javafx17) of the book [The Definitive Guide to Modern Java Clients with JavaFX 17: Cross-Platform Mobile and Cloud Development](https://link.springer.com/book/10.1007/978-1-4842-7268-8). An [alternative Github repo](https://github.com/Apress/definitive-guide-modern-java-clients-javafx) was used to get the code. This seems to be an older unmaintained version. 
 
 We start off with a very simple Scala application [`HelloModernWorld`](modernClients/HelloModernWorld/src/sample/Main.scala). The application module is in fact a **submodule** with the path [modernClients.HelloModernWorld](build.sc#L391). Mill allows us to have modules within modules, which helps us more easily organize our code. 
 
@@ -311,8 +311,8 @@ are available in JavaFX. The submodules and the exemplified elements are:
   * Tooltip
 * [`popup`](build.sc#557)
 * [`dialog`](build.sc#569)
-* [`advanced`](build.sc#581)
 * [`selectionAndFocus`](build.sc#593)
+* [`advanced`](build.sc#581)
 
 
 [Basic](/home/hmf/VSCodeProjects/javaFXClientMill/modernClients/ch04-javafx_controls/basic/src/Basic.scala):
@@ -332,21 +332,59 @@ $ ./mill -i --watch modernClients.ch04-javafx_controls.container.runMain org.mod
 ```
 
 [Others](modernClients/ch04-javafx_controls/others/src/Others.scala):
+
 ```bash
 $ ./mill -i modernClients.ch04-javafx_controls.others.run
 $ ./mill -i modernClients.ch04-javafx_controls.others.runMain org.modernclients.others.Others
 $ ./mill -i --watch modernClients.ch04-javafx_controls.others.runMain org.modernclients.others.Others
 ```
 
+[Popup](modernClients/ch04-javafx_controls/popup/src/Popup.scala):
+
 ```bash
+$ ./mill -i modernClients.ch04-javafx_controls.popup.run
+$ ./mill -i modernClients.ch04-javafx_controls.popup.runMain org.modernclients.popup.Popup
+$ ./mill -i --watch modernClients.ch04-javafx_controls.popup.runMain org.modernclients.popup.Popup
+```
+
+TODO 
+
+[SelectionAndFocus](modernClients/ch04-javafx_controls/selectionAndFocus/src/SelectionAndFocus.scala):
+
+```bash
+$ ./mill -i modernClients.ch04-javafx_controls.selectionAndFocus.run
+$ ./mill -i modernClients.ch04-javafx_controls.selectionAndFocus.runMain org.modernclients.selectionAndFocus.SelectionAndFocus
+$ ./mill -i --watch modernClients.ch04-javafx_controls.selectionAndFocus.runMain org.modernclients.selectionAndFocus.SelectionAndFocus
+```
+
+TODO: 
+
+[Advanced](modernClients/ch04-javafx_controls/advanced/src/Advanced.scala):
+
+```bash
+$ ./mill -i modernClients.ch04-javafx_controls.advanced.run
+$ ./mill -i modernClients.ch04-javafx_controls.advanced.runMain org.modernclients.advanced.Advanced
+$ ./mill -i --watch modernClients.ch04-javafx_controls.advanced.runMain org.modernclients.advanced.Advanced
 ```
 
 
-```bash
-```
+The `chapter5-mastering Visuals+CSS Design` module contains a set of submodules that exemplify the use of the GUI controls thar 
+are available in JavaFX. The submodules and the exemplified elements are:
+* [`basic`](build.sc#518): 
+
+
+[HelloCSS](modernClients/chapter5-mastering Visuals+CSS Design/introduction/src/HelloCSS.scala):
 
 ```bash
+$ ./mill -i modernClients.ch04-javafx_controls.advanced.run
+$ ./mill -i modernClients.ch04-javafx_controls.advanced.runMain org.modernclients.advanced.Advanced
+$ ./mill -i --watch modernClients.ch04-javafx_controls.advanced.runMain org.modernclients.advanced.Advanced
 ```
+
+./mill -i `modernClients.chapter5-mastering_Visuals+CSS_Design.introduction.run`
+./mill -i modernClients.chapter5-mastering_Visuals+CSS_Design.introduction.run
+
+
 ```bash
 ```
 

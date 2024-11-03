@@ -604,7 +604,20 @@ object modernClients extends ScalaModule {
 
   }
 
+object `chapter5-mastering_Visuals-CSS_Design` extends OpenJFX {
+    object introduction extends OpenJFX with ScalaModule {
+      def scalaVersion = T{ ScalaVersion }
 
+      override def mainClass: T[Option[String]] = Some("chapter5.introduction.HelloCSS")
+
+      override def ivyDeps = Agg(
+                                  ivy"$CONTROLS",
+                                  ivy"$FXML"
+                                )
+
+    }
+
+}
   // https://stackoverflow.com/questions/21185156/javafx-on-linux-is-showing-a-graphics-device-initialization-failed-for-es2-s
   // locate -i libprism_es2.so
   // locate -i libglass.so
