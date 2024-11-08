@@ -391,6 +391,14 @@ $ ./mill -i --watch modernClients.ch04-javafx_controls.advanced.runMain org.mode
 ```bash
 ```
 
+[ApplyingStyles](modernClients/chapter5-mastering_Visuals-CSS_Design/applying/src/ApplyingStyles.scala)
+
+ * ./mill -i modernClients.chapter5-mastering_Visuals-CSS_Design.applying.run
+ * ./mill -i modernClients.chapter5-mastering_Visuals-CSS_Design.applying.runMain chapter5.applying.ApplyingStyles
+ * ./mill -i --watch modernClients.chapter5-mastering_Visuals-CSS_Design.applying.runMain chapter5.applying.ApplyingStyles
+
+
+
 ```bash
 ```
 
