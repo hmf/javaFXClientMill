@@ -70,7 +70,7 @@ class Dialog extends Application {
 object Dialog {
 
     def main(args: Array[String]): Unit = {
-      Application.launch(classOf[Dialog], args: _*)
+      Application.launch(classOf[Dialog], args*)
     }
 }
 

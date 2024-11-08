@@ -1,5 +1,7 @@
-<!--cSpell:ignore JRE, SDK, jmods, jlink -->
-<!--cSpell:ignore JFX, Intellij -->
+<!-- cSpell:ignore JRE, SDK, jmods, jlink -->
+<!-- cSpell:ignore JFX, Intellij -->
+<!-- cSpell:ignore numericproperties, modernclients, propertiesandbindings, arraychangeevent, personui -->
+<!-- cSpell:ignore myshapesfxml -->
 
 # javaFXClientMill
 
@@ -153,7 +155,9 @@ An example of using an [MUnit](https://github.com/scalameta/munit) test is shown
  $ ./mill -i HelloWorldScala.test HelloWorld.PlotSpec.hello
 ```
 
-At this point, you should be able to code your own OpenFX/JavaFX applications in Java or Scala using Mill. Th next set of examples focuses on the use of OneFX (previously JavaFX). I found the [github examples](https://github.com/Apress/definitive-guide-modern-java-clients-javafx17) of the book [The Definitive Guide to Modern Java Clients with JavaFX 17: Cross-Platform Mobile and Cloud Development](https://link.springer.com/book/10.1007/978-1-4842-7268-8). An [alternative Github repo](https://github.com/Apress/definitive-guide-modern-java-clients-javafx) was used to get the code. This seems to be an older unmaintained version. 
+### OpenFX Scala Examples
+
+At this point, you should be able to code your own OpenFX/JavaFX applications in Java or Scala using Mill. Th next set of examples focuses on the use of OpenFX (previously JavaFX). I found the [github examples](https://github.com/Apress/definitive-guide-modern-java-clients-javafx17) of the book [The Definitive Guide to Modern Java Clients with JavaFX 17: Cross-Platform Mobile and Cloud Development](https://link.springer.com/book/10.1007/978-1-4842-7268-8). An [alternative Github repo](https://github.com/Apress/definitive-guide-modern-java-clients-javafx) was used to get the code. This seems to be an older unmaintained version. 
 
 We start off with a very simple Scala application [`HelloModernWorld`](modernClients/HelloModernWorld/src/sample/Main.scala). The application module is in fact a **submodule** with the path [modernClients.HelloModernWorld](build.sc#L391). Mill allows us to have modules within modules, which helps us more easily organize our code. 
 
@@ -261,7 +265,7 @@ $ ./mill -i modernClients.ch03-PropertiesBindings.arraychangeevent.runMain org.m
 $ ./mill -i --watch modernClients.ch03-PropertiesBindings.arraychangeevent.runMain org.modernclients.propertiesandbindings.ArrayChangeEventExample
 ```
 
-The [numericproperties](build.sc#502) module configures the [`NumericPropertiesExample`](modernClients/ch03-PropertiesBindings/numericproperties/src/main/java/org/modernclients/propertiesandbindings/NumericPropertiesExample.scala) that performs essentially the same type of tests as the above examples, but for numeric values. The non-GUI appliation contais the 
+The [numericproperties](build.sc#502) module configures the [`NumericPropertiesExample`](modernClients/ch03-PropertiesBindings/numericproperties/src/main/java/org/modernclients/propertiesandbindings/NumericPropertiesExample.scala) that performs essentially the same type of tests as the above examples, but for numeric values. The non-GUI application contais the 
 following tests:
 * `NumericPropertiesExample`
 * `BidirectionalBindingExample`
@@ -279,7 +283,7 @@ $ ./mill -i modernClients.ch03-PropertiesBindings.numericproperties.runMain org.
 $ ./mill -i --watch modernClients.ch03-PropertiesBindings.numericproperties.runMain org.modernclients.propertiesandbindings.NumericPropertiesExample
 ```
 
-The `ch04-javafx_controls` module contains a set of submodules that exemplify the use of the GUI controls thar 
+The `ch04-javafx_controls` module contains a set of submodules that exemplify the use of the GUI controls that 
 are available in JavaFX. The submodules and the exemplified elements are:
 * [`basic`](build.sc#518): 
   * Standard buttons 
@@ -347,6 +351,15 @@ $ ./mill -i modernClients.ch04-javafx_controls.popup.runMain org.modernclients.p
 $ ./mill -i --watch modernClients.ch04-javafx_controls.popup.runMain org.modernclients.popup.Popup
 ```
 
+[Dialog](modernClients/ch04-javafx_controls/dialog/src/Dialog.scala)
+
+```bash
+$ ./mill -i modernClients.ch04-javafx_controls.dialog.run
+$ ./mill -i modernClients.ch04-javafx_controls.dialog.runMain org.modernclients.dialog.Dialog
+$ ./mill -i --watch modernClients.ch04-javafx_controls.dialog.runMain org.modernclients.dialog.Dialog
+```
+
+
 TODO 
 
 [SelectionAndFocus](modernClients/ch04-javafx_controls/selectionAndFocus/src/SelectionAndFocus.scala):
@@ -368,9 +381,11 @@ $ ./mill -i --watch modernClients.ch04-javafx_controls.advanced.runMain org.mode
 ```
 
 
-The `chapter5-mastering Visuals+CSS Design` module contains a set of submodules that exemplify the use of the GUI controls thar 
+The `chapter5-mastering Visuals+CSS Design` module contains a set of submodules that exemplify the CSS API that 
 are available in JavaFX. The submodules and the exemplified elements are:
-* [`basic`](build.sc#518): 
+* [`introduction`](build.sc#608): 
+* [`cssapi`](build.sc#620): 
+* [`applying`](build.sc#633): 
 
 
 [HelloCSS](modernClients/chapter5-mastering Visuals+CSS Design/introduction/src/HelloCSS.scala):
@@ -383,23 +398,18 @@ $ ./mill -i --watch modernClients.ch04-javafx_controls.advanced.runMain org.mode
 
 [WeatherApp](modernClients/chapter5-mastering_Visuals-CSS_Design/cssapi/src/WeatherApp.scala)
 
- * ./mill -i modernClients.chapter5-mastering_Visuals-CSS_Design.cssapi.run
- * ./mill -i modernClients.chapter5-mastering_Visuals-CSS_Design.cssapi.runMain chapter5.cssapi.WeatherApp
- * ./mill -i --watch modernClients.chapter5-mastering_Visuals-CSS_Design.cssapi.runMain chapter5.cssapi.WeatherApp
-
-
 ```bash
+$ ./mill -i modernClients.chapter5-mastering_Visuals-CSS_Design.cssapi.run
+$ ./mill -i modernClients.chapter5-mastering_Visuals-CSS_Design.cssapi.runMain chapter5.cssapi.WeatherApp
+$ ./mill -i --watch modernClients.chapter5-mastering_Visuals-CSS_Design.cssapi.runMain chapter5.cssapi.WeatherApp
 ```
 
 [ApplyingStyles](modernClients/chapter5-mastering_Visuals-CSS_Design/applying/src/ApplyingStyles.scala)
 
- * ./mill -i modernClients.chapter5-mastering_Visuals-CSS_Design.applying.run
- * ./mill -i modernClients.chapter5-mastering_Visuals-CSS_Design.applying.runMain chapter5.applying.ApplyingStyles
- * ./mill -i --watch modernClients.chapter5-mastering_Visuals-CSS_Design.applying.runMain chapter5.applying.ApplyingStyles
-
-
-
 ```bash
+$ ./mill -i modernClients.chapter5-mastering_Visuals-CSS_Design.applying.run
+$ ./mill -i modernClients.chapter5-mastering_Visuals-CSS_Design.applying.runMain chapter5.applying.ApplyingStyles
+$ ./mill -i --watch modernClients.chapter5-mastering_Visuals-CSS_Design.applying.runMain chapter5.applying.ApplyingStyles
 ```
 
 ```bash
@@ -408,6 +418,9 @@ $ ./mill -i --watch modernClients.ch04-javafx_controls.advanced.runMain org.mode
 ```bash
 ```
 
+### HanSolo Charts Scala Examples
+
+https://github.com/HanSolo/charts
 
 
 hanSoloCharts/src/LineChartTest.scala
@@ -422,17 +435,22 @@ hanSoloChartsStd/src/LineChartTest.scala
  * ./mill -i hanSoloCharts.runMain hansolo.charts.LineChartTest
  * ./mill -i --watch hanSoloCharts.runMain hansolo.charts.LineChartTest
 
+
+
+
+<!-- 
+
+HelloWorldScala/src/helloworld/HelloWorld.scala
+
+ * ./mill -i HelloWorldScala.run
+ * ./mill -i HelloWorldScala.runMain helloworld.HelloWorld
+ * ./mill -i --watch HelloWorldScala.run
+ 
+
 /home/hmf/VSCodeProjects/javaFXClientMill/HelloWorldJava/src/button/Main.java
 
  * ./mill -i HelloWorldJava.runMain button.Main
  * ./mill -i --watch HelloWorldJava.runMain button.Main
-
-HelloWorldJava/test/src/PlotSpec.scala
-
- * ./mill -i HelloWorld.test
- * ./mill -i HelloWorld.test.testLocal
- * ./mill -i HelloWorld.test HelloWorld.PlotSpec.*
- * ./mill -i HelloWorld.test HelloWorld.PlotSpec.hello // test("hello")
 
 HelloWorldScala/src/button/Main.scala
 
@@ -440,31 +458,13 @@ HelloWorldScala/src/button/Main.scala
  * ./mill -i --watch HelloWorldScala.runMain button.Main
 
 
-HelloWorldScala/src/helloworld/HelloWorld.scala
-
- * ./mill -i HelloWorldScala.run
- * ./mill -i HelloWorldScala.runMain helloworld.HelloWorld
- * ./mill -i --watch HelloWorldScala.run
-
-HelloWorldScala/test/src/PlotSpec.scala
-
- * ./mill -i HelloWorld.test
- * ./mill -i HelloWorld.test.testLocal
- * ./mill -i HelloWorld.test HelloWorld.PlotSpec.*
- * ./mill -i HelloWorld.test HelloWorld.PlotSpec.hello // test("hello")
-
-modernClients/ch02-javafx_fundamentals/myshapes/src/main/java/org/modernclient/MyShapes.scala
-
- * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.run
- * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
- * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
-
 modernClients/ch02-javafx_fundamentals/myshapes2/src/main/java/org/modernclient/MyShapes2.scala
 modernClients/ch02-javafx_fundamentals/myshapes2/src/main/java/org/modernclient/MyShapes2.scala
 
  * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes2.run
  * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes2.runMain org.modernclient.MyShapes2
  * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapes2.runMain org.modernclient.MyShapes2
+
 
 modernClients/ch02-javafx_fundamentals/myshapesfxml/src/main/java/org/modernclient/MyShapesFXML.scala
 modernClients/ch02-javafx_fundamentals/myshapesfxml/target/classes/org/modernclient/MyShapesFXML.scala
@@ -487,12 +487,12 @@ modernClients/ch02-javafx_fundamentals/myshapesproperties/target/classes/org/mod
  * ./mill -i modernClients.ch02-javafx_fundamentals.myshapesproperties.runMain org.modernclient.MyShapesProperties
  * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapesproperties.runMain org.modernclient.MyShapesProperties
 
-
 modernClients/ch02-javafx_fundamentals/personui/src/main/java/com/modernclient/PersonUI.scala
 
  * ./mill -i modernClients.ch02-javafx_fundamentals.personui.run
  * ./mill -i modernClients.ch02-javafx_fundamentals.personui.runMain com.modernclient.PersonUI
  * ./mill -i --watch modernClients.ch02-javafx_fundamentals.personui.runMain com.modernclient.PersonUI
+
 
 modernClients/ch03-PropertiesBindings/arraychangeevent/src/main/java/org/modernclients/propertiesandbindings/ArrayChangeEventExample.scala
 
@@ -506,6 +506,7 @@ modernClients/ch03-PropertiesBindings/numericproperties/src/main/java/org/modern
  * ./mill -i modernClients.ch03-PropertiesBindings.numericproperties.run
  * ./mill -i modernClients.ch03-PropertiesBindings.numericproperties.runMain org.modernclients.propertiesandbindings.NumericPropertiesExample
  * ./mill -i --watch modernClients.ch03-PropertiesBindings.numericproperties.runMain org.modernclients.propertiesandbindings.NumericPropertiesExample
+
 
 modernClients/ch04-javafx_controls/advanced/src/Advanced.scala
 
@@ -542,7 +543,6 @@ modernClients/ch04-javafx_controls/others/src/Others.scala
  * ./mill -i modernClients.ch04-javafx_controls.others.runMain org.modernclients.others.Others
  * ./mill -i --watch modernClients.ch04-javafx_controls.others.runMain org.modernclients.others.Others
 
-
 modernClients/ch04-javafx_controls/popup/src/Popup.scala
 
  * ./mill -i modernClients.ch04-javafx_controls.popup.run
@@ -560,19 +560,14 @@ modernClients/ch04-javafx_controls/selectionAndFocus/src/SelectionAndFocus.scala
 modernClients/HelloModernWorld/src/sample/Main.scala
 
  * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
+ * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes 
+ 
+ modernClients/ch02-javafx_fundamentals/myshapes/src/main/java/org/modernclient/MyShapes.scala
+
+ * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.run
+ * ./mill -i modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
  * ./mill -i --watch modernClients.ch02-javafx_fundamentals.myshapes.runMain org.modernclient.MyShapes
 
-modernClients/HelloWorldScala/src/button/Main.scala
-
-
- * ./mill -i modernClients.HelloWorldScala.runMain button.Main
- * ./mill -i --watch modernClients.HelloWorldScala.runMain button.Main
-
-modernClients/HelloWorldScala/src/helloworld/HelloWorld.scala
-
- * ./mill -i modernClients.HelloWorldScala.run
- * ./mill -i modernClients.HelloWorldScala.runMain helloworld.HelloWorld
- * ./mill -i --watch modernClients.HelloWorldScala.run
 
 modernClients/HelloWorldScala/test/src/PlotSpec.scala
 
@@ -580,3 +575,12 @@ modernClients/HelloWorldScala/test/src/PlotSpec.scala
  * ./mill -i HelloWorld.test.testLocal
  * ./mill -i HelloWorld.test HelloWorld.PlotSpec.*
  * ./mill -i HelloWorld.test HelloWorld.PlotSpec.hello // test("hello")
+
+HelloWorldJava/test/src/PlotSpec.scala
+
+ * ./mill -i HelloWorld.test
+ * ./mill -i HelloWorld.test.testLocal
+ * ./mill -i HelloWorld.test HelloWorld.PlotSpec.*
+ * ./mill -i HelloWorld.test HelloWorld.PlotSpec.hello // test("hello")
+
+ -->
