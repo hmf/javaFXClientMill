@@ -670,6 +670,9 @@ https://www.gitmemory.com/issue/update4j/update4j/80/587583388
 
 https://stackoverflow.com/questions/661320/how-to-add-native-library-to-java-library-path-with-eclipse-launch-instead-of
   */
+
+}
+
   object hanSoloCharts extends OpenJFX with ScalaModule {
     def scalaVersion = T{ ScalaVersion }
 
@@ -741,4 +744,3 @@ https://stackoverflow.com/questions/661320/how-to-add-native-library-to-java-lib
 
 
 
-}
