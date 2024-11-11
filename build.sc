@@ -658,6 +658,7 @@ object hansolo extends ScalaModule {
     //override def scalacOptions = T{ Seq("-deprecation", "-feature") }
   
     // -Djdk.gtk.verbose=true -Djavafx.embed.singleThread=true -Dawt.useSystemAAFontSettings=on
+    // Seq("-Dprism.verbose=true", "-Djavafx.verbose=true", "-ea")
     // -Djava.library.path
     override def forkArgs: Target[Seq[String]] = T {
       println(darkOrange(s"build.sc.${getClass.getSimpleName}.forkArgs"))
@@ -673,20 +674,46 @@ object hansolo extends ScalaModule {
     override def mainClass: T[Option[String]] = Some("hansolo.charts.LineChartTest")
   
     override def ivyDeps = Agg(
-                                // TODO: required by charts only
+                                // Required by charts only
                                 ivy"org.slf4j:slf4j-api:2.0.16",
-                                // TODO: for tests only?
                                 // https://stackoverflow.com/questions/54777923/logback-in-a-java-9-modular-application-not-working
                                 // https://logback.qos.ch/
                                 // ivy"ch.qos.logback:logback-classic:1.3.0-alpha4",
                                 ivy"ch.qos.logback:logback-classic:1.5.7",
                                 ivy"$CONTROLS",
-                                //ivy"$CONTROLSFX",      // TODO: bug - we should not need this
                                 ivy"$HANSOLO_CHARTS" // ivyHanSoloCharts 
                               )
   
   }
-    
+
+  object arcChart extends OpenJFX with ScalaModule {
+    def scalaVersion = T{ ScalaVersion }
+  
+    override def forkArgs: Target[Seq[String]] = T {
+      println(darkOrange(s"build.sc.${getClass.getSimpleName}.forkArgs"))
+  
+      val t = Seq("-Djavafx.verbose=true") ++  super[OpenJFX].forkArgs() //  OpenFX
+      println(orange(t.mkString("\n")))
+      // we do not have here the hansolo module, loading s not the same
+      t
+    }
+  
+  
+    override def mainClass: T[Option[String]] = Some("hansolo.charts.ArcChartTest")
+  
+    override def ivyDeps = Agg(
+                                // Required by charts only
+                                ivy"org.slf4j:slf4j-api:2.0.16",
+                                // https://stackoverflow.com/questions/54777923/logback-in-a-java-9-modular-application-not-working
+                                // https://logback.qos.ch/
+                                // ivy"ch.qos.logback:logback-classic:1.3.0-alpha4",
+                                ivy"ch.qos.logback:logback-classic:1.5.7",
+                                ivy"$CONTROLS",
+                                ivy"$HANSOLO_CHARTS" // ivyHanSoloCharts 
+                              )
+  
+  }
+
 }
   
 object hanSoloCharts extends OpenJFX with ScalaModule {
@@ -697,6 +724,7 @@ object hanSoloCharts extends OpenJFX with ScalaModule {
   //override def scalacOptions = T{ Seq("-deprecation", "-feature") }
 
   // -Djdk.gtk.verbose=true -Djavafx.embed.singleThread=true -Dawt.useSystemAAFontSettings=on
+  // Seq("-Dprism.verbose=true", "-Djavafx.verbose=true", "-ea")
   // -Djava.library.path
   override def forkArgs: Target[Seq[String]] = T {
     println(darkOrange(s"build.sc.${getClass.getSimpleName}.forkArgs"))
