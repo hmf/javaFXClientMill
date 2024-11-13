@@ -147,7 +147,7 @@ class ArcChartTest extends Application {
 
         val connectionObserver: EvtObserver[ChartEvt] = e => {
             // EvtType<? extends Evt> type = e.getEvtType()
-            val type_ = e.getEvtType()
+            val type_ : EvtType[? <: Evt] = e.getEvtType()
             if (type_.equals(ChartEvt.CONNECTION_SELECTED_TO) || 
                 type_.equals(ChartEvt.CONNECTION_SELECTED_FROM) || 
                 type_.equals(ChartEvt.CONNECTION_SELECTED)) {
