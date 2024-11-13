@@ -23,8 +23,8 @@ import java.util.Random
  * ./mill mill.scalalib.GenIdea/idea
  *
  * ./mill -i hansolo.heatMaps.run
- * ./mill -i hansolo.arcChart.runMain hansolo.charts.AreaHeatMapTest
- * ./mill -i --watch hansolo.arcChart.runMain hansolo.charts.AreaHeatMapTest
+ * ./mill -i hansolo.heatMaps.runMain hansolo.charts.AreaHeatMapTest
+ * ./mill -i --watch hansolo.heatMaps.runMain hansolo.charts.AreaHeatMapTest
  * 
  * 
  * Note on resources (see StackOverflow link below): Mill's convention is to 
@@ -84,7 +84,6 @@ class AreaHeatMapTest extends Application {
     override def stop() = {
         System.exit(0)
     }
-
 
     def launchIt():Unit = {
         Application.launch()
