@@ -28,7 +28,8 @@ val controlsFXVersion    = "11.2.1" // "11.1.0"
 //val hanSoloChartsVersion = "16.0.12" JDK16
 // val hanSoloChartsVersion = "11.7"
 val hanSoloChartsVersion = "21.0.19"
-
+val sl4jVersion = "2.0.16"
+val logbackVersion = "1.5.7"
 
 /**
  * Mill now checks that a JavaModule does not use any scala dependencies. In 
@@ -675,11 +676,11 @@ object hansolo extends ScalaModule {
   
     override def ivyDeps = Agg(
                                 // Required by charts only
-                                ivy"org.slf4j:slf4j-api:2.0.16",
+                                ivy"org.slf4j:slf4j-api:${sl4jVersion}",
                                 // https://stackoverflow.com/questions/54777923/logback-in-a-java-9-modular-application-not-working
                                 // https://logback.qos.ch/
                                 // ivy"ch.qos.logback:logback-classic:1.3.0-alpha4",
-                                ivy"ch.qos.logback:logback-classic:1.5.7",
+                                ivy"ch.qos.logback:logback-classic:${logbackVersion}",
                                 ivy"$CONTROLS",
                                 ivy"$HANSOLO_CHARTS" // ivyHanSoloCharts 
                               )
@@ -703,16 +704,45 @@ object hansolo extends ScalaModule {
   
     override def ivyDeps = Agg(
                                 // Required by charts only
-                                ivy"org.slf4j:slf4j-api:2.0.16",
+                                ivy"org.slf4j:slf4j-api:${sl4jVersion}",
                                 // https://stackoverflow.com/questions/54777923/logback-in-a-java-9-modular-application-not-working
                                 // https://logback.qos.ch/
                                 // ivy"ch.qos.logback:logback-classic:1.3.0-alpha4",
-                                ivy"ch.qos.logback:logback-classic:1.5.7",
+                                ivy"ch.qos.logback:logback-classic:${logbackVersion}",
                                 ivy"$CONTROLS",
                                 ivy"$HANSOLO_CHARTS" // ivyHanSoloCharts 
                               )
   
   }
+
+  object heatMaps extends OpenJFX with ScalaModule {
+    def scalaVersion = T{ ScalaVersion }
+  
+    override def forkArgs: Target[Seq[String]] = T {
+      println(darkOrange(s"build.sc.${getClass.getSimpleName}.forkArgs"))
+  
+      val t = Seq("-Djavafx.verbose=true") ++  super[OpenJFX].forkArgs() //  OpenFX
+      println(orange(t.mkString("\n")))
+      // we do not have here the hansolo module, loading s not the same
+      t
+    }
+  
+  
+    override def mainClass: T[Option[String]] = Some("hansolo.charts.AreaHeatMapTest")
+  
+    override def ivyDeps = Agg(
+                                // Required by charts only
+                                ivy"org.slf4j:slf4j-api:${sl4jVersion}",
+                                // https://stackoverflow.com/questions/54777923/logback-in-a-java-9-modular-application-not-working
+                                // https://logback.qos.ch/
+                                // ivy"ch.qos.logback:logback-classic:1.3.0-alpha4",
+                                ivy"ch.qos.logback:logback-classic:${logbackVersion}",
+                                ivy"$CONTROLS",
+                                ivy"$HANSOLO_CHARTS" // ivyHanSoloCharts 
+                              )
+  
+  }
+
 
 }
   
@@ -741,12 +771,12 @@ object hanSoloCharts extends OpenJFX with ScalaModule {
 
   override def ivyDeps = Agg(
                               // TODO: required by charts only
-                              ivy"org.slf4j:slf4j-api:2.0.16",
+                              ivy"org.slf4j:slf4j-api:${sl4jVersion}",
                               // TODO: for tests only?
                               // https://stackoverflow.com/questions/54777923/logback-in-a-java-9-modular-application-not-working
                               // https://logback.qos.ch/
                               // ivy"ch.qos.logback:logback-classic:1.3.0-alpha4",
-                              ivy"ch.qos.logback:logback-classic:1.5.7",
+                              ivy"ch.qos.logback:logback-classic:${logbackVersion}",
                               ivy"$CONTROLS",
                               //ivy"$CONTROLSFX",      // TODO: bug - we should not need this
                               ivy"$HANSOLO_CHARTS" // ivyHanSoloCharts 
@@ -779,12 +809,12 @@ object hanSoloChartsStd extends OpenJFX with ScalaModule {
 
   override def ivyDeps = Agg(
                               // TODO: required by charts only
-                              ivy"org.slf4j:slf4j-api:2.0.16",
+                              ivy"org.slf4j:slf4j-api:${sl4jVersion}",
                               // TODO: for tests only?
                               // https://stackoverflow.com/questions/54777923/logback-in-a-java-9-modular-application-not-working
                               // https://logback.qos.ch/
                               // ivy"ch.qos.logback:logback-classic:1.3.0-alpha4",
-                              ivy"ch.qos.logback:logback-classic:1.5.7",
+                              ivy"ch.qos.logback:logback-classic:${logbackVersion}",
                               ivy"$CONTROLS",
                               //ivy"$CONTROLSFX",      // TODO: bug - we should not need this
                               ivy"$HANSOLO_CHARTS" // ivyHanSoloCharts 
