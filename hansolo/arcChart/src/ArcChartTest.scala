@@ -1,57 +1,5 @@
-package hansolo.charts
-
 // cSpell:ignore javafx, hansolo
 
-import eu.hansolo.fx.charts.data.XYChartItem
-import eu.hansolo.fx.charts.series.XYSeries
-import eu.hansolo.fx.charts.series.XYSeriesBuilder
-
-import eu.hansolo.fx.charts.ChartType
-import eu.hansolo.fx.charts.AxisBuilder
-import eu.hansolo.fx.charts.Position
-import eu.hansolo.fx.charts.AxisType
-import eu.hansolo.fx.charts.GridBuilder
-import eu.hansolo.fx.charts.XYPane
-import eu.hansolo.fx.charts.XYChart
-import eu.hansolo.fx.charts.Axis
-
-import eu.hansolo.fx.charts.data.XYItem
-
-import javafx.application.Application
-import javafx.geometry.Insets
-import javafx.geometry.Orientation
-import javafx.scene.layout.AnchorPane
-import javafx.scene.layout.Background
-import javafx.scene.layout.BackgroundFill
-import javafx.scene.layout.CornerRadii
-import javafx.scene.paint.Color
-import javafx.stage.Stage
-import javafx.scene.layout.StackPane
-import javafx.scene.Scene
-
-
-/**
- * ./mill mill.scalalib.GenIdea/idea
- *
- * ./mill -i hansolo.lineChart.run
- * ./mill -i hansolo.lineChart.runMain hansolo.charts.LineChartTest
- * ./mill -i --watch hansolo.lineChart.runMain hansolo.charts.LineChartTest
- * 
- * 
- * Note on resources (see StackOverflow link below): Mill's convention is to 
- * place a resources directory on the lowest level Mill module. To access 
- * these resources one must use the path relative to the application (Mill 
- * module) and not the class (because resources are not copied to the compiled 
- * class directory).
- * 
- * If you want to keep the resources next to the classes, these would require
- * you change Mill behavior to copy them, or do it yourself. 
- * 
- * 
- * @see https://stackoverflow.com/questions/22000423/javafx-and-maven-nullpointerexception-location-is-required
- * @see https://stackoverflow.com/questions/12124657/getting-started-on-scala-javafx-desktop-application-development
- * @see https://github.com/HanSolo/charts/blob/master/src/test/java/eu/hansolo/fx/charts/LineChartTest.java
- */
 package hansolo.charts
 
 import eu.hansolo.fx.charts.ArcChart
@@ -71,12 +19,36 @@ import javafx.scene.layout.StackPane
 import javafx.scene.paint.Color
 import javafx.stage.Stage
 
+
+import scala.compiletime.uninitialized
 import java.util.List
 
 
+/**
+ * ./mill mill.scalalib.GenIdea/idea
+ *
+ * ./mill -i hansolo.arcChart.run
+ * ./mill -i hansolo.arcChart.runMain hansolo.charts.ArcChartTest
+ * ./mill -i --watch hansolo.arcChart.runMain hansolo.charts.ArcChartTest
+ * 
+ * 
+ * Note on resources (see StackOverflow link below): Mill's convention is to 
+ * place a resources directory on the lowest level Mill module. To access 
+ * these resources one must use the path relative to the application (Mill 
+ * module) and not the class (because resources are not copied to the compiled 
+ * class directory).
+ * 
+ * If you want to keep the resources next to the classes, these would require
+ * you change Mill behavior to copy them, or do it yourself. 
+ * 
+ * 
+ * @see https://stackoverflow.com/questions/22000423/javafx-and-maven-nullpointerexception-location-is-required
+ * @see https://stackoverflow.com/questions/12124657/getting-started-on-scala-javafx-desktop-application-development
+ * @see https://github.com/HanSolo/charts/blob/master/src/test/java/eu/hansolo/fx/charts/LineChartTest.java
+ */
 class ArcChartTest extends Application {
     
-    private var arcChart: ArcChart = _
+    private var arcChart: ArcChart = uninitialized
 
     override def init() = {
         // Setup Data
@@ -153,9 +125,9 @@ class ArcChartTest extends Application {
         val items: List[PlotItem] = List.of(germany, france, italy, spain, india, china, japan, thailand, singapore)
 
         // Register listeners to click on connections and items
-        items.forEach(item -> {
+        items.forEach(item => {
             item.addChartEvtObserver(ChartEvt.ITEM_SELECTED, e => {
-                PlotItem i = e.getSource().asInstanceOf[PlotItem]
+                val i = e.getSource().asInstanceOf[PlotItem]
                 println("Selected: " + i.getName())
             })
         })
@@ -174,15 +146,18 @@ class ArcChartTest extends Application {
                                   .build()
 
         val connectionObserver: EvtObserver[ChartEvt] = e => {
-            EvtType<? extends Evt> type = e.getEvtType()
-            if (type.equals(ChartEvt.CONNECTION_SELECTED_TO) || type.equals(ChartEvt.CONNECTION_SELECTED_FROM) || type.equals(ChartEvt.CONNECTION_SELECTED)) {
-                if (e.getSource() instanceof Connection) {
-                    Connection connection = (Connection) e.getSource()
+            // EvtType<? extends Evt> type = e.getEvtType()
+            val type_ = e.getEvtType()
+            if (type_.equals(ChartEvt.CONNECTION_SELECTED_TO) || 
+                type_.equals(ChartEvt.CONNECTION_SELECTED_FROM) || 
+                type_.equals(ChartEvt.CONNECTION_SELECTED)) {
+                if (e.getSource().isInstanceOf[Connection]) {
+                    val connection = e.getSource().asInstanceOf[Connection]
                     System.out.println("From: " + connection.getOutgoingItem().getName() + " -> to: " + connection.getIncomingItem().getName() + " -> Value: " + connection.getValue())
                 }
             }
         }
-        arcChart.getConnections().forEach(connection -> connection.addChartEvtObserver(ChartEvt.ANY, connectionObserver))
+        arcChart.getConnections().forEach(connection => connection.addChartEvtObserver(ChartEvt.ANY, connectionObserver))
 
         /* Custom connection colors
         if (null != arcChart.getConnection(australia, japan)) {
@@ -207,11 +182,11 @@ class ArcChartTest extends Application {
         //System.out.println(null == connection ? "Connection is null!!!" : "Connection from Thailand -> China: " + connection.getValue())
     }
 
-    override def start(Stage stage) = {
-        StackPane pane = new StackPane(arcChart)
+    override def start(stage: Stage) = {
+        val pane = new StackPane(arcChart)
         pane.setPadding(new Insets(10))
 
-        Scene scene = new Scene(pane)
+        val scene = new Scene(pane)
 
         stage.setTitle("Arc Chart")
         stage.setScene(scene)
