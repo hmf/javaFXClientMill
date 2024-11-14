@@ -436,6 +436,40 @@ hanSoloChartsStd/src/LineChartTest.scala
  * ./mill -i --watch hanSoloCharts.runMain hansolo.charts.LineChartTest
 
 
+hansolo/lineChart/src/LineChartTest.scala
+
+ * ./mill -i hansolo.lineChart.run
+ * ./mill -i hansolo.lineChart.runMain hansolo.charts.LineChartTest
+ * ./mill -i --watch hansolo.lineChart.runMain hansolo.charts.LineChartTest
+
+hansolo/arcChart/src/ArcChartTest.scala
+
+ * ./mill -i hansolo.arcChart.run
+ * ./mill -i hansolo.arcChart.runMain hansolo.charts.ArcChartTest
+ * ./mill -i --watch hansolo.arcChart.runMain hansolo.charts.ArcChartTest
+
+
+hansolo/heatMaps/src/AreaHeatMapTest.scala
+
+ * ./mill -i hansolo.heatMaps.run
+ * ./mill -i hansolo.heatMaps.runMain hansolo.charts.AreaHeatMapTest
+ * ./mill -i --watch hansolo.heatMaps.runMain hansolo.charts.AreaHeatMapTest
+
+
+hansolo/heatMaps/src/HeatMapTest.scala
+
+ * X ./mill -i hansolo.heatMaps.run
+ * ./mill -i hansolo.heatMaps.runMain hansolo.charts.HeatMapTest
+ * ./mill -i --watch hansolo.heatMaps.runMain hansolo.charts.HeatMapTest
+
+
+hansolo/heatMaps/src/MatrixHeatMapTest.scala
+
+
+ * ./mill -i hansolo.heatMaps.runMain hansolo.charts.MatrixHeatmapTest
+ * ./mill -i --watch hansolo.heatMaps.runMain hansolo.charts.MatrixHeatmapTest
+
+
 
 
 <!-- 
