@@ -469,7 +469,11 @@ hansolo/heatMaps/src/MatrixHeatMapTest.scala
  * ./mill -i hansolo.heatMaps.runMain hansolo.charts.MatrixHeatmapTest
  * ./mill -i --watch hansolo.heatMaps.runMain hansolo.charts.MatrixHeatmapTest
 
+hansolo/heatMaps/src/WorldHeatMapTest.scala
 
+
+ * ./mill -i hansolo.heatMaps.runMain hansolo.charts.WorldHeatMapTest
+ * ./mill -i --watch hansolo.heatMaps.runMain hansolo.charts.WorldHeatMapTest
 
 
 
