@@ -490,6 +490,20 @@ hansolo/axis/src/DateAxisTest.scala
  * ./mill -i hansolo.axis.runMain hansolo.charts.DateAxisTest
  * ./mill -i --watch hansolo.axis.runMain hansolo.charts.DateAxisTest
 
+hansolo/axis/src/TimeAxisTest.scala
+
+ * X ./mill -i hansolo.axis.run
+ * ./mill -i hansolo.axis.runMain hansolo.charts.TimeAxisTest
+ * ./mill -i --watch hansolo.axis.runMain hansolo.charts.TimeAxisTest
+
+
+bar
+
+hansolo/bar/src/BarChartTest.scala
+
+ * ./mill -i hansolo.bar.run
+ * ./mill -i hansolo.bar.runMain hansolo.charts.BarChartTest
+ * ./mill -i --watch hansolo.bar.runMain hansolo.charts.BarChartTest
 
 
 

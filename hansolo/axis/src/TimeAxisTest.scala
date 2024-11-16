@@ -36,7 +36,7 @@ import scala.compiletime.uninitialized
 /**
  * ./mill mill.scalalib.GenIdea/idea
  *
- * ./mill -i hansolo.axis.run
+ * X ./mill -i hansolo.axis.run
  * ./mill -i hansolo.axis.runMain hansolo.charts.TimeAxisTest
  * ./mill -i --watch hansolo.axis.runMain hansolo.charts.TimeAxisTest
  * 
