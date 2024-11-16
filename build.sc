@@ -14,7 +14,7 @@ import mill._, scalalib._
 import $ivy.`com.lihaoyi::pprint:0.9.0`
 import $ivy.`com.lihaoyi::fansi:0.5.0`
 
-val ScalaVersion = "3.5.1-RC2" // "3.0.1"
+val ScalaVersion = "3.5.2" // "3.5.1-RC2" "3.0.1"
 
 //val javaFXVersion = "11.0.2"
 //val javaFXVersion = "11"
@@ -23,7 +23,7 @@ val ScalaVersion = "3.5.1-RC2" // "3.0.1"
 // val javaFXVersion = "16"
 val javaFXVersion = "22.0.2"
 
-val mUnitVersion         = "1.0.1" // "0.8.4" // "0.7.27"
+val mUnitVersion         = "1.0.2" // "1.0.1" "0.8.4" // "0.7.27"
 val controlsFXVersion    = "11.2.1" // "11.1.0"
 //val hanSoloChartsVersion = "16.0.12" JDK16
 // val hanSoloChartsVersion = "11.7"
@@ -743,6 +743,34 @@ object hansolo extends ScalaModule {
   
   }
 
+
+  object axis extends OpenJFX with ScalaModule {
+    def scalaVersion = T{ ScalaVersion }
+  
+    override def forkArgs: Target[Seq[String]] = T {
+      println(darkOrange(s"build.sc.${getClass.getSimpleName}.forkArgs"))
+  
+      val t = Seq("-Djavafx.verbose=true") ++  super[OpenJFX].forkArgs() //  OpenFX
+      println(orange(t.mkString("\n")))
+      // we do not have here the hansolo module, loading s not the same
+      t
+    }
+  
+  
+    override def mainClass: T[Option[String]] = Some("hansolo.charts.AxisTest")
+  
+    override def ivyDeps = Agg(
+                                // Required by charts only
+                                ivy"org.slf4j:slf4j-api:${sl4jVersion}",
+                                // https://stackoverflow.com/questions/54777923/logback-in-a-java-9-modular-application-not-working
+                                // https://logback.qos.ch/
+                                // ivy"ch.qos.logback:logback-classic:1.3.0-alpha4",
+                                ivy"ch.qos.logback:logback-classic:${logbackVersion}",
+                                ivy"$CONTROLS",
+                                ivy"$HANSOLO_CHARTS" // ivyHanSoloCharts 
+                              )
+  
+  }
 
 }
   

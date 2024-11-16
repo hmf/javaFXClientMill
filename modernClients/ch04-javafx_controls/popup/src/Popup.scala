@@ -82,7 +82,7 @@ class Popup extends Application {
 object Popup {
 
     def main(args: Array[String]): Unit = {
-      Application.launch(classOf[Popup], args: _*)
+      Application.launch(classOf[Popup], args*)
     }
 }
 
