@@ -476,6 +476,26 @@ hansolo/heatMaps/src/WorldHeatMapTest.scala
  * ./mill -i --watch hansolo.heatMaps.runMain hansolo.charts.WorldHeatMapTest
 
 
+Axis
+
+hansolo/axis/src/AxisTest.scala
+
+ * ./mill -i hansolo.axis.run
+ * ./mill -i hansolo.axis.runMain hansolo.charts.AxisTest
+ * ./mill -i --watch hansolo.axis.runMain hansolo.charts.AxisTest
+
+hansolo/axis/src/DateAxisTest.scala
+
+ * X ./mill -i hansolo.axis.run 
+ * ./mill -i hansolo.axis.runMain hansolo.charts.DateAxisTest
+ * ./mill -i --watch hansolo.axis.runMain hansolo.charts.DateAxisTest
+
+
+
+
+
+
+
 
 
 

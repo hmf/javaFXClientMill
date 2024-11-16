@@ -89,7 +89,6 @@ class AxisTest extends Application {
         System.exit(0)
     }
 
-
     def launchIt():Unit = {
         Application.launch()
     }
