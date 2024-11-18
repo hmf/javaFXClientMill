@@ -506,6 +506,12 @@ hansolo/bar/src/BarChartTest.scala
  * ./mill -i --watch hansolo.bar.runMain hansolo.charts.BarChartTest
 
 
+hansolo/bar/src/ComparisonBarChartTest.scala
+
+ * X ./mill -i hansolo.bar.run
+ * ./mill -i hansolo.bar.runMain hansolo.charts.ComparisonBarChartTest
+ * ./mill -i --watch hansolo.bar.runMain hansolo.charts.ComparisonBarChartTest
+
 
 
 
