@@ -512,6 +512,13 @@ hansolo/bar/src/ComparisonBarChartTest.scala
  * ./mill -i hansolo.bar.runMain hansolo.charts.ComparisonBarChartTest
  * ./mill -i --watch hansolo.bar.runMain hansolo.charts.ComparisonBarChartTest
 
+hansolo/bar/src/NestedBarChartTest.scala
+
+ * X ./mill -i hansolo.bar.run
+ * ./mill -i hansolo.bar.runMain hansolo.charts.NestedBarChartTest
+ * ./mill -i --watch hansolo.bar.runMain hansolo.charts.NestedBarChartTest
+
+
 
 
 
