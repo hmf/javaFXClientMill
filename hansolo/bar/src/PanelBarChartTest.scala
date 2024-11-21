@@ -32,7 +32,7 @@ import scala.compiletime.uninitialized
 /**
  * ./mill mill.scalalib.GenIdea/idea
  *
- * ./mill -i hansolo.bar.run
+ * X ./mill -i hansolo.bar.run
  * ./mill -i hansolo.bar.runMain hansolo.charts.PanelBarChartTest
  * ./mill -i --watch hansolo.bar.runMain hansolo.charts.PanelBarChartTest
  * 
@@ -63,7 +63,7 @@ class PanelBarChartTest extends Application {
         val ss = 0 until 3
         for (s <- ss) {
             val serverNo: Int = s
-            val series: ChartItemSeries[? <: ChartItem] = ChartItemSeriesBuilder.create().name("This week " + serverNo).build()
+            val series: ChartItemSeries[ChartItem] = ChartItemSeriesBuilder.create().name("This week " + serverNo).build().asInstanceOf[ChartItemSeries[ChartItem]]
             categories.forEach(category => {
                 val item: ChartItem = ChartItemBuilder.create().name(series.getName() + " " + category.getName(TextStyle.SHORT, Locale.US)).category(category).value(RND.nextDouble() * 100).fill(Color.ORANGE).build()
                 series.getItems().add(item)
@@ -80,7 +80,7 @@ class PanelBarChartTest extends Application {
         val comparisonListOfSeries: List[ChartItemSeries[ChartItem]] = new ArrayList[ChartItemSeries[ChartItem]]()
         for (s <- ss) {
             val serverNo: Int = s
-            val series: ChartItemSeries[?] = ChartItemSeriesBuilder.create().name("Last week " + serverNo).build()
+            val series: ChartItemSeries[ChartItem] = ChartItemSeriesBuilder.create().name("Last week " + serverNo).build().asInstanceOf[ChartItemSeries[ChartItem]]
             categories.forEach(category => {
                 val item: ChartItem = ChartItemBuilder.create().name(series.getName() + " " + category.getName(TextStyle.SHORT, Locale.US)).category(category).value(RND.nextDouble() * 100).fill(Color.BLUE).build()
                 series.getItems().add(item)

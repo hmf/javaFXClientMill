@@ -518,6 +518,11 @@ hansolo/bar/src/NestedBarChartTest.scala
  * ./mill -i hansolo.bar.runMain hansolo.charts.NestedBarChartTest
  * ./mill -i --watch hansolo.bar.runMain hansolo.charts.NestedBarChartTest
 
+hansolo/bar/src/PanelBarChartTest.scala
+
+ * X ./mill -i hansolo.bar.run
+ * ./mill -i hansolo.bar.runMain hansolo.charts.PanelBarChartTest
+ * ./mill -i --watch hansolo.bar.runMain hansolo.charts.PanelBarChartTest
 
 
 
