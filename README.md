@@ -530,6 +530,7 @@ hansolo/bar/src/RadialBarChartTest.scala
  * ./mill -i hansolo.bar.runMain hansolo.charts.RadialBarChartTest
  * ./mill -i --watch hansolo.bar.runMain hansolo.charts.RadialBarChartTest
 
+box
 
 
 
