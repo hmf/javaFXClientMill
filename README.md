@@ -532,6 +532,12 @@ hansolo/bar/src/RadialBarChartTest.scala
 
 box
 
+hansolo/box/src/BoxPlotTest.scala
+
+ * ./mill -i hansolo.box.run
+ * ./mill -i hansolo.box.runMain hansolo.charts.BoxPlotTest
+ * ./mill -i --watch hansolo.box.runMain hansolo.charts.BoxPlotTest
+
 
 
 
