@@ -538,6 +538,13 @@ hansolo/box/src/BoxPlotTest.scala
  * ./mill -i hansolo.box.runMain hansolo.charts.BoxPlotTest
  * ./mill -i --watch hansolo.box.runMain hansolo.charts.BoxPlotTest
 
+hansolo/box/src/BoxPlotsTest.scala
+
+ * X ./mill -i hansolo.box.run
+ * ./mill -i hansolo.box.runMain hansolo.charts.BoxPlotsTest
+ * ./mill -i --watch hansolo.box.runMain hansolo.charts.BoxPlotsTest
+
+
 
 
 
