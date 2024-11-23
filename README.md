@@ -545,6 +545,13 @@ hansolo/box/src/BoxPlotsTest.scala
  * ./mill -i --watch hansolo.box.runMain hansolo.charts.BoxPlotsTest
 
 
+bubble
+
+hansolo/bubble/src/BubblePlotTest.scala
+./mill -i hansolo.bubble.run
+ * 
+ * ./mill -i hansolo.bubble.runMain hansolo.charts.BubblePlotTest
+ * ./mill -i --watch hansolo.bubble.runMain hansolo.charts.BubblePlotTest
 
 
 
