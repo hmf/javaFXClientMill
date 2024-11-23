@@ -567,7 +567,13 @@ hansolo/candle/src/CandleChartTest.scala
  * ./mill -i hansolo.candle.runMain hansolo.charts.CandleChartTest
  * ./mill -i --watch hansolo.candle.runMain hansolo.charts.CandleChartTest
 
+charts
 
+/home/hmf/VSCodeProjects/javaFXClientMill/hansolo/charts/src/ChartTest.scala
+
+ * ./mill -i hansolo.charts.run
+ * ./mill -i hansolo.charts.runMain hansolo.charts.ChartTest
+ * ./mill -i --watch hansolo.charts.runMain hansolo.charts.ChartTest
 
 
 
