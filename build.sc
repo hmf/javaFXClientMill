@@ -779,7 +779,6 @@ object hansolo extends ScalaModule {
   
   }
 
-
   object axis extends OpenJFX with ScalaModule {
     def scalaVersion = T{ ScalaVersion }
   
@@ -906,6 +905,42 @@ object hansolo extends ScalaModule {
   
   
     override def mainClass: T[Option[String]] = Some("hansolo.charts.CandleChartTest")
+  
+    override def ivyDeps = Agg(
+                                // Required by charts only
+                                ivy"org.slf4j:slf4j-api:${sl4jVersion}",
+                                // https://stackoverflow.com/questions/54777923/logback-in-a-java-9-modular-application-not-working
+                                // https://logback.qos.ch/
+                                // ivy"ch.qos.logback:logback-classic:1.3.0-alpha4",
+                                ivy"ch.qos.logback:logback-classic:${logbackVersion}",
+                                ivy"$CONTROLS",
+                                ivy"$HANSOLO_CHARTS" // ivyHanSoloCharts 
+                              )
+  
+  }
+
+  object ring extends OpenJFX with ScalaModule {
+    def scalaVersion = T{ ScalaVersion }
+  
+    //override def javacOptions = Seq("-source", "1.8", "-target", "1.8", "-Xlint")
+    //override def javacOptions = T{ Seq("-source", "11", "-target", "11", "-Xlint") }
+    //override def scalacOptions = T{ Seq("-deprecation", "-feature") }
+  
+    // -Djdk.gtk.verbose=true -Djavafx.embed.singleThread=true -Dawt.useSystemAAFontSettings=on
+    // Seq("-Dprism.verbose=true", "-Djavafx.verbose=true", "-ea")
+    // -Djava.library.path
+    override def forkArgs: Target[Seq[String]] = T {
+      println(darkOrange(s"build.sc.${getClass.getSimpleName}.forkArgs"))
+  
+      //val t = Seq("-Dprism.verbose=true", "-Djavafx.verbose=true", "-ea") ++ // JavaFX
+      val t = Seq("-Djavafx.verbose=true") ++  super[OpenJFX].forkArgs() //  OpenFX
+      println(orange(t.mkString("\n")))
+      // we do not have here the hansolo module, loading s not the same
+      t
+    }
+  
+  
+    override def mainClass: T[Option[String]] = Some("hansolo.charts.ConcentricRingChartTest")
   
     override def ivyDeps = Agg(
                                 // Required by charts only

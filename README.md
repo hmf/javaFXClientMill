@@ -575,6 +575,13 @@ charts
  * ./mill -i hansolo.charts.runMain hansolo.charts.ChartTest
  * ./mill -i --watch hansolo.charts.runMain hansolo.charts.ChartTest
 
+ring
+
+/home/hmf/VSCodeProjects/javaFXClientMill/hansolo/ring/src/ConcentricRingChartTest.scala
+
+ * ./mill -i hansolo.ring.run
+ * ./mill -i hansolo.ring.runMain hansolo.charts.ConcentricRingChartTest
+ * ./mill -i --watch hansolo.ring.runMain hansolo.charts.ConcentricRingChartTest
 
 
 
