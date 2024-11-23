@@ -547,11 +547,18 @@ hansolo/box/src/BoxPlotsTest.scala
 
 bubble
 
-hansolo/bubble/src/BubblePlotTest.scala
-./mill -i hansolo.bubble.run
- * 
- * ./mill -i hansolo.bubble.runMain hansolo.charts.BubblePlotTest
- * ./mill -i --watch hansolo.bubble.runMain hansolo.charts.BubblePlotTest
+hansolo/bubble/src/BubbleChartTest.scala
+
+ * ./mill -i hansolo.bubble.run
+ * ./mill -i hansolo.bubble.runMain hansolo.charts.BubbleChartTest
+ * ./mill -i --watch hansolo.bubble.runMain hansolo.charts.BubbleChartTest
+
+hansolo/bubble/src/BubbleGridChartTest.scala
+
+ * X ./mill -i hansolo.bubble.run
+ * ./mill -i hansolo.bubble.runMain hansolo.charts.BubbleGridChartTest
+ * ./mill -i --watch hansolo.bubble.runMain hansolo.charts.BubbleGridChartTest
+
 
 
 

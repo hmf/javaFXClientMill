@@ -687,7 +687,7 @@ object hansolo extends ScalaModule {
   
   }
 
-  object arcChart extends OpenJFX with ScalaModule {
+  object arc extends OpenJFX with ScalaModule {
     def scalaVersion = T{ ScalaVersion }
   
     override def forkArgs: Target[Seq[String]] = T {
@@ -841,7 +841,7 @@ object hansolo extends ScalaModule {
     }
   
   
-    override def mainClass: T[Option[String]] = Some("hansolo.charts.BubblePlotTest")
+    override def mainClass: T[Option[String]] = Some("hansolo.charts.BubbleChartTest")
   
     override def ivyDeps = Agg(
                                 // Required by charts only

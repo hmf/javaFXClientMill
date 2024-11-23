@@ -27,9 +27,9 @@ import java.util.List
 /**
  * ./mill mill.scalalib.GenIdea/idea
  *
- * ./mill -i hansolo.arcChart.run
- * ./mill -i hansolo.arcChart.runMain hansolo.charts.ArcChartTest
- * ./mill -i --watch hansolo.arcChart.runMain hansolo.charts.ArcChartTest
+ * ./mill -i hansolo.arc.run
+ * ./mill -i hansolo.arc.runMain hansolo.charts.ArcChartTest
+ * ./mill -i --watch hansolo.arc.runMain hansolo.charts.ArcChartTest
  * 
  * 
  * Note on resources (see StackOverflow link below): Mill's convention is to 

@@ -34,8 +34,8 @@ import scala.compiletime.uninitialized
  * ./mill mill.scalalib.GenIdea/idea
  *
  * ./mill -i hansolo.bubble.run
- * ./mill -i hansolo.bubble.runMain hansolo.charts.BubblePlotTest
- * ./mill -i --watch hansolo.bubble.runMain hansolo.charts.BubblePlotTest
+ * ./mill -i hansolo.bubble.runMain hansolo.charts.BubbleChartTest
+ * ./mill -i --watch hansolo.bubble.runMain hansolo.charts.BubbleChartTest
  * 
  * 
  * Note on resources (see StackOverflow link below): Mill's convention is to 
@@ -52,7 +52,7 @@ import scala.compiletime.uninitialized
  * @see https://stackoverflow.com/questions/12124657/getting-started-on-scala-javafx-desktop-application-development
  * @see https://github.com/HanSolo/charts/blob/master/src/test/java/eu/hansolo/fx/charts/LineChartTest.java
  */
-class BubblePlotTest extends Application {
+class BubbleChartTest extends Application {
     private val RND: Random = new Random()
     private var chart: BubbleChart[?] = uninitialized
     private var items: List[ChartItem] = uninitialized
@@ -100,17 +100,17 @@ class BubblePlotTest extends Application {
 
 
 // Not required, not needed
-// object BubblePlotTest {
+// object BubbleChartTest {
 //   def main(args: Array[String]) =
-//     val app = new BubblePlotTest
+//     val app = new BubbleChartTest
 //     app.launchIt()
 // 
 // }
 
 // Not required, not needed
-// object BubblePlotTest {
+// object BubbleChartTest {
 // 
 //     def main(args: Array[String]): Unit = {
-//     Application.launch(classOf[BubblePlotTest], args*)
+//     Application.launch(classOf[BubbleChartTest], args*)
 //     }
 // }
