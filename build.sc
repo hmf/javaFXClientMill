@@ -651,7 +651,7 @@ object `chapter5-mastering_Visuals-CSS_Design` extends OpenJFX {
 object hansolo extends ScalaModule {
   def scalaVersion = T{ ScalaVersion }
 
-  object lineChart extends OpenJFX with ScalaModule {
+  object line extends OpenJFX with ScalaModule {
     def scalaVersion = T{ ScalaVersion }
   
     //override def javacOptions = Seq("-source", "1.8", "-target", "1.8", "-Xlint")
@@ -855,6 +855,35 @@ object hansolo extends ScalaModule {
                               )
   
   }
+
+  object candle extends OpenJFX with ScalaModule {
+    def scalaVersion = T{ ScalaVersion }
+  
+    override def forkArgs: Target[Seq[String]] = T {
+      println(darkOrange(s"build.sc.${getClass.getSimpleName}.forkArgs"))
+  
+      val t = Seq("-Djavafx.verbose=true") ++  super[OpenJFX].forkArgs() //  OpenFX
+      println(orange(t.mkString("\n")))
+      // we do not have here the hansolo module, loading s not the same
+      t
+    }
+  
+  
+    override def mainClass: T[Option[String]] = Some("hansolo.charts.CandleChartTest")
+  
+    override def ivyDeps = Agg(
+                                // Required by charts only
+                                ivy"org.slf4j:slf4j-api:${sl4jVersion}",
+                                // https://stackoverflow.com/questions/54777923/logback-in-a-java-9-modular-application-not-working
+                                // https://logback.qos.ch/
+                                // ivy"ch.qos.logback:logback-classic:1.3.0-alpha4",
+                                ivy"ch.qos.logback:logback-classic:${logbackVersion}",
+                                ivy"$CONTROLS",
+                                ivy"$HANSOLO_CHARTS" // ivyHanSoloCharts 
+                              )
+  
+  }
+
 
 }
   

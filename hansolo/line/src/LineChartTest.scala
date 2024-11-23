@@ -33,9 +33,9 @@ import javafx.scene.Scene
 /**
  * ./mill mill.scalalib.GenIdea/idea
  *
- * ./mill -i hansolo.lineChart.run
- * ./mill -i hansolo.lineChart.runMain hansolo.charts.LineChartTest
- * ./mill -i --watch hansolo.lineChart.runMain hansolo.charts.LineChartTest
+ * ./mill -i hansolo.line.run
+ * ./mill -i hansolo.line.runMain hansolo.charts.LineChartTest
+ * ./mill -i --watch hansolo.line.runMain hansolo.charts.LineChartTest
  * 
  * 
  * Note on resources (see StackOverflow link below): Mill's convention is to 

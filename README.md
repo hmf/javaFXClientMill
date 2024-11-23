@@ -559,6 +559,15 @@ hansolo/bubble/src/BubbleGridChartTest.scala
  * ./mill -i hansolo.bubble.runMain hansolo.charts.BubbleGridChartTest
  * ./mill -i --watch hansolo.bubble.runMain hansolo.charts.BubbleGridChartTest
 
+candle
+
+hansolo/candle/src/CandleChartTest.scala
+
+ * ./mill -i hansolo.candle.run
+ * ./mill -i hansolo.candle.runMain hansolo.charts.CandleChartTest
+ * ./mill -i --watch hansolo.candle.runMain hansolo.charts.CandleChartTest
+
+
 
 
 
