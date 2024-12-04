@@ -47,26 +47,26 @@ import scala.compiletime.uninitialized
  * @see https://github.com/HanSolo/charts/blob/master/src/test/java/eu/hansolo/fx/charts/ComparisonRingChartTest.java
  */
 class ComparisonRingChartTest extends Application {
-    private static final Random RND = new Random()
-    private ChartItem           chart1Data1
-    private ChartItem           chart1Data2
-    private ChartItem           chart1Data3
-    private ChartItem           chart1Data4
-    private ChartItem           chart1Data5
-    private ChartItem           chart1Data6
-    private ChartItem           chart1Data7
-    private ChartItem           chart1Data8
-    private ChartItem           chart2Data1
-    private ChartItem           chart2Data2
-    private ChartItem           chart2Data3
-    private ChartItem           chart2Data4
-    private ChartItem           chart2Data5
-    private ChartItem           chart2Data6
-    private ChartItem           chart2Data7
-    private ChartItem           chart2Data8
-    private ComparisonRingChart chart
-    private long                lastTimerCall
-    private AnimationTimer      timer
+    private val RND: Random = new Random()
+    private var chart1Data1 : ChartItem = uninitialized
+    private var chart1Data2 : ChartItem = uninitialized
+    private var chart1Data3 : ChartItem = uninitialized
+    private var chart1Data4 : ChartItem = uninitialized
+    private var chart1Data5 : ChartItem = uninitialized
+    private var chart1Data6 : ChartItem = uninitialized
+    private var chart1Data7 : ChartItem = uninitialized
+    private var chart1Data8 : ChartItem = uninitialized
+    private var chart2Data1 : ChartItem = uninitialized
+    private var chart2Data2 : ChartItem = uninitialized
+    private var chart2Data3 : ChartItem = uninitialized
+    private var chart2Data4 : ChartItem = uninitialized
+    private var chart2Data5 : ChartItem = uninitialized
+    private var chart2Data6 : ChartItem = uninitialized
+    private var chart2Data7 : ChartItem = uninitialized
+    private var chart2Data8 : ChartItem = uninitialized
+    private var chart: ComparisonRingChart = uninitialized
+    private var lastTimerCall: Long = uninitialized
+    private var timer: AnimationTimer = uninitialized
 
 
     override def init() = {
@@ -79,7 +79,7 @@ class ComparisonRingChartTest extends Application {
         chart1Data7 = new ChartItem("Item 7")
         chart1Data8 = new ChartItem("Item 8")
 
-        ChartItemSeries<ChartItem> series1 = ChartItemSeriesBuilder.create()
+        val series1: ChartItemSeries[ChartItem] = ChartItemSeriesBuilder.create()
                                                                    .name("Series 1")
                                                                    .items(chart1Data1, chart1Data2, chart1Data3, chart1Data4,
                                                                           chart1Data5, chart1Data6, chart1Data7, chart1Data8)
@@ -88,6 +88,7 @@ class ComparisonRingChartTest extends Application {
                                                                    .animated(true)
                                                                    .animationDuration(1000)
                                                                    .build()
+                                                                   .asInstanceOf[ChartItemSeries[ChartItem]]
 
         chart2Data1 = new ChartItem("Item 1")
         chart2Data2 = new ChartItem("Item 2")
@@ -98,7 +99,7 @@ class ComparisonRingChartTest extends Application {
         chart2Data7 = new ChartItem("Item 7")
         chart2Data8 = new ChartItem("Item 8")
 
-        ChartItemSeries<ChartItem> series2 = ChartItemSeriesBuilder.create()
+        val series2: ChartItemSeries[ChartItem] = ChartItemSeriesBuilder.create()
                                                                    .name("Series 2")
                                                                    .items(chart2Data1, chart2Data2, chart2Data3, chart2Data4,
                                                                           chart2Data5, chart2Data6, chart2Data7, chart2Data8)
@@ -107,6 +108,7 @@ class ComparisonRingChartTest extends Application {
                                                                    .animated(true)
                                                                    .animationDuration(1000)
                                                                    .build()
+                                                                   .asInstanceOf[ChartItemSeries[ChartItem]]
 
         chart = ComparisonRingChartBuilder.create(series1, series2)
                                           .prefSize(400, 400)
@@ -117,7 +119,7 @@ class ComparisonRingChartTest extends Application {
 
         lastTimerCall = System.nanoTime()
         timer = new AnimationTimer() {
-            override def handle(now: Long) {
+            override def handle(now: Long) = {
                 if (now > lastTimerCall + 1_000_000_000l) {
                     chart1Data1.setValue(RND.nextDouble() * 20)
                     chart1Data2.setValue(RND.nextDouble() * 20)
@@ -143,7 +145,7 @@ class ComparisonRingChartTest extends Application {
         }
     }
 
-    override def start(Stage stage) = {
+    override def start(stage: Stage) = {
         val pane = new StackPane(chart)
         pane.setPadding(new Insets(10))
 
