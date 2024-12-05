@@ -584,6 +584,14 @@ ring
  * ./mill -i --watch hansolo.ring.runMain hansolo.charts.ConcentricRingChartTest
 
 
+hansolo/ring/src/ComparisonRingChartTest.scala
+
+ * X ./mill -i hansolo.ring.run
+ * ./mill -i hansolo.ring.runMain hansolo.charts.ComparisonRingChartTest
+ * ./mill -i --watch hansolo.ring.runMain hansolo.charts.ComparisonRingChartTest
+
+
+
 
 
 <!-- 
