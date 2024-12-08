@@ -575,6 +575,26 @@ charts
  * ./mill -i hansolo.charts.runMain hansolo.charts.ChartTest
  * ./mill -i --watch hansolo.charts.runMain hansolo.charts.ChartTest
 
+hansolo/charts/src/CoxcombChartTest.scala
+
+ * X ./mill -i hansolo.charts.run
+ * ./mill -i hansolo.charts.runMain hansolo.charts.CoxcombChartTest
+ * ./mill -i --watch hansolo.charts.runMain hansolo.charts.CoxcombChartTest
+
+hansolo/charts/src/CubeChartTest.scala
+
+ * X ./mill -i hansolo.charts.run
+ * ./mill -i hansolo.charts.runMain hansolo.charts.CubeChartTest
+ * ./mill -i --watch hansolo.charts.runMain hansolo.charts.CubeChartTest
+
+
+hansolo/charts/src/EmptyItemTest.scala
+
+ * X ./mill -i hansolo.charts.run
+ * ./mill -i hansolo.charts.runMain hansolo.charts.EmptyItemTest
+ * ./mill -i --watch hansolo.charts.runMain hansolo.charts.EmptyItemTest
+
+
 ring
 
 /home/hmf/VSCodeProjects/javaFXClientMill/hansolo/ring/src/ConcentricRingChartTest.scala
@@ -590,7 +610,33 @@ hansolo/ring/src/ComparisonRingChartTest.scala
  * ./mill -i hansolo.ring.runMain hansolo.charts.ComparisonRingChartTest
  * ./mill -i --watch hansolo.ring.runMain hansolo.charts.ComparisonRingChartTest
 
+grid
 
+hansolo/grid/src/GridTest.scala
+
+ * ./mill -i hansolo.grid.run
+ * ./mill -i hansolo.grid.runMain hansolo.charts.GridTest
+ * ./mill -i --watch hansolo.grid.runMain hansolo.charts.GridTest
+
+
+hansolo/grid/src/LogGridTest.scala
+
+ * ./mill -i hansolo.grid.run
+ * ./mill -i hansolo.grid.runMain hansolo.charts.LogGridTest
+ * ./mill -i --watch hansolo.grid.runMain hansolo.charts.LogGridTest
+
+
+graph
+
+hansolo/graph/src/ForceDirectedGraphTest.scala
+
+ * ./mill -i hansolo.graph.run
+ * ./mill -i hansolo.graph.runMain hansolo.charts.ForceDirectedGraphTest
+ * ./mill -i --watch hansolo.graph.runMain hansolo.charts.ForceDirectedGraphTest
+
+timeSeries
+
+hansolo/timeSeries/src/MultiTimeSeriesTest.scala
 
 
 
