@@ -671,13 +671,9 @@ maps
  * ./mill -i hansolo.maps.runMain hansolo.charts.WorldmapConnectionsTest
  * ./mill -i --watch hansolo.maps.runMain hansolo.charts.WorldmapConnectionsTest
 
-CircularPlotTest
-HorizonChartTest
-LegendTest
-LogChartTest (in LogGridTest)
-OfflineRenderTest
-OfflineRenderTest2
-ParallelCoordinatesChartTest
+SingleChartTest (charts)
+StreamChartTest
+
 ParetoTest
 PlayfairTest
 PoincarePlotTest
@@ -685,12 +681,22 @@ PolarChartTest
 RadarChartTest
 RadialTidyTreeTest
 RidgeLineChartTest
+
+CircularPlotTest
+HorizonChartTest
+
 SankeyPlotTest
 SectorChartTest
-SingleChartTest
-StreamChartTest
 SunburstChartTest
 WaffleChartTest
+
+ParallelCoordinatesChartTest
+
+LogChartTest (in LogGridTest)
+
+LegendTest (axis)
+OfflineRenderTest
+OfflineRenderTest2
 
 
 <!-- 
