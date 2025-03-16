@@ -661,6 +661,9 @@ maps
  * ./mill -i hansolo.maps.runMain hansolo.charts.WaferMapTest
  * ./mill -i --watch hansolo.maps.runMain hansolo.charts.WaferMapTest
 
+ * ./mill -i hansolo.maps.run X
+ * ./mill -i hansolo.maps.runMain hansolo.charts.WorldmapConnectionsTest
+ * ./mill -i --watch hansolo.maps.runMain hansolo.charts.WorldmapConnectionsTest
 
 <!-- 
 

@@ -1,4 +1,4 @@
-// cSpell:ignore javafx, hansolo, voronoi
+// cSpell:ignore javafx, hansolo
 
 package hansolo.charts
 

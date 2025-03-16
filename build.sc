@@ -27,7 +27,7 @@ val mUnitVersion         = "1.0.2" // "1.0.1" "0.8.4" // "0.7.27"
 val controlsFXVersion    = "11.2.1" // "11.1.0"
 //val hanSoloChartsVersion = "16.0.12" JDK16
 // val hanSoloChartsVersion = "11.7"
-val hanSoloChartsVersion = "21.0.19"
+val hanSoloChartsVersion = "21.0.23" // "21.0.19"
 val sl4jVersion = "2.0.16"
 val logbackVersion = "1.5.7"
 
