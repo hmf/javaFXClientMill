@@ -639,6 +639,28 @@ timeSeries
 hansolo/timeSeries/src/MultiTimeSeriesTest.scala
 
 
+ * ./mill -i hansolo.timeSeries.run
+ * ./mill -i hansolo.timeSeries.runMain hansolo.charts.TimeSeriesPredictionTest
+ * ./mill -i --watch hansolo.timeSeries.runMain hansolo.charts.TimeSeriesPredictionTest
+
+hansolo/timeSeries/src/TimeSeriesPredictionTest.scala
+
+ * ./mill -i hansolo.timeSeries.run
+ * ./mill -i hansolo.timeSeries.runMain hansolo.charts.TimeSeriesPredictionTest
+ * ./mill -i --watch hansolo.timeSeries.runMain hansolo.charts.TimeSeriesPredictionTest
+
+voronoi (broken) 
+
+ * ./mill -i hansolo.voronoi.run
+ * ./mill -i hansolo.voronoi.runMain hansolo.charts.VoronoiChartTest
+ * ./mill -i --watch hansolo.voronoi.runMain hansolo.charts.VoronoiChartTest
+
+maps
+
+ * ./mill -i hansolo.maps.run
+ * ./mill -i hansolo.maps.runMain hansolo.charts.WaferMapTest
+ * ./mill -i --watch hansolo.maps.runMain hansolo.charts.WaferMapTest
+
 
 <!-- 
 
