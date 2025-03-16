@@ -496,6 +496,12 @@ hansolo/axis/src/TimeAxisTest.scala
  * ./mill -i hansolo.axis.runMain hansolo.charts.TimeAxisTest
  * ./mill -i --watch hansolo.axis.runMain hansolo.charts.TimeAxisTest
 
+hansolo/axis/src/LogAxisTest.scala
+
+ * ./mill -i hansolo.axis.run
+ * ./mill -i hansolo.axis.runMain hansolo.charts.LogAxisTest
+ * ./mill -i --watch hansolo.axis.runMain hansolo.charts.LogAxisTest
+
 
 bar
 
@@ -664,6 +670,13 @@ maps
  * ./mill -i hansolo.maps.run X
  * ./mill -i hansolo.maps.runMain hansolo.charts.WorldmapConnectionsTest
  * ./mill -i --watch hansolo.maps.runMain hansolo.charts.WorldmapConnectionsTest
+
+CircularPlotTest
+HorizonChartTest
+LegendTest
+LogChartTest (in LogGridTest)
+
+
 
 <!-- 
 
