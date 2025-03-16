@@ -675,7 +675,22 @@ CircularPlotTest
 HorizonChartTest
 LegendTest
 LogChartTest (in LogGridTest)
-
+OfflineRenderTest
+OfflineRenderTest2
+ParallelCoordinatesChartTest
+ParetoTest
+PlayfairTest
+PoincarePlotTest
+PolarChartTest
+RadarChartTest
+RadialTidyTreeTest
+RidgeLineChartTest
+SankeyPlotTest
+SectorChartTest
+SingleChartTest
+StreamChartTest
+SunburstChartTest
+WaffleChartTest
 
 
 <!-- 
