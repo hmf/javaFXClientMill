@@ -2,12 +2,12 @@
 
 package hansolo.charts
 
-import eu.hansolo.fx.charts.mapsmap.DieMap
-import eu.hansolo.fx.charts.mapsmap.DieMapBuilder
-import eu.hansolo.fx.charts.mapsmap.KLA
-import eu.hansolo.fx.charts.mapsmap.KLAParser
-import eu.hansolo.fx.charts.mapsmap.mapsMap
-import eu.hansolo.fx.charts.mapsmap.mapsMapBuilder
+import eu.hansolo.fx.charts.wafermap.DieMap
+import eu.hansolo.fx.charts.wafermap.DieMapBuilder
+import eu.hansolo.fx.charts.wafermap.KLA
+import eu.hansolo.fx.charts.wafermap.KLAParser
+import eu.hansolo.fx.charts.wafermap.WaferMap
+import eu.hansolo.fx.charts.wafermap.WaferMapBuilder
 import eu.hansolo.fx.heatmap.ColorMapping
 import javafx.application.Application
 import javafx.application.Platform
@@ -17,7 +17,6 @@ import javafx.scene.layout.HBox
 import javafx.scene.paint.Color
 import javafx.stage.Stage
 
-// import eu.hansolo.fx.charts.Position // TODO
 // import eu.hansolo.fx.charts.AxisBuilder // TODO
 // import eu.hansolo.fx.charts.Prediction // TODO
 // import eu.hansolo.fx.charts.XYPane // TODO
@@ -68,13 +67,13 @@ import java.{util => ju}
 
 
 class WaferMapTest extends Application {
-    private              WaferMap wafermap
-    private              DieMap   dieMap
+    private var wafermap: WaferMap = uninitialized
+    private var dieMap: DieMap     = uninitialized
 
 
     override def init() = {
-        String        filename = WaferMapTest.class.getResource("12.KLA").toString().replace("file:", "")
-        Optional<KLA> klaOpt   = KLAParser.INSTANCE.parse(filename)
+        val filename: String        = getClass().getResource("/12.KLA").toString().replace("file:", "")
+        val klaOpt: Optional[KLA]   = KLAParser.INSTANCE.parse(filename)
 
         //System.out.println(klaOpt.get())
 
@@ -87,8 +86,8 @@ class WaferMapTest extends Application {
                                   .heatmapColorMapping(ColorMapping.BLUE_CYAN_GREEN_YELLOW_RED)
                                   .heatmapSpotRadius(7)
                                   .heatmapOpacity(0.75)
-                                  .mapsFill(Color.LIGHTGRAY)
-                                  .mapsStroke(Color.BLACK)
+                                  .waferFill(Color.LIGHTGRAY)
+                                  .waferStroke(Color.BLACK)
                                   .dieTextFill(Color.BLACK)
                                   .build()
 
@@ -98,13 +97,13 @@ class WaferMapTest extends Application {
                               .densityColorsVisible(false)
                               .build()
 
-        wafermap.selectedDieProperty().addListener(o -> Platform.runLater(() -> dieMap.setDie(wafermap.getSelectedDie())))
+        wafermap.selectedDieProperty().addListener(o => Platform.runLater(() => dieMap.setDie(wafermap.getSelectedDie())))
     }
 
-    override def start(Stage stage) = {
-        HBox pane  = new HBox(20, wafermap, dieMap)
+    override def start(stage: Stage) = {
+        val pane: HBox  = new HBox(20, wafermap, dieMap)
         pane.setPadding(new Insets(10))
-        Scene scene = new Scene(pane, Color.DARKGRAY)
+        val scene: Scene = new Scene(pane, Color.DARKGRAY)
 
         stage.setTitle("Wafermap")
         stage.setScene(scene)
